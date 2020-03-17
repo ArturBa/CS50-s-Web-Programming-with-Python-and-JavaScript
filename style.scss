@@ -1,0 +1,57 @@
+$text-color: #7f7f7f;
+#main-body {
+    width: 70%;
+    margin: 0 auto;
+    color: $text-color;
+
+    h1, h2{
+        color: #EE7766;
+        padding: 20px;
+    }
+    p{
+        padding: 10px;
+        font-size: 16px;
+    }
+    table{
+        table-layout: auto;
+        width: 100%;
+
+    }
+
+}
+
+.main-pizza{
+    width: 60%;
+    transform: rotate(90deg);
+    margin: 0 auto;
+}
+
+%table-row{
+    font-family: serif;
+    font-size: 18px;
+}
+
+.title-row{
+    @extend %table-row;
+    font-style: bold;
+}
+
+.data-row{
+    @extend %table-row;
+    font-style: italic;
+}
+
+.secret-menu{
+    opacity: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .secret-menu {
+    opacity: 1;
+  }
+}
+
+img {
+    box-sizing: border-box;
+    width: 100%;
+}
