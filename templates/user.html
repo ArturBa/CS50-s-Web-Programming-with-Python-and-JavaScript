@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    User panel
+{% endblock %}
+
+{% block body %}
+    <h1>Hi
+        {% if user.name == None %}
+            {{ user.username }}!
+        {% else %}
+            {{ user.name }}!
+        {% endif %}
+    </h1>
+    <a href="{{ url_for('logout') }}">Log out</a>
+{% endblock %}

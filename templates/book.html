@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ book.title }}</h1>
+    <h2>{{ book.author }}</h2>
+    <p>Year: {{ book.year }}</p>
+    <p>ISBN: {{ book.isbn }}</p>
+    <h3>Goodreads</h3>
+    {% if goodreads != None %}
+        <p>Average: {{ goodreads['average_rating'] }}</p>
+        <p>Number of rating works: {{ goodreads['work_ratings_count'] }}</p>
+    {% else %}
+        <p>Cannot get data from goodreads</p>
+    {% endif %}
+    <h3>User reviews</h3>
+    {% for review in book.review %}
+        <div class="user-review">
+            <p>{{ review.rating }}</p>
+            <p>{{ review.review }}</p>
+        </div>
+    {% else %}
+        <p>No user reviews</p>
+    {% endfor %}
+    {% if user != None %}
+        <div class="review">
+            <form method="post" action="{{ url_for('add_opinion') }}">
+                <div class="form-group">
+                    <label>
+                        <input name="rating" type="range" min="1" max="5">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Your review<br>
+                        <textarea name="review" placeholder="Write here your review" cols="40" rows="5"></textarea>
+                    </label>
+                </div>
+                <input type="hidden" name="book_id" value="{{ book.id }}">
+                <div class="form-group">
+                    <button class="btn btn-primary">Add opinion</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

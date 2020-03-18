@@ -1,0 +1,5 @@
+# Ignore env
+venv
+
+# Ignore IDE files
+.idea
