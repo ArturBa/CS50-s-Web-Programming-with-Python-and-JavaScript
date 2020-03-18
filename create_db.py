@@ -1,20 +1,34 @@
 import os
 
-from flask import Flask
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
-from model import *
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-app.config["SQLALCHEMY_DATABASE_PASS"] = os.getenv("DATABASE_PASS")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db.init_app(app)
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
 
 
 def main():
-    db.create_all()
+    db.execute("CREATE TABLE books ("
+               "isbn VARCHAR PRIMARY KEY, "
+               "title VARCHAR NOT NULL, "
+               "author VARCHAR NOT NULL, "
+               "year INTEGER NOT NULL);"
+               )
+    db.execute("CREATE TABLE users ("
+               "id SERIAL PRIMARY KEY, "
+               "username VARCHAR UNIQUE NOT NULL, "
+               "password VARCHAR NOT NULL, "
+               "name VARCHAR NOT NULL);"
+               )
+    db.execute("CREATE TABLE reviews ("
+               "id SERIAL PRIMARY KEY, "
+               "book_id SERIAL NOT NULL, "
+               "user_id SERIAL NOT NULL, "
+               "review VARCHAR NOT NULL, "
+               "value VARCHAR NOT NULL);"
+               )
+    db.commit()
 
 
-if __name__ == '__main__':
-    with app.app_context():
-        main()
+if __name__ == "__main__":
+    main()

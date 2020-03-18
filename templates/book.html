@@ -21,13 +21,8 @@
         <p>Cannot get data from goodreads</p>
     {% endif %}
     <h3>User reviews</h3>
-    {% for review in book.review %}
-        <div class="user-review">
-            <p>{{ review.rating }}</p>
-            <p>{{ review.review }}</p>
-        </div>
-    {% else %}
-        <p>No user reviews</p>
+    {% for review in reviews %}
+        <p>{{ review.review }}</p>
     {% endfor %}
     {% if user != None %}
         <div class="review">
@@ -53,7 +48,7 @@
                                   minlength="50"></textarea>
                     </label>
                 </div>
-                <input type="hidden" name="book_id" value="{{ book.id }}">
+                <input type="hidden" name="book_isbn" value="{{ book.isbn }}">
                 <div class="form-group">
                     <button class="btn btn-primary">Add opinion</button>
                 </div>

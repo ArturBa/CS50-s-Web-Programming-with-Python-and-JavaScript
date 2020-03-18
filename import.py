@@ -1,27 +1,26 @@
 import csv
 import os
 
-from flask import Flask
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 
-from model import *
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-app.config["SQLALCHEMY_DATABASE_PASS"] = os.getenv("DATABASE_PASS")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db.init_app(app)
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
 
 
 def main():
     f = open("books.csv")
-    reader = csv.DictReader(f)
-    for row in reader:
-        book = Book(isbn=row['isbn'], author=row['author'], title=row['title'], year=row['year'])
-        db.session.add(book)
-        print(f"Added book: {row['title']} by {row['author']} from {row['year']}")
-    db.session.commit()
+    reader = csv.reader(f)
+    header = True
+    for isbn, title, author, year in reader:
+        if header:
+            header = False
+            continue
+        db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)",
+                   {"isbn": isbn, "title": title, "author": author, "year": year})
+        print(f"Added book {title} by {author}.")
+    db.commit()
 
 
 if __name__ == "__main__":
-    with app.app_context():
-        main()
+    main()

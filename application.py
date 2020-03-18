@@ -1,10 +1,9 @@
 import requests
 from flask import Flask, session, render_template, jsonify, request, flash, redirect, url_for
 from flask_session import Session
-from sqlalchemy import create_engine, exc
+from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from model import *
 from utils import *
 
 app = Flask(__name__)
@@ -30,8 +29,9 @@ def index():
 
 @app.route('/user')
 def user():
-    if session.get('logged'):
-        return render_template('user.html', user=session.get('user'))
+    if session['user']:
+        print(session['user'][3])
+        return render_template('user.html', user=session['user'])
     else:
         return redirect(url_for('login'))
 
@@ -52,15 +52,14 @@ def register_authorization():
     post_password = code_password(str(request.form.get('password')))
     post_name = str(request.form.get('name'))
     try:
-        _user = User(username=post_username, password=post_password, name=post_name)
-        db()
-        db.add(_user)
+        db.execute("INSERT INTO users (username, password, name) VALUES (:username, :password, :name)",
+                   {"username": post_username, "password": post_password, "name": post_name})
         db.commit()
-        db.remove()
         message = {'type': 'success', 'value': 'User created'}
         flash(message)
         return redirect(url_for('login'))
-    except exc.IntegrityError:
+    except Exception as exception:
+        print(exception)
         message = {'type': 'warning', 'value': 'User with that username already exist'}
         flash(message)
         return redirect(url_for('register'))
@@ -73,7 +72,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session['logged'] = False
+    session['user'] = None
     return redirect(url_for('index'))
 
 
@@ -86,43 +85,38 @@ def login_authorization():
     post_username = str(request.form.get('username'))
     post_password = code_password(str(request.form.get('password')))
 
-    db()
-    query = db.query(User).filter(User.username.in_([post_username]), User.password.in_([post_password]))
-    db.remove()
-    result = query.first()
+    result = db.execute("SELECT * FROM users WHERE username=:username AND password=:password;",
+                        {'username': post_username, 'password': post_password}).fetchmany(1)
     if result is None:
         message = {'type': 'warning', 'value': 'Login and password not matching'}
         flash(message)
         return redirect(url_for('login'))
     else:
-        session['logged'] = True
-        session['user'] = result
+        session['user'] = result[0]
         return redirect(url_for('index'))
 
 
 @app.route('/books')
 def books():
     """Return detail about all books"""
-    _books = db.query(Book).all()
+    _books = db.execute("SELECT * FROM books").fetchall()
     return render_template("books.html", books=_books)
 
 
-@app.route('/book/<int:book_id>')
-def book(book_id):
+@app.route('/book/<book_isbn>')
+def book(book_isbn):
     """Return detail about a single book"""
     try:
-        _book = db.query(Book).get(book_id)
+        _book = db.execute("SELECT * FROM books WHERE isbn=:isbn;", {"isbn": book_isbn}).fetchmany(1)[0]
+        _review = db.execute("SELECT * FROM reviews JOIN users ON reviews.user_id = users.id WHERE book_isbn=:isbn;",
+                             {"isbn": book_isbn}).fetchall()
         goodreads = requests.get("https://www.goodreads.com/book/review_counts.json",
-                                 params={"key": os.getenv('GOODREADS_KEY'), "isbns": _book.isbn})
+                                 params={"key": os.getenv('GOODREADS_KEY'), "isbns": book_isbn})
         if goodreads.status_code == 200:
             goodreads_data = goodreads.json()['books'][0]
         else:
             goodreads_data = None
-        if session.get('logged'):
-            _user = session.get('user')
-        else:
-            _user = None
-        return render_template("book.html", user=_user, book=_book, goodreads=goodreads_data)
+        return render_template("book.html", book=_book, reviews=_review, user=session['user'], goodreads=goodreads_data)
     except Exception as exception:
         print(type(exception))
         return render_template("error.html", message="Book not found")
@@ -133,19 +127,18 @@ def add_opinion():
     if request.method != 'POST':
         return redirect(url_for('index'))
     try:
-        review = Review(user_id=session.get('user').id, book_id=request.form.get('book_id'),
-                        rating=request.form.get('rating'), review=request.form.get('review'))
-        db()
-        db.add(review)
+        db.execute("INSERT INTO reviews (book_isbn, user_id, review, ranking)"
+                   "VALUES (:book_isbn, :user_id, :review, :ranking)",
+                   {"book_isbn": request.form.get('book_isbn'), "user_id": session.get('user').id,
+                    "review": request.form.get('review'), "ranking": request.form.get('rating')})
         db.commit()
-        db.remove()
         message = {'type': 'success', 'value': f'Review added'}
     except Exception as exception:
         print(exception)
         message = {'type': 'warning', 'value': f'Error while adding review. Try again later'}
 
     flash(message)
-    return redirect(url_for('book', book_id=request.form.get('book_id')))
+    return redirect(url_for('book', book_isbn=request.form.get('book_isbn')))
 
 
 @app.route('/api/<int:book_id>')
@@ -153,35 +146,34 @@ def book_api(book_id):
     """Return detail about a single book"""
 
     # Check if flights exist
-    db()
-    _book = db.query(Book).get(book_id)
-    if _book is None:
-        return jsonify({"error": "invalid book_id"}), 404
+    # _book = db.query(Book).get(book_id)
+    # _book = db.execute(f'SELECT * FROM BOOKS WHERE id == {book_id}')
+    # if _book is None:
+    #     return jsonify({"error": "invalid book_id"}), 404
 
-    score = 0
-    for review in _book.review:
-        score += review.rating
-    review_count = len(_book.review)
-    db.remove()
-
-    goodreads = requests.get("https://www.goodreads.com/book/review_counts.json",
-                             params={"key": os.getenv('GOODREADS_KEY'), "isbns": _book.isbn})
-    if goodreads.status_code == 200:
-        goodreads_data = goodreads.json()['books'][0]
-        review_count += goodreads_data['work_ratings_count']
-        score += goodreads_data['work_ratings_count'] * float(goodreads_data['average_rating'])
-
-    if review_count == 0:
-        score = 0
-    else:
-        score = float(score) / review_count
-
-    # Get passengers
+    # score = 0
+    # for review in _book.review:
+    #     score += review.rating
+    # review_count = len(_book.review)
+    # db.remove()
+    #
+    # goodreads = requests.get("https://www.goodreads.com/book/review_counts.json",
+    #                          params={"key": os.getenv('GOODREADS_KEY'), "isbns": _book.isbn})
+    # if goodreads.status_code == 200:
+    #     goodreads_data = goodreads.json()['books'][0]
+    #     review_count += goodreads_data['work_ratings_count']
+    #     score += goodreads_data['work_ratings_count'] * float(goodreads_data['average_rating'])
+    #
+    # if review_count == 0:
+    #     score = 0
+    # else:
+    #     score = float(score) / review_count
+    #
     return jsonify({
-        "title": _book.title,
-        "author": _book.author,
-        "year": _book.year,
-        "isbn": _book.isbn,
-        "review_count": review_count,
-        "average_score": score
+        "title": "bo",
+        "author": "bo",
+        "year": "bo",
+        "isbn": "bo",
+        "review_count": "bo",
+        "average_score": "bo",
     }), 200
