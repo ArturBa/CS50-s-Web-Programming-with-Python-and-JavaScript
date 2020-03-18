@@ -127,12 +127,20 @@ def add_opinion():
     if request.method != 'POST':
         return redirect(url_for('index'))
     try:
-        db.execute("INSERT INTO reviews (book_isbn, user_id, review, ranking)"
-                   "VALUES (:book_isbn, :user_id, :review, :ranking)",
-                   {"book_isbn": request.form.get('book_isbn'), "user_id": session.get('user').id,
-                    "review": request.form.get('review'), "ranking": request.form.get('rating')})
+        review = db.execute("SELECT * FROM reviews WHERE book_isbn=:isbn AND user_id=:user_id;",
+                            {"isbn": request.form.get('book_isbn'), "user_id": session.get('user').id}).fetchmany(1)[0]
+        if review is None:
+            db.execute("INSERT INTO reviews (book_isbn, user_id, review, rating)"
+                       "VALUES (:book_isbn, :user_id, :review, :rating)",
+                       {"book_isbn": request.form.get('book_isbn'), "user_id": session.get('user').id,
+                        "review": request.form.get('review'), "rating": request.form.get('rating')})
+            message = {'type': 'success', 'value': f'Review added'}
+        else:
+            db.execute("UPDATE reviews SET review=:review, rating=:rating WHERE id=:id ",
+                       {"id": review.id, "review": request.form.get('review'), "rating": request.form.get('rating')})
+            message = {'type': 'success', 'value': f'Review updated'}
+
         db.commit()
-        message = {'type': 'success', 'value': f'Review added'}
     except Exception as exception:
         print(exception)
         message = {'type': 'warning', 'value': f'Error while adding review. Try again later'}
@@ -141,39 +149,39 @@ def add_opinion():
     return redirect(url_for('book', book_isbn=request.form.get('book_isbn')))
 
 
-@app.route('/api/<int:book_id>')
-def book_api(book_id):
+@app.route('/api/<book_isbn>')
+def book_api(book_isbn):
     """Return detail about a single book"""
 
-    # Check if flights exist
-    # _book = db.query(Book).get(book_id)
-    # _book = db.execute(f'SELECT * FROM BOOKS WHERE id == {book_id}')
-    # if _book is None:
-    #     return jsonify({"error": "invalid book_id"}), 404
+    # Check if book exist
+    _book = db.execute("SELECT * FROM books WHERE isbn=:isbn;", {"isbn": book_isbn}).fetchmany(1)[0]
+    if _book is None:
+        return jsonify({"error": "invalid book_id"}), 404
 
-    # score = 0
-    # for review in _book.review:
-    #     score += review.rating
-    # review_count = len(_book.review)
-    # db.remove()
-    #
-    # goodreads = requests.get("https://www.goodreads.com/book/review_counts.json",
-    #                          params={"key": os.getenv('GOODREADS_KEY'), "isbns": _book.isbn})
-    # if goodreads.status_code == 200:
-    #     goodreads_data = goodreads.json()['books'][0]
-    #     review_count += goodreads_data['work_ratings_count']
-    #     score += goodreads_data['work_ratings_count'] * float(goodreads_data['average_rating'])
-    #
-    # if review_count == 0:
-    #     score = 0
-    # else:
-    #     score = float(score) / review_count
-    #
+    _review = db.execute("SELECT * FROM reviews WHERE book_isbn=:isbn;",
+                         {"isbn": book_isbn}).fetchall()
+    score = 0
+    for review in _review:
+        score += review.rating
+    review_count = len(_review)
+
+    goodreads = requests.get("https://www.goodreads.com/book/review_counts.json",
+                             params={"key": os.getenv('GOODREADS_KEY'), "isbns": _book.isbn})
+    if goodreads.status_code == 200:
+        goodreads_data = goodreads.json()['books'][0]
+        review_count += goodreads_data['work_ratings_count']
+        score += goodreads_data['work_ratings_count'] * float(goodreads_data['average_rating'])
+
+    if review_count == 0:
+        score = 0
+    else:
+        score = float(score) / review_count
+
     return jsonify({
-        "title": "bo",
-        "author": "bo",
-        "year": "bo",
-        "isbn": "bo",
-        "review_count": "bo",
-        "average_score": "bo",
+        "title": _book.title,
+        "author": _book.author,
+        "year": _book.year,
+        "isbn": _book.isbn,
+        "review_count": review_count,
+        "average_score": score,
     }), 200

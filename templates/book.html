@@ -22,6 +22,7 @@
     {% endif %}
     <h3>User reviews</h3>
     {% for review in reviews %}
+        <h5>{{ review.username }}:</h5>
         <p>{{ review.review }}</p>
     {% endfor %}
     {% if user != None %}
