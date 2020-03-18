@@ -5,6 +5,11 @@
 .width-70 {
   width: 70%;
   margin: 0 auto;
+  padding: 6px;
+
+  h1 {
+    padding: 12px;
+  }
 }
 
 .login {
@@ -13,7 +18,11 @@
 }
 
 .login * {
-  padding: 20px;
-}
+  h1 {
+    font-size: 16ex;
+    padding: 8px;
+  }
 
-/*# sourceMappingURL=base.css.map */
+  text-align: center;
+  padding: 8px;
+}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block header %} {% endblock %}
 {% block title %}
     Login page
 {% endblock %}
@@ -21,6 +22,8 @@
                 <button class="btn btn-primary">Login</button>
             </div>
         </form>
-        Not a member? <a href="{{ url_for('register') }}">Register now</a>
+        <p>
+            Not a member? <a href="{{ url_for('register') }}">Register now</a>
+        </p>
     </div>
 {% endblock %}

@@ -1,31 +1,38 @@
 {% extends "base.html" %}
+
+{% block header %} {% endblock %}
+
 {% block title %}
     Register
 {% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-    <form action="{{ url_for('register_authorization') }}" method="post">
-        <div class="form-group">
-            <label>Username*:
-                <input class="form-contol" name="username" type="text" autofocus required placeholder="Username"
-                       minlength="3">
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="password">Password (min length)*:
-                <input class="form-contol" name="password" type="password" required
-                       placeholder="Password" minlength="8">
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="name"> Name:
-                <input class="form-contol" name="name" type="text" placeholder="Name">
-            </label>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary">Register</button>
-        </div>
-    </form>
-    A member already? <a href="{{ url_for('login') }}">Login now</a>
+    <div class="login">
+        <h1>Register</h1>
+        <form action="{{ url_for('register_authorization') }}" method="post">
+            <div class="form-group">
+                <label>
+                    <input class="form-contol" name="username" type="text" autofocus required placeholder="Username*"
+                           minlength="3">
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input class="form-contol" name="password" type="password" required
+                           placeholder="Password*" minlength="8">
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="name">
+                    <input class="form-contol" name="name" type="text" placeholder="Name">
+                </label>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Register</button>
+            </div>
+        </form>
+        <p>
+            A member already? <a href="{{ url_for('login') }}">Login now</a>
+        </p>
+    </div>
 {% endblock %}
