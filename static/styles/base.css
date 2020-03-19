@@ -6,7 +6,7 @@
   margin: 0 auto;
   padding: 6px; }
   .width-70 h1 {
-    padding: 12px; }
+    padding: 12px 0; }
 
 .login {
   width: 500px;
@@ -17,6 +17,36 @@
   padding: 8px; }
   .login * h1 {
     font-size: 16ex;
-    padding: 8px; }
+    padding: 0 8px; }
+
+.book #title {
+  font-family: sans-serif;
+  font-weight: bold; }
+.book #author {
+  font-family: serif;
+  font-style: italic; }
+.book img {
+  box-sizing: border-box;
+  width: 300px; }
+.book #review {
+  font-family: serif; }
+
+.review label, .review textarea {
+  box-sizing: border-box;
+  width: 100%;
+  line-height: normal; }
+.review label {
+  line-break: loose;
+  line-height: 5ex; }
+
+#book_list {
+  list-style: none; }
+  #book_list li {
+    padding: 20px 0; }
+
+@media screen and (max-width: 900px) {
+  .book img {
+    box-sizing: border-box;
+    width: 100%; } }
 
 /*# sourceMappingURL=base.css.map */

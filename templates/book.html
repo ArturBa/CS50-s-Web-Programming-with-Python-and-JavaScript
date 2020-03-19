@@ -9,51 +9,70 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ book.title }}</h1>
-    <h2>{{ book.author }}</h2>
-    <p>Year: {{ book.year }}</p>
-    <p>ISBN: {{ book.isbn }}</p>
-    <h3>Goodreads</h3>
-    {% if goodreads != None %}
-        <p>Average: {{ goodreads['average_rating'] }}</p>
-        <p>Number of rating works: {{ goodreads['work_ratings_count'] }}</p>
-    {% else %}
-        <p>Cannot get data from goodreads</p>
-    {% endif %}
-    <h3>User reviews</h3>
-    {% for review in reviews %}
-        <h5>{{ review.username }}:</h5>
-        <p>{{ review.review }}</p>
-    {% endfor %}
-    {% if user != None %}
-        <div class="review">
-            <form method="post" action="{{ url_for('add_opinion') }}">
-                <div class="form-group" style="height: 40px">
-                    <ul class="rate-area">
-                        <input type="radio" id="5-star" name="rating" value="5"/><label for="5-star" title="Amazing">5
-                        stars</label>
-                        <input type="radio" id="4-star" name="rating" value="4"/><label for="4-star" title="Good">4
-                        stars</label>
-                        <input type="radio" id="3-star" name="rating" value="3"/><label for="3-star" title="Average">3
-                        stars</label>
-                        <input type="radio" id="2-star" name="rating" value="2"/><label for="2-star" title="Not Good">2
-                        stars</label>
-                        <input type="radio" id="1-star" name="rating" value="1"/><label for="1-star" title="Bad">1
-                        star</label>
-                    </ul>
-                </div>
-                <br>
-                <div class="form-group">
-                    <label>Your review<br>
-                        <textarea name="review" placeholder="Write here your review" cols="40" rows="5"
-                                  minlength="50"></textarea>
-                    </label>
-                </div>
-                <input type="hidden" name="book_isbn" value="{{ book.isbn }}">
-                <div class="form-group">
-                    <button class="btn btn-primary">Add opinion</button>
-                </div>
-            </form>
+    <div class="book">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h1 id="title">{{ book.title }}</h1>
+                <h2 id="author">{{ book.author }}</h2>
+                <p id="year">Year: {{ book.year }}</p>
+                <p id="isbn">ISBN: {{ book.isbn }}</p>
+                <h3>Goodreads</h3>
+                {% if goodreads != None %}
+                    <p>Average: {{ goodreads['average_rating'] }}</p>
+                    <p>Number of rating works: {{ goodreads['work_ratings_count'] }}</p>
+                {% else %}
+                    <p>Cannot get data from goodreads</p>
+                {% endif %}
+
+            </div>
+            <div class="col-md-6">
+
+                <img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-L.jpg"/>
+            </div>
         </div>
-    {% endif %}
+        <h3>User reviews:</h3>
+        {% for review in reviews %}
+            <h5 id="author">{{ review.username }}: {{ review.rating }}/5</h5>
+            <p id="review">{{ review.review }}</p>
+        {% endfor %}
+        <p style="margin-bottom: 5ex;"></p>
+        <h3>Add opinion:</h3>
+        {% if user != None %}
+            <div class="review">
+                <form method="post" action="{{ url_for('add_opinion') }}">
+                    <div class="form-group" style="height: 2.5ex;">
+                        <ul class="rate-area">
+                            <input type="radio" id="5-star" name="rating" value="5"/><label for="5-star"
+                                                                                            title="Amazing">5
+                            stars</label>
+                            <input type="radio" id="4-star" name="rating" value="4"/><label for="4-star" title="Good">4
+                            stars</label>
+                            <input type="radio" id="3-star" name="rating" value="3"/><label for="3-star"
+                                                                                            title="Average">3
+                            stars</label>
+                            <input type="radio" id="2-star" name="rating" value="2"/><label for="2-star"
+                                                                                            title="Not Good">2
+                            stars</label>
+                            <input type="radio" id="1-star" name="rating" value="1"/><label for="1-star" title="Bad">1
+                            star</label>
+                        </ul>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Your review:<br>
+                            <textarea name="review" placeholder="Write here your review" rows="5"
+                                      minlength="50"></textarea>
+                        </label>
+                    </div>
+                    <input type="hidden" name="book_isbn" value="{{ book.isbn }}">
+                    <div class="form-group">
+                        <button class="btn btn-primary">Add opinion</button>
+                    </div>
+                </form>
+            </div>
+        {% else %}
+            Please <a href="{{ url_for('login') }}">login</a> to add opinion
+        {% endif %}
+    </div>
 {% endblock %}

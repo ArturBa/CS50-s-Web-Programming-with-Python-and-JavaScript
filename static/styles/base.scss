@@ -8,7 +8,7 @@
   padding: 6px;
 
   h1 {
-    padding: 12px;
+    padding: 12px 0;
   }
 }
 
@@ -20,9 +20,60 @@
 .login * {
   h1 {
     font-size: 16ex;
-    padding: 8px;
+    padding: 0 8px;
   }
 
   text-align: center;
   padding: 8px;
+}
+
+.book {
+  #title {
+    font-family: sans-serif;
+    font-weight: bold;
+  }
+
+  #author {
+    font-family: serif;
+    font-style: italic;
+  }
+
+  img {
+    box-sizing: border-box;
+    width: 300px;
+  }
+
+  #review {
+    font-family: serif;
+  }
+}
+
+.review {
+  label, textarea {
+    box-sizing: border-box;
+    width: 100%;
+    line-height: normal;
+  }
+
+  label {
+    line-break: loose;
+    line-height: 5ex;
+  }
+}
+
+#book_list {
+  list-style: none;
+
+  li {
+    padding: 20px 0;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .book {
+    img {
+      box-sizing: border-box;
+      width: 100%;
+    }
+  }
 }

@@ -87,7 +87,8 @@ def login_authorization():
 
     result = db.execute("SELECT * FROM users WHERE username=:username AND password=:password;",
                         {'username': post_username, 'password': post_password}).fetchmany(1)
-    if result is None:
+    print(result)
+    if result is None or result == []:
         message = {'type': 'warning', 'value': 'Login and password not matching'}
         flash(message)
         return redirect(url_for('login'))
@@ -128,8 +129,8 @@ def add_opinion():
         return redirect(url_for('index'))
     try:
         review = db.execute("SELECT * FROM reviews WHERE book_isbn=:isbn AND user_id=:user_id;",
-                            {"isbn": request.form.get('book_isbn'), "user_id": session.get('user').id}).fetchmany(1)[0]
-        if review is None:
+                            {"isbn": request.form.get('book_isbn'), "user_id": session.get('user').id}).fetchmany(1)
+        if not review:
             db.execute("INSERT INTO reviews (book_isbn, user_id, review, rating)"
                        "VALUES (:book_isbn, :user_id, :review, :rating)",
                        {"book_isbn": request.form.get('book_isbn'), "user_id": session.get('user').id,
@@ -137,7 +138,7 @@ def add_opinion():
             message = {'type': 'success', 'value': f'Review added'}
         else:
             db.execute("UPDATE reviews SET review=:review, rating=:rating WHERE id=:id ",
-                       {"id": review.id, "review": request.form.get('review'), "rating": request.form.get('rating')})
+                       {"id": review[0].id, "review": request.form.get('review'), "rating": request.form.get('rating')})
             message = {'type': 'success', 'value': f'Review updated'}
 
         db.commit()
@@ -154,9 +155,11 @@ def book_api(book_isbn):
     """Return detail about a single book"""
 
     # Check if book exist
-    _book = db.execute("SELECT * FROM books WHERE isbn=:isbn;", {"isbn": book_isbn}).fetchmany(1)[0]
-    if _book is None:
+    _book = db.execute("SELECT * FROM books WHERE isbn=:isbn;", {"isbn": book_isbn}).fetchmany(1)
+    if not _book:
         return jsonify({"error": "invalid book_id"}), 404
+    else:
+        _book = _book[0]
 
     _review = db.execute("SELECT * FROM reviews WHERE book_isbn=:isbn;",
                          {"isbn": book_isbn}).fetchall()
@@ -191,14 +194,14 @@ def book_api(book_isbn):
 def search():
     query = []
     if request.method == 'POST':
-        query = request.form.get('query')
+        query = request.form.get('query').lower()
     elif request.method == 'GET':
-        query = request.args.get('query')
+        query = request.args.get('query').lower()
     else:
         return redirect(url_for('books'))
     books_filtered = []
     _books = db.execute("SELECT * FROM books;").fetchall()
     for _book in _books:
-        if _book.title.lower() == query.lower():
+        if query in {_book.author.lower(), _book.title.lower(), _book.isbn.lower()}:
             books_filtered.append(_book)
     return render_template('books.html', books=books_filtered)
