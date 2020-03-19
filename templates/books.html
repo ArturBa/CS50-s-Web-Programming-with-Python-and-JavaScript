@@ -10,6 +10,8 @@
     <ul>
         {% for book in books %}
             <li><a href="{{ url_for('book', book_isbn=book[0]) }}">{{ book[1] }}</a></li>
+        {% else %}
+            <p>No book found</p>
         {% endfor %}
     </ul>
 {% endblock %}

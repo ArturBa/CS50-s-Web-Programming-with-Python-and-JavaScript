@@ -32,13 +32,15 @@
                 <a class="nav-link" href="{{ url_for('books') }}">Books</a>
             </li>
         </ul>
-        <form class="form-inline d-block d-lg-none">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline d-block d-lg-none" method="get" action="{{ url_for('search') }}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required
+                   name="query">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
-    <form class="form-inline d-none d-lg-block">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline d-none d-lg-block" method="post" action="{{ url_for('search') }}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required
+               name="query">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <ul class="navbar-nav">

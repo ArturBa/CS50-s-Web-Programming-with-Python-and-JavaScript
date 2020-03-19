@@ -185,3 +185,20 @@ def book_api(book_isbn):
         "review_count": review_count,
         "average_score": score,
     }), 200
+
+
+@app.route('/search', methods=['POST', 'GET'])
+def search():
+    query = []
+    if request.method == 'POST':
+        query = request.form.get('query')
+    elif request.method == 'GET':
+        query = request.args.get('query')
+    else:
+        return redirect(url_for('books'))
+    books_filtered = []
+    _books = db.execute("SELECT * FROM books;").fetchall()
+    for _book in _books:
+        if _book.title.lower() == query.lower():
+            books_filtered.append(_book)
+    return render_template('books.html', books=books_filtered)
