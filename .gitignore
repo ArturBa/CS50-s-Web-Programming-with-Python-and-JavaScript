@@ -1,0 +1,12 @@
+# Ignore IDE files
+.idea/
+
+# Ignore venv
+venv/
+
+# Ignore credentials
+credentials.sh
+
+# Ignore sass cache files
+*.css.map
+.sass-cache/
