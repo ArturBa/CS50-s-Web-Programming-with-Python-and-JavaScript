@@ -1,10 +1,27 @@
 {% extends "layout.html" %}
 {% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/chat.css') }}">
 {% endblock %}
 
 {% block title %}
-    Sidebar check
 {% endblock %}
 
 {% block content %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <div id="chat-head"></div>
+
+    <div id="chat-body">
+        <ul id="chat-msgs">
+            {% for msg in msgs %}
+                <li>{{ msg.msg }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <form id="chat-msg">
+        <label for="new-msg">
+            <input required placeholder="New message" autofocus autocomplete="off" id="new-msg">
+        </label>
+        <button id="new-msg-submit">Submit</button>
+    </form>
 {% endblock %}

@@ -1,0 +1,20 @@
+#chat-head {
+  flex: 1;
+  position: sticky;
+  height: 4ex;
+  background-color: olive;
+  font-size: 4ex;
+  padding: 10px;
+}
+
+#chat-body {
+  flex: 1;
+}
+
+#chat-msg {
+  flex: 1;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

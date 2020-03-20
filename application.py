@@ -4,7 +4,6 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 
 from model.chats import *
-from model.messages import *
 from model.users import *
 
 app = Flask(__name__)
@@ -12,7 +11,6 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 users = Users()
-messages = Messages()
 chats = Chats()
 
 
@@ -23,7 +21,10 @@ def index():
 
 @app.route('/chat/<chat_id>')
 def chat(chat_id):
-    return render_template('chat.html', chats=chats.get(), msgs=messages.chat(chat_id))
+    _chat = chats.get_chat(chat_id)
+    if not _chat:
+        return render_template('no-chat.html')
+    return render_template('chat.html', chats=chats.get(), msgs=_chat.msg())
 
 
 @socketio.on("add user")
@@ -35,8 +36,10 @@ def create_user(data):
 
 @socketio.on("add msg")
 def new_msg(data):
-    messages.add(data['chat_id'], data['user_id'], data['msg'])
-    msg = messages.chat(data['chat_id'])[-1]
+    print(f"new msg: {data['msg']}")
+    _chat = chats.get_chat(data['chat_id'])
+    _chat.add_msg(user_id=data['chat_id'], msg=data['msg'])
+    msg = chats.get_chat(data['chat_id']).msg()[-1]
     return_date = {'chat_id': data['chat_id'], 'msg': msg.msg, 'user': msg.user}
     emit('new msg', return_date)
 

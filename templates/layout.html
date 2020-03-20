@@ -39,21 +39,8 @@
     </nav>
 
     <div id="content">
-        <div id="chat-head"></div>
         {% block content %}
         {% endblock %}
-        <ul id="chat-msg">
-            {% for msg in msgs %}
-                <li>{{ msg.msg }}</li>
-            {% endfor %}
-        </ul>
-
-        <form id="new-msg-form">
-            <label for="new-msg">
-                <input required placeholder="New message" autofocus autocomplete="off" id="new-msg">
-            </label>
-            <button id="new-msg-submit">Submit</button>
-        </form>
     </div>
 </div>
 </body>
