@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         const li = document.createElement('li');
         li.innerHTML = `<p class="msg-user">${localStorage.getItem('username')}</p><p class="msg-text">${data.msg}</p>`;
-        document.querySelector('#chat-msgs').append(li);
-        // window.innerHeight + window.scrollY >= document.body.offsetHeight
         let chat = document.getElementById('chat-body');
-        if (chat.clientHeight + chat.scrollHeight >= chat.offsetHeight) {
-            chat.scrollBy(0, li.clientHeight);
+        let bottom = chat.clientHeight + chat.scrollTop >= chat.scrollHeight;
+        document.querySelector('#chat-msgs').append(li);
+        if (bottom) {
+            chat.scroll(0, chat.clientHeight);
         }
         return false;
     });
