@@ -30,7 +30,7 @@ def chat(chat_id):
 @socketio.on("add user")
 def create_user(data):
     users.add(data['username'])
-    chats.add(data['username'], 'global')
+    chats.add_user(data['username'], 'global')
     emit('user created', data)
 
 
