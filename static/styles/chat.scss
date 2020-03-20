@@ -1,5 +1,4 @@
 #chat-head {
-  flex: 1;
   position: sticky;
   height: 4ex;
   background-color: olive;
@@ -9,12 +8,24 @@
 
 #chat-body {
   flex: 1;
+  overflow-y: scroll;
 }
 
 #chat-msg {
-  flex: 1;
   box-sizing: border-box;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  text-align: center;
+  height: 5ex;
 }
+
+#chat-form {
+  width: 100%;
+
+  label {
+    width: 90%;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+

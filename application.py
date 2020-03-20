@@ -36,7 +36,6 @@ def create_user(data):
 
 @socketio.on("add msg")
 def new_msg(data):
-    print(f"new msg: {data['msg']}")
     _chat = chats.get_chat(data['chat_id'])
     _chat.add_msg(user_id=data['chat_id'], msg=data['msg'])
     msg = chats.get_chat(data['chat_id']).msg()[-1]

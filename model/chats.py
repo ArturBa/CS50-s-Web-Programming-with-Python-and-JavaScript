@@ -46,7 +46,7 @@ class Chat:
         """
         if len(self.messages) == MAX_MESSAGE_LEN:
             self.messages.pop(0)
-        self.messages.append(Message(datetime.datetime.now(), user=user_id, msg=msg))
+        self.messages.append(Message(user=user_id, msg=msg))
 
 
 class Chats:
