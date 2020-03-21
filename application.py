@@ -52,6 +52,11 @@ def new_chat_create():
         return redirect(url_for('new_chat'))
 
 
+@app.route('/all_chats')
+def all_chats():
+    return render_template("chats.html", chats=chats.get())
+
+
 @socketio.on("add user")
 def create_user(data):
     users.add(data['username'])
@@ -76,6 +81,12 @@ def get_chats(data):
         ret_chats.append(_chat.name)
     _chats = {'chats': ret_chats}
     emit('user chats', _chats)
+
+
+@socketio.on('add user to chat')
+def add_user_to_chat(data):
+    chats.add_user(data['user_if'], data['chat_id'])
+    emit('user added to chat', data)
 
 
 if __name__ == '__main__':

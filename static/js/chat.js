@@ -1,3 +1,6 @@
+if (localStorage.getItem('chat')) {
+    console.log(location.href.substr(location.href.lastIndexOf('/') + 1));
+}
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('chat-body').scrollBy(0, document.getElementById('chat-body').clientHeight);
     document.getElementById('chat-head').innerHTML = `:${localStorage.getItem('chat')}`;

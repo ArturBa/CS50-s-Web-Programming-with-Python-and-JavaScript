@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}
+    :All chats
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/chats.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/chats.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+
+    <ul>
+        {% for chat in chats %}
+            <li>Join chat: <a href="#" onclick="foo('{{ chat.name }}')">{{ chat.name }}</a></li>
+        {% endfor %}
+
+    </ul>
+
+
+{% endblock %}

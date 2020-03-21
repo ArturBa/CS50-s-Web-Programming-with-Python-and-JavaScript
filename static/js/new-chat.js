@@ -5,5 +5,4 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('form').onsubmit = () => {
         localStorage.setItem('chat', document.getElementById('new-chat-value').value);
     };
-
 });
