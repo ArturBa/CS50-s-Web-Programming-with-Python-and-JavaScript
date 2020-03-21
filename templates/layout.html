@@ -29,18 +29,18 @@
 
         <label for="mode"><input id="mode" type="checkbox"> Dark Mode</label>
 
-        <h2>Chats</h2>
-        <div id="Chats">
-            <ul>
-                <li id="add-new-chat">Add new <i class="em em-heavy_plus_sign" aria-label="HEAVY PLUS SIGN"></i></li>
-                {% for chat in chats %}
-                    <li><a href="{{ url_for('chat', chat_id=chat.name) }}">:{{ chat.name }}</a></li>
-                {% endfor %}
+        <div id="chats">
+            <h2>Chats</h2>
+            <ul id="chat-list">
+                <li id="add-new-chat"><a href="{{ url_for('new_chat') }}">Add new <i class="em em-heavy_plus_sign"
+                                                                                     aria-label="HEAVY PLUS SIGN"></i></a>
+                </li>
             </ul>
         </div>
     </nav>
 
     <div id="content">
+        <div id="chat-head"></div>
         {% block content %}
         {% endblock %}
     </div>

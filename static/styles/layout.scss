@@ -22,10 +22,26 @@ $sidebar-width: 260px;
 }
 
 #content {
-  //background-color: #595959;
   display: flex;
   flex: 1;
   flex-direction: column;
+}
+
+.dark-mode #content {
+  background-color: #595959;
+}
+
+#chat-head {
+  position: sticky;
+  height: 4ex;
+  font-size: 4ex;
+  padding: 10px;
+  background-color: olive;
+}
+
+.dark-mode #chat-head {
+  background-color: #0D0D0D;
+  color: #F26680;
 }
 
 body {

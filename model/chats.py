@@ -105,6 +105,18 @@ class Chats:
             if name == chat.name:
                 return chat
 
+    def get_user(self, user_id):
+        """
+        Get chats with certain user
+        :param user_id: user
+        :return: chat list
+        """
+        chats = []
+        for chat in self.chats:
+            if chat.has_user(user_id):
+                chats.append(chat)
+        return chats
+
     def get(self):
         """
         Get all chats list

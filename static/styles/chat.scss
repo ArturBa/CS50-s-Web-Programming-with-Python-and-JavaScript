@@ -1,14 +1,4 @@
-#chat-head {
-  position: sticky;
-  height: 4ex;
-  font-size: 4ex;
-  padding: 10px;
-}
 
-.dark-mode #chat-head {
-  background-color: #0D0D0D;
-  color: #F26680;
-}
 
 #chat-body {
   flex: 1;
@@ -39,6 +29,7 @@
 }
 
 .msg-text {
+  background-color: khaki;
   display: block;
   padding: 10px;
 }
