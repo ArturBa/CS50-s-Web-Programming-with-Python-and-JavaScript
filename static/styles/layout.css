@@ -49,8 +49,8 @@ a:link, a:hover, a:active, a:visited {
   height: 2ex; }
 
 #chat-list {
-  flex: 1;
-  overflow-y: hidden; }
+    flex: 1;
+}
 
 input {
   background-color: #f2f2f2;

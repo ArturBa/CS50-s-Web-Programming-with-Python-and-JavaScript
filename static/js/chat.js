@@ -1,5 +1,5 @@
 if (localStorage.getItem('chat')) {
-    console.log(location.href.substr(location.href.lastIndexOf('/') + 1));
+    localStorage.setItem('chat', (location.href.substr(location.href.lastIndexOf('/') + 1)));
 }
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('chat-body').scrollBy(0, document.getElementById('chat-body').clientHeight);
@@ -33,10 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
         li.innerHTML = `<p class="msg-user">${localStorage.getItem('username')}</p> ` +
             `<p class="msg-time">${data.timestamp}</p>` +
             `<p class="msg-text">${data.msg}</p>`;
-        document.querySelector('#chat-msgs').append(li);
 
         let chat = document.getElementById('chat-body');
         let bottom = chat.clientHeight + chat.scrollTop >= chat.scrollHeight;
+
+        document.querySelector('#chat-msgs').append(li);
         if (bottom) {
             chat.scroll(0, chat.clientHeight);
         }
