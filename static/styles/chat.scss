@@ -1,9 +1,13 @@
 #chat-head {
   position: sticky;
   height: 4ex;
-  background-color: olive;
   font-size: 4ex;
   padding: 10px;
+}
+
+.dark-mode #chat-head {
+  background-color: #0D0D0D;
+  color: #F26680;
 }
 
 #chat-body {
@@ -29,3 +33,25 @@
   }
 }
 
+#chat-msgs {
+  list-style: none;
+  padding: 5px 10px;
+}
+
+.msg-text {
+  display: block;
+  padding: 10px;
+}
+
+.dark-mode .msg-text {
+  background-color: #A6A6A6;
+}
+
+.msg-user {
+  display: inline;
+}
+
+.msg-time {
+  display: inline;
+  font-size: x-small;
+}

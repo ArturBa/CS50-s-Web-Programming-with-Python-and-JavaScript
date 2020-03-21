@@ -12,12 +12,26 @@ $sidebar-width: 260px;
   width: $sidebar-width;
   height: 100%;
   position: sticky;
-  background-color: khaki;
+  background-color: olive;
   padding-top: 16px;
 }
 
+.dark-mode #sidebar {
+  background-color: #0D0D0D;
+  color: #F26680;
+}
+
 #content {
+  //background-color: #595959;
   display: flex;
   flex: 1;
   flex-direction: column;
+}
+
+body {
+  background-color: whitesmoke;
+}
+
+body.dark-mode {
+  background-color: #0D0D0D;
 }

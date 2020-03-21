@@ -36,10 +36,12 @@ def create_user(data):
 
 @socketio.on("add msg")
 def new_msg(data):
+    print(f"data: {data}")
     _chat = chats.get_chat(data['chat_id'])
-    _chat.add_msg(user_id=data['chat_id'], msg=data['msg'])
+    _chat.add_msg(user_id=data['user_id'], msg=data['msg'])
     msg = chats.get_chat(data['chat_id']).msg()[-1]
-    return_date = {'chat_id': data['chat_id'], 'msg': msg.msg, 'user': msg.user}
+    return_date = {'chat_id': data['chat_id'], 'msg': msg.msg, 'user': msg.user,
+                   'timestamp': msg.timestamp.strftime("%H:%M:%S")}
     emit('new msg', return_date)
 
 

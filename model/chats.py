@@ -48,6 +48,17 @@ class Chat:
             self.messages.pop(0)
         self.messages.append(Message(user=user_id, msg=msg))
 
+    def has_user(self, user_id):
+        """
+        Check if user in chat
+        :param user_id: user to check
+        :return: True if user in chat
+        """
+        if user_id in self.user_ids:
+            return True
+        else:
+            return False
+
 
 class Chats:
     """

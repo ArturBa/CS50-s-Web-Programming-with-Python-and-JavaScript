@@ -30,8 +30,9 @@ class Users:
         """
         for user in self.users:
             if name == user.name:
-                raise UsersException(f"Username: {name} already taken")
-        self.users.append(User(name=name))
+                break
+        else:
+            self.users.append(User(name=name))
 
 
 class UsersException(Exception):

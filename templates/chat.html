@@ -13,7 +13,11 @@
     <div id="chat-body">
         <ul id="chat-msgs">
             {% for msg in msgs %}
-                <li>{{ msg.msg }}</li>
+                <li>
+                    <p class="msg-user">{{ msg.user }}</p>
+                    <p class="msg-time">{{ msg.timestamp.strftime("%H:%M:%S") }}</p>
+                    <p class="msg-text">{{ msg.msg }}</p>
+                </li>
             {% endfor %}
         </ul>
     </div>
@@ -23,7 +27,7 @@
             <label for="new-msg">
                 <input required placeholder="New message" autofocus autocomplete="off" id="new-msg">
             </label>
-            <button id="new-msg-submit">Submit</button>
+            <button id="new-msg-submit">Send</button>
         </form>
     </div>
 {% endblock %}

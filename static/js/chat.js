@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('chat-body').scrollBy(0, document.getElementById('chat-body').clientHeight);
+    document.getElementById('chat-head').innerHTML = `:${localStorage.getItem('chat')}`;
     const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     // By default, submit button is disabled
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.querySelector('#chat-form').onsubmit = () => {
+        console.log(document.getElementById('new-msg').value);
         socket.emit('add msg', {
             'msg': document.querySelector('#new-msg').value,
             'chat_id': localStorage.getItem('chat'),
@@ -25,7 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.chat_id !== localStorage.getItem('chat'))
             return false;
         const li = document.createElement('li');
-        li.innerHTML = `<p class="msg-user">${localStorage.getItem('username')}</p><p class="msg-text">${data.msg}</p>`;
+        li.innerHTML = `<p class="msg-user">${localStorage.getItem('username')}</p> ` +
+            `<p class="msg-time">${data.timestamp}</p>` +
+            `<p class="msg-text">${data.msg}</p>`;
         let chat = document.getElementById('chat-body');
         let bottom = chat.clientHeight + chat.scrollTop >= chat.scrollHeight;
         document.querySelector('#chat-msgs').append(li);

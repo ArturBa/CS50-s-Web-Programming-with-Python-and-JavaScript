@@ -1,23 +1,36 @@
 #flex {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 #sidebar {
-    width: 260px;
-    height: 100%;
-    position: sticky;
-    background-color: khaki;
-    padding-top: 16px;
+  width: 260px;
+  height: 100%;
+  position: sticky;
+  background-color: olive;
+  padding-top: 16px;
+}
+
+.dark-mode #sidebar {
+  background-color: #0D0D0D;
+  color: #F26680;
 }
 
 #content {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+body {
+  background-color: whitesmoke;
+}
+
+body.dark-mode {
+  background-color: #0D0D0D;
 }
 
 /*# sourceMappingURL=layout.css.map */
