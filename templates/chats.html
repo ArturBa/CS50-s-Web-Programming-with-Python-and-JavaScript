@@ -12,7 +12,7 @@
 
     <ul>
         {% for chat in chats %}
-            <li>Join chat: <a href="#" onclick="foo('{{ chat.name }}')">{{ chat.name }}</a></li>
+            <li><a href="#" onclick="add_user_chat('{{ chat.name }}')">:{{ chat.name }}</a></li>
         {% endfor %}
 
     </ul>

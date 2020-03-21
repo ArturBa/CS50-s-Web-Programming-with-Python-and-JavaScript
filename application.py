@@ -85,7 +85,7 @@ def get_chats(data):
 
 @socketio.on('add user to chat')
 def add_user_to_chat(data):
-    chats.add_user(data['user_if'], data['chat_id'])
+    chats.add_user(data['user_id'], data['chat_id'])
     emit('user added to chat', data)
 
 

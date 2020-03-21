@@ -31,12 +31,13 @@
 
         <div id="chats">
             <h2>Chats</h2>
-            <ul id="chat-list">
+            <ul class="all-chats">
                 <li id="add-new-chat"><a href="{{ url_for('new_chat') }}">Add new <i class="em em-heavy_plus_sign"
                                                                                      aria-label="HEAVY PLUS SIGN"></i></a>
                 </li>
             </ul>
-            <ul id="all-chats">
+            <ul id="chat-list"></ul>
+            <ul class="all-chats">
                 <li id="show-all-chats"><a href="{{ url_for('all_chats') }}">Show all chats</a></li>
             </ul>
         </div>

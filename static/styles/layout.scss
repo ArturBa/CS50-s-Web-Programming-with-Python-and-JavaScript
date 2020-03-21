@@ -12,7 +12,8 @@ $sidebar-width: 260px;
   width: $sidebar-width;
   height: 100%;
   position: sticky;
-  background-color: olive;
+  background-color: #253340;
+  color: #A6610D;
   padding-top: 16px;
 }
 
@@ -25,6 +26,7 @@ $sidebar-width: 260px;
   display: flex;
   flex: 1;
   flex-direction: column;
+  background-color: #F2F2F2;
 }
 
 .dark-mode #content {
@@ -36,11 +38,40 @@ $sidebar-width: 260px;
   height: 4ex;
   font-size: 4ex;
   padding: 10px;
-  background-color: olive;
+  background-color: #253340;
+  color: #A6610D;
 }
 
 .dark-mode #chat-head {
   background-color: #0D0D0D;
+  color: #F26680;
+}
+
+a:link, a:hover, a:active, a:visited {
+  color: #A6610D;
+}
+
+#chats {
+  display: flex;
+  flex-direction: column;
+}
+
+.all-chats {
+  height: 2ex;
+}
+
+#chat-list {
+  flex: 1;
+  overflow-y: hidden;
+}
+
+input {
+  background-color: #f2f2f2;
+  color: #0D0D0D;
+}
+
+.dark-mode input {
+  background-color: #595959;
   color: #F26680;
 }
 

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
-function foo(chat_id) {
+function add_user_chat(chat_id) {
     socket.emit('add user to chat', {
         'user_id': localStorage.getItem('username'),
         'chat_id': chat_id
