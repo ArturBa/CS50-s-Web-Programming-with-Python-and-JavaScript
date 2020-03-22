@@ -7,28 +7,39 @@
     :New chat
 {% endblock %}
 
+{% block chat_head %}
+    :New chat
+{% endblock %}
+
 {% block content %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/new-chat.js') }}"></script>
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class=flashes>
-                {% for message in messages %}
-                    <div class="alert alert-warning">{{ message }}</div>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    <div style="height: 10%;">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
 
-    <div class="new-chat">
-        <form id="new-chat-form" action="{{ url_for('new_chat_create') }}" method="post">
-            <label>
-                <input id="new-chat-value" type="text" required minlength="3" name="chat_name" placeholder="Chat name"
-                       autofocus pattern="([A-z0-9]){2,}"
-                       autocomplete="off">
-            </label>
-            <button>Add chat</button>
-            <input type="hidden" id="new-chat-user-id" name="user_id" value="">
-        </form>
+    <div style="display: flex">
+        <div style="width: 40px"></div>
+        <div class="new-chat" style="flex: 1">
+            <h1>Add a new chat:</h1>
+            <form novalidate id="new-chat-form" action="{{ url_for('new_chat_create') }}" method="post">
+                <span class="error" aria-live="polite"></span><br>
+                <label>
+                    <input id="new-chat-value" type="text" required minlength="3" name="chat_name"
+                           placeholder="Chat name"
+                           autofocus pattern="([A-z0-9]){2,}" autocomplete="off">
+                </label>
+                <button class="btn btn-user">Add chat</button>
+                <input type="hidden" id="new-chat-user-id" name="user_id" value="">
+            </form>
+        </div>
     </div>
 {% endblock %}

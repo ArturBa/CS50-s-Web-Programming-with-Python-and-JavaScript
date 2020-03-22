@@ -1,29 +1,21 @@
+@import "colors";
 body, html {
   height: 100%;
-}
-
-.index {
-  border: 3px solid green;
-  width: 400px;
-  height: 400px;
 }
 
 .bg {
   background-size: cover;
   height: 100%;
-  background: linear-gradient(63deg, rgba(37, 51, 64, 1) 0%, rgba(166, 97, 13, 1) 44%, rgba(242, 242, 242, 1) 100%);
-  /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+  background-color: $dark-green;
 }
 
 /* Position text in the middle of the page/image */
 .center {
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
-  color: floralwhite;
+  color: $white;
   font-weight: bold;
-  border: 3px solid floralwhite;
+  border: 3px solid $accent-color;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -32,4 +24,47 @@ body, html {
   width: 60%;
   padding: 20px;
   text-align: center;
+}
+
+input {
+  width: 100%;
+  background: none;
+  border: none;
+  color: $white;
+  border-bottom: $white solid 3px;
+  transition: border-color .7s ease-out;
+}
+
+input:invalid {
+  border-bottom: $red solid 3px;
+}
+
+form {
+  width: 100%;
+  text-align: center;
+
+  label {
+    width: 70%;
+  }
+}
+
+.error {
+  width: 100%;
+  padding: 0;
+
+  font-size: 80%;
+  color: $red;
+  border-radius: 0 0 5px 5px;
+
+  box-sizing: border-box;
+}
+
+.btn-user {
+  background-color: $accent-color;
+  opacity: 1;
+  transition: opacity .7s ease-out;
+}
+
+.btn-user:hover {
+  opacity: 0.7;
 }

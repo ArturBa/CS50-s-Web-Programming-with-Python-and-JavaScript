@@ -1,4 +1,5 @@
 $sidebar-width: 260px;
+@import "colors";
 
 #flex {
   display: flex;
@@ -12,25 +13,33 @@ $sidebar-width: 260px;
   width: $sidebar-width;
   height: 100%;
   position: sticky;
-  background-color: #253340;
-  color: #A6610D;
+  background-color: $dark-green;
+  color: $white;
   padding-top: 16px;
+}
+
+#dark-mode {
+  margin-left: 2ex;
+  margin-bottom: 1ex;
+  width: 40px;
+  height: 40px;
 }
 
 .dark-mode #sidebar {
   background-color: #0D0D0D;
-  color: #F26680;
 }
 
 #content {
   display: flex;
   flex: 1;
   flex-direction: column;
-  background-color: #F2F2F2;
+  background-color: $white;
+  color: $dark-green;
 }
 
 .dark-mode #content {
-  background-color: #595959;
+  background-color: #1c1c1e;
+  color: $white-dark;
 }
 
 #chat-head {
@@ -38,17 +47,21 @@ $sidebar-width: 260px;
   height: 4ex;
   font-size: 4ex;
   padding: 10px;
-  background-color: #253340;
-  color: #A6610D;
+  background-color: $accent-color;
+  color: $white;
 }
 
 .dark-mode #chat-head {
-  background-color: #0D0D0D;
-  color: #F26680;
+  background-color: $dark-green;
+  color: $accent-color;
 }
 
 a:link, a:hover, a:active, a:visited {
-  color: #A6610D;
+  color: $accent-color;
+}
+
+.dark-mode a:link, .dark-mode a:hover, .dark-mode a:active, .dark-mode a:visited {
+  color: $accent-color;
 }
 
 #chats {
@@ -64,20 +77,37 @@ a:link, a:hover, a:active, a:visited {
   flex: 1;
 }
 
-input {
-  background-color: #f2f2f2;
-  color: #0D0D0D;
+input[type=text] {
+  background: none;
+  border: none;
+  border-bottom: $accent-color solid 3px;
+  transition: border-color .7s ease-out;
+}
+
+input[type=text]:invalid {
+  border-bottom-color: $red;
 }
 
 .dark-mode input {
-  background-color: #595959;
-  color: #F26680;
+  color: $white-dark;
 }
 
-body {
-  background-color: whitesmoke;
+.btn-user {
+  background-color: $accent-color !important;
+  opacity: 1;
 }
 
-body.dark-mode {
-  background-color: #0D0D0D;
+.btn-user:hover {
+  opacity: 0.7;
+}
+
+.error {
+  width: 100%;
+  padding: 0;
+
+  font-size: 80%;
+  color: $red;
+  border-radius: 0 0 5px 5px;
+
+  box-sizing: border-box;
 }

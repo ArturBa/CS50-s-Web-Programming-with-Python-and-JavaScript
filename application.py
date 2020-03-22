@@ -57,8 +57,19 @@ def all_chats():
     return render_template("chats.html", chats=chats.get())
 
 
+@app.route('/leave_chat', methods=['POST'])
+def leave_chat():
+    if request.method == 'POST':
+        try:
+            chats.remove_user(user_id=request.form.get('user_id'), name=request.form.get('chat_id'))
+        except Exception as exception:
+            print(exception)
+    return redirect(url_for('all_chats'))
+
+
 @socketio.on("add user")
 def create_user(data):
+    print(data)
     users.add(data['username'])
     chats.add_user(data['username'], 'global')
     emit('user created', data)
@@ -69,7 +80,7 @@ def new_msg(data):
     _chat = chats.get_chat(data['chat_id'])
     _chat.add_msg(user_id=data['user_id'], msg=data['msg'])
     msg = chats.get_chat(data['chat_id']).msg()[-1]
-    return_date = {'chat_id': data['chat_id'], 'msg': msg.msg, 'user': msg.user,
+    return_date = {'chat_id': data['chat_id'], 'msg': msg.msg, 'user_id': msg.user,
                    'timestamp': msg.timestamp.strftime("%H:%M:%S")}
     emit('new msg', return_date)
 

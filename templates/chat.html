@@ -6,6 +6,20 @@
 {% block title %}
 {% endblock %}
 
+{% block chat_head %}
+    <div style="display: flex">
+        <div style="flex: 1" id="chat-name"></div>
+        <div>
+            <form method="post" action="{{ url_for('leave_chat') }}">
+                <input type="hidden" id="leave-chat-user-id" name="user_id">
+                <input type="hidden" id="leave-chat-chat-id" name="chat_id">
+                <button title="leave chat" id="leave-chat-icon"></button>
+                {#                <input type="image" id="leave-chat-icon" src="/static/img/logout_d.svg" alt="leave chat" title="leave chat">#}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
     <script type="text/javascript" src="{{ url_for('static', filename='js/chat.js') }}"></script>
 
@@ -15,18 +29,23 @@
                 <li>
                     <p class="msg-user">{{ msg.user }}</p>
                     <p class="msg-time">{{ msg.timestamp.strftime("%H:%M:%S") }}</p>
-                    <p class="msg-text">{{ msg.msg }}</p>
+                    <div class="msg-text">{{ msg.msg }}</div>
                 </li>
             {% endfor %}
         </ul>
     </div>
 
     <div id="chat-msg">
-        <form id="chat-form">
+        <form novalidate id="chat-form">
             <label for="new-msg">
-                <input required placeholder="New message" autofocus autocomplete="off" id="new-msg">
+                <span id="new-msg-error" class="error" aria-live="polite"></span>
+                <div style="display: flex;">
+                    <input type="text" placeholder="New message" required minlength="1" autofocus autocomplete="off"
+                           id="new-msg">
+                    <input type="image" id="new-msg-icon" src="{{ url_for('static', filename='img/favicon.svg') }}"
+                           alt="send">
+                </div>
             </label>
-            <button id="new-msg-submit">Send</button>
         </form>
     </div>
 {% endblock %}

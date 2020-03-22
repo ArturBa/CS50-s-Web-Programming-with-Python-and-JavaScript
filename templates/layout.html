@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.svg') }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/layout.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -27,13 +28,14 @@
     <nav id="sidebar">
         <h1 id="hello-user"></h1>
 
-        <label for="mode"><input id="mode" type="checkbox"> Dark Mode</label>
+        <img id="dark-mode" src="{{ url_for('static', filename='img/moon.svg') }}" alt="night mode">
 
         <div id="chats">
             <h2>Chats</h2>
             <ul class="all-chats">
-                <li id="add-new-chat"><a href="{{ url_for('new_chat') }}">Add new <i class="em em-heavy_plus_sign"
-                                                                                     aria-label="HEAVY PLUS SIGN"></i></a>
+                <li id="add-new-chat"><a class="" href="{{ url_for('new_chat') }}">Add new <i
+                        class="em-svg em-heavy_plus_sign"
+                        aria-label="HEAVY PLUS SIGN"></i></a>
                 </li>
             </ul>
             <ul id="chat-list"></ul>
@@ -44,7 +46,7 @@
     </nav>
 
     <div id="content">
-        <div id="chat-head"></div>
+        <div id="chat-head">{% block chat_head %}{% endblock %}</div>
         {% block content %}
         {% endblock %}
     </div>

@@ -24,20 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up color mode
     if (localStorage.getItem('dark-mode') === 'true') {
         document.querySelector('body').classList.add('dark-mode');
-        document.getElementById('mode').checked = true;
+        document.getElementById('dark-mode').src = '/static/img/sun.svg';
     } else {
-        document.getElementById('mode').checked = false;
     }
 
-    // Add dark mode
-    document.getElementById('mode').onchange = function () {
-        if (this.checked === true) {
+    document.getElementById('dark-mode').onclick = function () {
+        if (localStorage.getItem('dark-mode') === 'true') {
+            localStorage.setItem('dark-mode', 'false');
+            document.querySelector('body').classList.remove('dark-mode');
+            document.getElementById('dark-mode').src = '/static/img/moon.svg';
+        } else {
+            document.getElementById('dark-mode').src = '/static/img/sun.svg';
             document.querySelector('body').classList.add('dark-mode');
             localStorage.setItem('dark-mode', 'true');
-        } else {
-            document.querySelector('body').classList.remove('dark-mode');
-            localStorage.setItem('dark-mode', 'false');
         }
-    }
+    };
 });
 
