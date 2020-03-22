@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Create new message
             const li = document.createElement('li');
-            li.innerHTML = `<p class="msg-user">${localStorage.getItem('username')}</p> ` +
+            li.innerHTML = `<p class="msg-user">${data.user_id}</p> ` +
                 `<p class="msg-time">${data.timestamp}</p>` +
                 `<div class="msg-text">${data.msg}</div>`;
 

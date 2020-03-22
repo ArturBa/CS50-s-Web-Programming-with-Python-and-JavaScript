@@ -82,7 +82,7 @@ def new_msg(data):
     msg = chats.get_chat(data['chat_id']).msg()[-1]
     return_date = {'chat_id': data['chat_id'], 'msg': msg.msg, 'user_id': msg.user,
                    'timestamp': msg.timestamp.strftime("%H:%M:%S")}
-    emit('new msg', return_date)
+    emit('new msg', return_date, broadcast=True)
 
 
 @socketio.on('get chats')

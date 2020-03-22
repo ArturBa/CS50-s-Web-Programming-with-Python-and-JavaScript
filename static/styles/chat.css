@@ -1,0 +1,80 @@
+#chat-body {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+#chat-msg {
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#chat-form label {
+  width: 90%;
+}
+
+#chat-form label input[type=text] {
+  width: 100%;
+}
+
+#chat-msgs {
+  list-style: none;
+  padding: 10px 20px;
+}
+
+.msg-text {
+  font-size: 14pt;
+  display: block;
+  padding: 2px 10px;
+  margin-bottom: 1ex;
+}
+
+.msg-user, .msg-user:before {
+  font-weight: bold;
+  font-family: "Anonymous Pro", monospace;
+  font-size: 11pt;
+  display: inline;
+}
+
+.msg-user:before {
+  content: '@';
+}
+
+.msg-time {
+  display: inline;
+  font-size: x-small;
+}
+
+#leave-chat-icon {
+  background: none;
+  background-image: url(/static/img/logout_l.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  height: 2ex;
+  width: 2ex;
+  background-size: 2ex 2ex;
+  border: none;
+  opacity: 1;
+  transition: opacity .7s ease-out;
+}
+
+#leave-chat-icon span {
+  display: none;
+}
+
+#leave-chat-icon:hover {
+  opacity: 0.7;
+}
+
+.dark-mode #leave-chat-icon {
+  background-image: url(/static/img/logout_d.svg);
+}
+
+#new-msg-icon {
+  vertical-align: center;
+  margin-left: 2ex;
+  display: inline;
+  height: 3ex;
+  width: 3ex;
+}
+
+/*# sourceMappingURL=chat.css.map */

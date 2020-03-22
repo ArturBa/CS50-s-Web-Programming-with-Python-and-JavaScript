@@ -3,41 +3,36 @@
   flex-direction: row;
   position: absolute;
   width: 100%;
-  height: 100%;
-}
+  height: 100%; }
 
 #sidebar {
+  padding-left: 3ex;
   width: 260px;
   height: 100%;
   position: sticky;
   background-color: #232c33;
   color: #f4f1eb;
-  padding-top: 16px;
-}
+  padding-top: 16px; }
 
 #dark-mode {
   margin-left: 2ex;
   margin-bottom: 1ex;
   width: 40px;
-  height: 40px;
-}
+  height: 40px; }
 
 .dark-mode #sidebar {
-  background-color: #0D0D0D;
-}
+  background-color: #0D0D0D; }
 
 #content {
   display: flex;
   flex: 1;
   flex-direction: column;
   background-color: #f4f1eb;
-  color: #232c33;
-}
+  color: #232c33; }
 
 .dark-mode #content {
   background-color: #1c1c1e;
-  color: #dadada;
-}
+  color: #dadada; }
 
 #chat-head {
   position: sticky;
@@ -45,58 +40,46 @@
   font-size: 4ex;
   padding: 10px;
   background-color: #4EB1A0;
-  color: #f4f1eb;
-}
+  color: #f4f1eb; }
 
 .dark-mode #chat-head {
   background-color: #232c33;
-  color: #4EB1A0;
-}
+  color: #4EB1A0; }
 
 a:link, a:hover, a:active, a:visited {
-  color: #4EB1A0;
-}
+  color: #4EB1A0; }
 
 .dark-mode a:link, .dark-mode a:hover, .dark-mode a:active, .dark-mode a:visited {
-  color: #4EB1A0;
-}
+  color: #4EB1A0; }
 
 #chats {
   display: flex;
-  flex-direction: column;
-}
+  flex-direction: column; }
 
 .all-chats {
-  height: 2ex;
-}
+  height: 2ex; }
 
 #chat-list {
-  flex: 1;
-}
+  flex: 1; }
 
 input[type=text] {
   background: none;
   border: none;
   border-bottom: #4EB1A0 solid 3px;
-  transition: border-color .7s ease-out;
-}
+  transition: border-color .7s ease-out; }
 
 input[type=text]:invalid {
-  border-bottom-color: #F26680;
-}
+  border-bottom-color: #F26680; }
 
 .dark-mode input {
-  color: #dadada;
-}
+  color: #dadada; }
 
 .btn-user {
   background-color: #4EB1A0 !important;
-  opacity: 1;
-}
+  opacity: 1; }
 
 .btn-user:hover {
-  opacity: 0.7;
-}
+  opacity: 0.7; }
 
 .error {
   width: 100%;
@@ -104,7 +87,11 @@ input[type=text]:invalid {
   font-size: 80%;
   color: #F26680;
   border-radius: 0 0 5px 5px;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
+
+#add-new-chat img {
+  transform: translateY(-0.3ex);
+  width: 1.5ex;
+  height: 1.5ex; }
 
 /*# sourceMappingURL=layout.css.map */

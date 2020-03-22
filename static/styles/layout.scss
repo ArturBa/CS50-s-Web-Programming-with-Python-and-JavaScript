@@ -10,6 +10,7 @@ $sidebar-width: 260px;
 }
 
 #sidebar {
+  padding-left: 3ex;
   width: $sidebar-width;
   height: 100%;
   position: sticky;
@@ -111,3 +112,10 @@ input[type=text]:invalid {
 
   box-sizing: border-box;
 }
+
+#add-new-chat img {
+  transform: translateY(-0.3ex);
+  width: 1.5ex;
+  height: 1.5ex;
+}
+

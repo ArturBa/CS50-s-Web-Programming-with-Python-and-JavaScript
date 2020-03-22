@@ -3,6 +3,7 @@
 
 # Ignore venv
 venv/
+__pycache__
 
 # Ignore credentials
 credentials.sh
