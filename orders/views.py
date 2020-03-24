@@ -7,16 +7,19 @@ from django.urls import reverse
 
 # Create your views here.
 def index(request):
-    if not request.user.is_authenticated:
-        return render(request, "orders/login.html", {"message": None})
-    context = {
-        "user": request.user
-    }
     return render(request, "orders/index.html")
 
 
 def login_view(request):
     return render(request, "orders/login.html", {"message": None})
+
+
+def menu_view(request):
+    return render(request, 'orders/menu.html')
+
+
+def about_us_view(request):
+    return render(request, 'orders/about_us.html')
 
 
 def login_authenticate(request):
@@ -49,10 +52,6 @@ def register_view(request):
         form = UserCreationForm()
     print('hi')
     return render(request, 'orders/register.html', {'form': form})
-
-
-def menu_view(request):
-    return render(request, 'orders/menu.html')
 
 
 def orders_view(request):

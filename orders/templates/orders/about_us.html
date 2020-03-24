@@ -1,0 +1,53 @@
+{% extends "orders/base.html" %}
+{% load static %}
+{% block title %}
+    About us
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+    <h2>Opening hours</h2>
+    <table class="col-md-9">
+        <tr>
+            <td>Sunday</td>
+            <td>1 pm - 12 midnight</td>
+        </tr>
+        <tr>
+            <td>Monday - Thursday</td>
+            <td>11 am - 1 am</td>
+        </tr>
+        <tr>
+            <td>Friday - Saturday</td>
+            <td>11 am - 2:30 am</td>
+        </tr>
+
+    </table>
+
+    ******* Important note March 17th, 2020--- we will be closing every night at 11:00 pm until further notice.
+    <h2>Location and Directions</h2>
+    <div class="row">
+        <div class="col-md-5">
+            <a href="https://www.google.com/maps?q=74+Winthrop+St,+Cambridge,+MA+02138&spn=0.023621,0.024837&gl=us">
+                <img src="{% static 'orders/img/map.gif' %}" alt="map">
+            </a>
+        </div>
+        <div class="col-md-7">
+            <ul>
+                <li>
+                    Pinocchio's is located on Winthrop street right near the corner of JFK Street next to Berk's shoes.
+                </li>
+                <li>
+                    We are 2 blocks from the Harvard Square T stop.
+                </li>
+                <li>
+                    Do not park across the street from us! It is a tow zone!
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+{% endblock %}

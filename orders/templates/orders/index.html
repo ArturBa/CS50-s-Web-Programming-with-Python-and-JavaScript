@@ -1,4 +1,5 @@
 {% extends "orders/base.html" %}
+{% load static %}
 
 {% block title %}
     Pizza
@@ -8,5 +9,33 @@
 {% endblock %}
 
 {% block content %}
-    Hello there
+    <div class="row index">
+        <div class="col-md-7 text-center"><img src="{% static 'orders/img/building3.jpg' %}"></div>
+        <div class="col-md-5">
+            <h2>Latest news</h2>
+            <div>
+                <p>
+                    Noch's has been in business for over 50 years! We've been feeding Harvard and the surrounding area
+                    since 1966!
+                </p>
+                <p>
+                    We sell award-winning sicilian-style pizza and mouth-watering steak subs! We have over 750 reviews
+                    on
+                    Yelp--- check it out!
+                </p>
+                <p>
+                    ***** March 17,2020---Pinocchio's is still open and conducting business. We are strictly adhering to
+                    the
+                    guidelines set forth by ServSafe, the CDC and WHO. All orders must be to go and we are still
+                    delivering
+                    via Grubhub, Doordash and Postmates. We will be closing at 11:00 pm every night. Our wishes to
+                    everyone
+                    to stay safe....maintain social distance and wash your hands!!!!*****
+                </p>
+                <p>
+                    Check out our mention on Suits!
+                </p>
+            </div>
+        </div>
+    </div>
 {% endblock %}

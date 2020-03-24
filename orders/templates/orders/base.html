@@ -23,18 +23,22 @@
 </head>
 <body>
 <div id="top">
-    <div id="top-green"></div>
-    <div id="top-white">Pinocchio's Pizza & Subs</div>
-    <div id="top-red"></div>
+    <div id="flag-green"></div>
+    <div id="flag-white">
+        <div style="flex: 1;"></div>
+        Pinocchio's Pizza & Subs
+        <div style="flex: 1;"></div>
+    </div>
+    <div id="flag-red"></div>
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07"
-                aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="main_navbar"
+                aria-controls="main_navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExample07">
+        <div class="collapse navbar-collapse" id="main_navbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'index' %}">Home</a>
@@ -43,26 +47,41 @@
                     <a class="nav-link" href="{% url 'menu' %}">Menu</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About us</a>
+                    <a class="nav-link" href="{% url 'about_us' %}">About us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">User</a>
-                </li>
+            </ul>
+            <ul class="navbar-nav nav">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
-{% block content %}
-{% endblock %}
+<div class="col-md-9" style="margin: 0 auto;">
+    {% block content %}
+    {% endblock %}
+</div>
 <footer class="page-footer font-small teal pt-4">
 
     <!-- Footer Text -->
-    <div class="container-fluid text-center text-md-left col-md-10">
+    <div class="container-fluid text-center text-md-left col-md-9">
 
         <!-- Grid row -->
         <div class="row">
             <!-- Grid column -->
-            <div class="col-md-4 mb-md-0 mb-3">
+            <div class="col-md-5 mb-md-0 mb-3">
 
                 <!-- Content -->
                 <h5 class="text-uppercase font-weight-bold">Location</h5>
@@ -87,7 +106,7 @@
 
             </div>
             <hr class="clearfix w-100 d-md-none pb-3">
-            <div class="col-md-4 mb-md-0 mb-3">
+            <div class="col-md-3 mb-md-0 mb-3">
                 <h5 class="text-uppercase font-weight-bold">Follow us</h5>
                 <a class="tw-ic" href="https://twitter.com/PinocchiosPizz">
                     <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
@@ -103,7 +122,17 @@
     </div>
     <!-- Footer Text -->
 
-    <div id="copyrights" class="text-center py-3">© 2020 Copyright: Pinocchio's Pizza & Subs</div>
+    <div id="copyrights">
+        <div id="flag-green"></div>
+        <div id="flag-white">
+            <div style="flex: 1;"></div>
+            <div>
+                © 2020 Copyright: Pinocchio's Pizza & Subs
+            </div>
+            <div style="flex: 1;"></div>
+        </div>
+        <div id="flag-red"></div>
+        {#    <div id="copyrights" class="text-center py-3"></div>#}
 </footer>
 </body>
 </html>
