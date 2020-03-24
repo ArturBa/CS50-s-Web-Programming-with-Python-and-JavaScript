@@ -3,6 +3,9 @@ from django.db import models
 
 
 class PizzaType(models.Model):
+    """
+    Pizza type
+    """
     name = models.CharField(max_length=64)
 
     def __str__(self):
@@ -12,6 +15,7 @@ class PizzaType(models.Model):
 class Pizza(models.Model):
     """
     Pizza model
+    Has info about price for big and small pizza, pizza type and number of available toppings
     """
     name = models.CharField(max_length=64)
     type = models.ForeignKey(PizzaType, on_delete=models.CASCADE, related_name='pizzas')
@@ -44,6 +48,9 @@ class PizzaOrder(models.Model):
 
 
 class SubAdd(models.Model):
+    """
+    Sub adds on model
+    """
     name = models.CharField(max_length=64)
     price = models.FloatField()
 
@@ -52,6 +59,10 @@ class SubAdd(models.Model):
 
 
 class Sub(models.Model):
+    """
+    Sub model
+    Has information about price, extra cheese price and if adds are available
+    """
     name = models.CharField(max_length=64, unique=True)
     extra_cheese_price = models.FloatField(default=0.5)
     price_large = models.FloatField(blank=True, null=True)
@@ -63,6 +74,10 @@ class Sub(models.Model):
 
 
 class SubsOrder(models.Model):
+    """
+    Sub order model
+    Has information about sub type, adds, size, quantity and if extra cheese was chosen
+    """
     sub_id = models.ForeignKey(Sub, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     large = models.BooleanField(default=True)
@@ -71,6 +86,9 @@ class SubsOrder(models.Model):
 
 
 class Salad(models.Model):
+    """
+    Salad model
+    """
     name = models.CharField(max_length=64, unique=True)
     price = models.FloatField()
 
@@ -79,11 +97,18 @@ class Salad(models.Model):
 
 
 class SaladOrder(models.Model):
+    """
+    Salad order model
+    Has information about type and number of salad
+    """
     salad_id = models.ForeignKey(Salad, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
 
 class Pasta(models.Model):
+    """
+    Pasta model
+    """
     name = models.CharField(max_length=64, unique=True)
     price = models.FloatField()
 
@@ -92,11 +117,18 @@ class Pasta(models.Model):
 
 
 class PastaOrder(models.Model):
+    """
+    Pasta order model
+    Has information about type and number of pastas
+    """
     pasta_id = models.ForeignKey(Pasta, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
 
 class DinnerPlate(models.Model):
+    """
+    Dinner plate model
+    """
     name = models.CharField(max_length=64, unique=True)
     price_large = models.FloatField()
     price_small = models.FloatField()
@@ -106,12 +138,20 @@ class DinnerPlate(models.Model):
 
 
 class DinnerPlateOrder(models.Model):
+    """
+    Dinner player order model
+    Has information about dinner player number and type
+    """
     dinner_plate_id = models.ForeignKey(DinnerPlate, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     large = models.BooleanField(default=True)
 
 
 class OrderStatus(models.Model):
+    """
+    Order status model
+    Has information about possible order status
+    """
     name = models.CharField(max_length=64)
 
     class Meta:
