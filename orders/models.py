@@ -2,24 +2,32 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+class PizzaType(models.Model):
+    name = models.CharField(max_length=64)
+
+    def __str__(self):
+        return f'Pizza type: {self.name}'
+
+
 class Pizza(models.Model):
     """
     Pizza model
     """
     name = models.CharField(max_length=64)
+    type = models.ForeignKey(PizzaType, on_delete=models.CASCADE, related_name='pizzas')
     toppings_count = models.IntegerField()
     large_price = models.FloatField()
     small_price = models.FloatField()
 
     def __str__(self):
-        return f'Pizza: {self.name} with toppings: {self.toppings_count}'
+        return f'Pizza: {self.type.name}:{self.name} with toppings: {self.toppings_count}'
 
 
 class Topping(models.Model):
     """
     Topping model
     """
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
 
     def __str__(self):
         return f'Topping: {self.name}'
@@ -44,11 +52,11 @@ class SubAdd(models.Model):
 
 
 class Sub(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     extra_cheese_price = models.FloatField(default=0.5)
-    price_large = models.FloatField()
-    price_small = models.FloatField()
-    add_available = models.BooleanField()
+    price_large = models.FloatField(blank=True, null=True)
+    price_small = models.FloatField(blank=True, null=True)
+    adds_available = models.BooleanField()
 
     def __str__(self):
         return f'Sub: {self.name}'
@@ -63,7 +71,7 @@ class SubsOrder(models.Model):
 
 
 class Salad(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     price = models.FloatField()
 
     def __str__(self):
@@ -76,7 +84,7 @@ class SaladOrder(models.Model):
 
 
 class Pasta(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     price = models.FloatField()
 
     def __str__(self):
@@ -89,7 +97,7 @@ class PastaOrder(models.Model):
 
 
 class DinnerPlate(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     price_large = models.FloatField()
     price_small = models.FloatField()
 
@@ -103,33 +111,28 @@ class DinnerPlateOrder(models.Model):
     large = models.BooleanField(default=True)
 
 
-ORDER_STATUS_CHOICES = (
-    ('wait', 'Waiting'),
-    ('cook', 'Cooking'),
-    ('delv', 'Delivering'),
-    ('comp', 'Completed')
-)
+class OrderStatus(models.Model):
+    name = models.CharField(max_length=64)
+
+    class Meta:
+        verbose_name_plural = 'Order statutes'
+
+    def __str__(self):
+        return f'Order status: {self.name}'
 
 
 class Order(models.Model):
     """
     Order model
     """
-    WAITING = 'FR'
-    COOKING = 'SO'
-    DELIVERING = 'JR'
-    COMPLETED = 'SR'
-    ORDER_STATUS_CHOICES = (
-        (WAITING, 'Waiting'),
-        (COOKING, 'Cooking'),
-        (DELIVERING, 'Delivering'),
-        (COMPLETED, 'Completed')
-    )
-    status = models.CharField(max_length=4, choices=ORDER_STATUS_CHOICES)
+    status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, related_name="orders")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
     creation_date = models.DateField(auto_now_add=True)
-    pizza_order = models.ManyToManyField(PizzaOrder, blank=True)
-    sub_order = models.ManyToManyField(SubsOrder, blank=True)
-    salad_order = models.ManyToManyField(SaladOrder, blank=True)
-    pasta_order = models.ManyToManyField(PastaOrder, blank=True)
-    dinner_plate_order = models.ManyToManyField(DinnerPlateOrder, blank=True)
+    pizza_order = models.ManyToManyField(PizzaOrder, blank=True, related_name='order')
+    sub_order = models.ManyToManyField(SubsOrder, blank=True, related_name='order')
+    salad_order = models.ManyToManyField(SaladOrder, blank=True, related_name='order')
+    pasta_order = models.ManyToManyField(PastaOrder, blank=True, related_name='order')
+    dinner_plate_order = models.ManyToManyField(DinnerPlateOrder, blank=True, related_name='order')
+
+    def __str__(self):
+        return f'[{self.status.name}] Order by {self.user_id.first_name} from {self.creation_date}'
