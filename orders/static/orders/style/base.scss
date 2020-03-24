@@ -1,0 +1,28 @@
+@import "colors";
+
+#top {
+  width: 100%;
+  height: 10ex;
+  display: flex;
+
+  #top-green {
+    flex: 1;
+    background-color: $green;
+  }
+
+  #top-white {
+    flex: 2;
+    text-align: center;
+    font-size: large;
+  }
+
+  #top-red {
+    flex: 1;
+    background-color: $red;
+  }
+}
+
+#copyrights {
+  background-color: $green;
+}
+
