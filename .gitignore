@@ -138,3 +138,7 @@ credentials.sh
 
 # Ignore migrations
 migrations
+
+# ignore sass files
+.sass-cache
+*.css.map

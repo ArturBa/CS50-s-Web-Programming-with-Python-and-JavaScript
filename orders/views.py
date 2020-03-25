@@ -5,9 +5,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import *
+from .utils import *
 
 
-# Create your views here.
 def index(request):
     return render(request, "orders/index.html")
 
@@ -57,7 +57,6 @@ def register_view(request):
             return redirect('index')
     else:
         form = UserCreationForm()
-    print('hi')
     return render(request, 'orders/register.html', {'form': form})
 
 
@@ -72,3 +71,8 @@ def orders_view(request):
             return render(request, "orders/login.html",
                           {"message": "Look's like you dont have permissions here. Try relogin."})
     return render(request, "orders/login.html", {"message": "Login firstly"})
+
+
+def add_pizza(request, pizza_id):
+    cart = get_user_cart(request.user)
+    return render(request, 'orders/pizza.html')
