@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
+from .models import *
+
 
 # Create your views here.
 def index(request):
@@ -15,7 +17,12 @@ def login_view(request):
 
 
 def menu_view(request):
-    return render(request, 'orders/menu.html')
+    context = {'pizza': PizzaType.objects.all(),
+               'subs': Sub.objects.all(),
+               'salads': Salad.objects.all(),
+               'pastas': Pasta.objects.all(),
+               'dinner_plates': DinnerPlate.objects.all()}
+    return render(request, 'orders/menu.html', context)
 
 
 def about_us_view(request):

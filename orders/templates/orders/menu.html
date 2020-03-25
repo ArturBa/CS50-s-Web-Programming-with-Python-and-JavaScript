@@ -2,3 +2,52 @@
 {% block title %}
     Menu
 {% endblock %}
+
+{% block content %}
+    <h1>Menu</h1>
+    <h2>Pizza</h2>
+    {% for pizza_type in pizza %}
+        <h3>{{ pizza_type }}</h3>
+        <ul>
+            {% for pizza_ in pizza_type.pizzas.all %}
+                <li>
+                    {{ pizza_ }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+    <h2>Subs</h2>
+    <ul>
+        {% for sub in subs %}
+            <li>
+                {{ sub }}
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Salads</h2>
+    <ul>
+        {% for salad in salads %}
+            <li>
+                {{ salad }}
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Pastas</h2>
+    <ul>
+        {% for pasta in pastas %}
+            <li>
+                {{ pasta }}
+            </li>
+        {% endfor %}
+    </ul>
+    <h2>Dinner plates</h2>
+    <ul>
+        {% for dinner_plate in dinner_plates %}
+            <li>
+                {{ dinner_plate }}
+            </li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
