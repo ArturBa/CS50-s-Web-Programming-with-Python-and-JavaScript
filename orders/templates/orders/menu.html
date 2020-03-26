@@ -1,4 +1,10 @@
 {% extends 'orders/base.html' %}
+{% load static %}
+
+{% block head %}
+    <script src="{% static 'orders/js/menu.js' %}"></script>
+{% endblock %}
+
 {% block title %}
     Menu
 {% endblock %}
@@ -48,6 +54,7 @@
             </li>
         {% endfor %}
     </ul>
+    <button class="add-menu" data-csrf="{% csrf_token %}">Red</button>
 
 
 {% endblock %}

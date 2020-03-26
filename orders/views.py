@@ -1,11 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import *
-from .utils import *
 
 
 def index(request):
@@ -73,6 +72,9 @@ def orders_view(request):
     return render(request, "orders/login.html", {"message": "Login firstly"})
 
 
-def add_pizza(request, pizza_id):
-    cart = get_user_cart(request.user)
-    return render(request, 'orders/pizza.html')
+def add_pizza(request):
+    if request.method != 'POST':
+        return HttpResponse('')
+    name = request.POST['name']
+    print(name)
+    return HttpResponse('')
