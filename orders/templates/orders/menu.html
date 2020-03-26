@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'orders/style/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'orders/style/menu.css' %}"/>
     <script src="{% static 'orders/js/menu.js' %}"></script>
 {% endblock %}
 
@@ -15,6 +15,7 @@
 {% block content %}
     <h1>Menu</h1>
     <h2>Pizza</h2>
+    <button class="add-menu" data-type="pizza" data-id="1">Button</button>
     {% for pizza_type in pizza %}
         <h3>{{ pizza_type }}</h3>
         <table>
@@ -26,7 +27,9 @@
                     <td> {{ pizza_.name }} </td>
                     <td> {{ pizza_.large_price }}
                         {% if request.user.is_authenticated %}
-                            <button class="add-menu" data-type="pizza" data-id="{{ pizza_.id }}">Button</button>
+                            <button class="add-menu" data-type="pizza" data-large="False" data-id="{{ pizza_.id }}">
+                                Button
+                            </button>
                         {% endif %}
                     </td>
                     <td> {{ pizza_.small_price }} </td>

@@ -85,12 +85,11 @@ def add(request):
     if request.method != 'POST':
         return HttpResponse('', status=400)
     try:
-        id = request.POST['id']
         type = request.POST['type']
         if type == "pizza":
             add_pizza(request)
-        elif type == "sub":
-            add_sub(request)
+        # elif type == "sub":
+        #     add_sub(request)
         print(f'{type}: {id}')
         return HttpResponse('', status=200)
     except Exception as exception:
@@ -100,7 +99,16 @@ def add(request):
 
 def add_pizza(request):
     id = request.POST['id']
-    print(f'Pizza: {id}')
+    if request.POST['large'] == 'False':
+        large = False
+    else:
+        large = True
+    pizza_order = PizzaOrder.objects.create(pizza_id=Pizza.objects.get(id=id), large=large)
+    pizza_order.save()
+    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
+    cart.pizza_order.add(pizza_order)
+    cart.save()
 
 
 def add_sub(request):

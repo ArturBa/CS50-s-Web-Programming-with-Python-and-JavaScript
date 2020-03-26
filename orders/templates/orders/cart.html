@@ -7,20 +7,16 @@
 {% block content %}
 
     {{ cart.pizza_order.all }}
-    {% if not cart.pizza_order.all %}
+    {% if not cart.sub_order.all and not cart.pizza_order.all %}
         Begin orders now
-    {% else %}
-        {% for pizza in cart.pizza_order.all %}
-            <p>{{ pizza }}</p>
-        {% endfor %}
     {% endif %}
 
-    {% if not cart.sub_order.all %}
-        Begin orders now
-    {% else %}
-        {% for sub in cart.sub_order.all %}
-            <p>{{ sub }}</p>
-        {% endfor %}
-    {% endif %}
+    {% for pizza in cart.pizza_order.all %}
+        <p>{{ pizza }}</p>
+    {% endfor %}
+
+    {% for sub in cart.sub_order.all %}
+        <p>{{ sub }}</p>
+    {% endfor %}
 
 {% endblock %}

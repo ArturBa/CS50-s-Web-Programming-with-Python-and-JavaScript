@@ -4,13 +4,14 @@ $(document).ready(() => {
 
     document.querySelectorAll('.add-menu').forEach(button => {
         button.onclick = () => {
-            console.log('hi');
+            console.log(button.dataset.large);
             $.ajax({
                 type: 'POST',
                 url: 'add/',
                 data: {
                     type: button.dataset.type,
                     id: button.dataset.id,
+                    large: button.dataset.large,
                     csrfmiddlewaretoken: csrftoken,
                 },
                 success: function () {
