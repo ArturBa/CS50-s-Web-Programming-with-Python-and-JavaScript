@@ -15,24 +15,33 @@
 {% block content %}
     <h1>Menu</h1>
     <h2>Pizza</h2>
-    <button class="add-menu" data-type="pizza" data-id="1">Button</button>
     {% for pizza_type in pizza %}
         <h3>{{ pizza_type }}</h3>
         <table>
-            <th> Pizza</th>
-            <th> Big</th>
-            <th> Small</th>
+            <th>Pizza</th>
+            <th>Small</th>
+            <th>Big</th>
             {% for pizza_ in pizza_type.pizzas.all %}
                 <tr>
                     <td> {{ pizza_.name }} </td>
-                    <td> {{ pizza_.large_price }}
+                    <td>
                         {% if request.user.is_authenticated %}
                             <button class="add-menu" data-type="pizza" data-large="False" data-id="{{ pizza_.id }}">
-                                Button
+                                {{ pizza_.small_price }}
                             </button>
+                        {% else %}
+                            {{ pizza_.small_price }}
                         {% endif %}
                     </td>
-                    <td> {{ pizza_.small_price }} </td>
+                    <td>
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="pizza" data-large="True" data-id="{{ pizza_.id }}">
+                                {{ pizza_.large_price }}
+                            </button>
+                        {% else %}
+                            {{ pizza_.large_price }}
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </table>
