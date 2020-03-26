@@ -14,10 +14,10 @@ $(document).ready(() => {
                 },
                 success: function () {
                     console.log('add success');
-                    notification.css('opacity', 1);
+                    notification.addClass('show');
                     setTimeout(() => {
-                        notification.css('opacity', 0);
-                    }, 500);
+                        notification.removeClass('show');
+                    }, 2500);
 
                 }
             });
