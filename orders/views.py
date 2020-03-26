@@ -72,9 +72,37 @@ def orders_view(request):
     return render(request, "orders/login.html", {"message": "Login firstly"})
 
 
-def add_pizza(request):
+def cart_view(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reversed('index'))
+    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
+    print(cart.pizza_order.all())
+    return render(request, "orders/cart.html", {'cart': cart})
+
+
+def add(request):
     if request.method != 'POST':
-        return HttpResponse('')
-    name = request.POST['name']
-    print(name)
-    return HttpResponse('')
+        return HttpResponse('', status=400)
+    try:
+        id = request.POST['id']
+        type = request.POST['type']
+        if type == "pizza":
+            add_pizza(request)
+        elif type == "sub":
+            add_sub(request)
+        print(f'{type}: {id}')
+        return HttpResponse('', status=200)
+    except Exception as exception:
+        print(exception)
+        return HttpResponse('', status=400)
+
+
+def add_pizza(request):
+    id = request.POST['id']
+    print(f'Pizza: {id}')
+
+
+def add_sub(request):
+    id = request.POST['id']
+    print(f'Sub: {id}')

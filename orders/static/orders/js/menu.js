@@ -7,9 +7,10 @@ $(document).ready(() => {
             console.log('hi');
             $.ajax({
                 type: 'POST',
-                url: 'add/pizza/',
+                url: 'add/',
                 data: {
-                    name: 'artur',
+                    type: button.dataset.type,
+                    id: button.dataset.id,
                     csrfmiddlewaretoken: csrftoken,
                 },
                 success: function () {

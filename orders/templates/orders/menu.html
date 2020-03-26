@@ -10,18 +10,29 @@
     Menu
 {% endblock %}
 
+
+
 {% block content %}
     <h1>Menu</h1>
     <h2>Pizza</h2>
     {% for pizza_type in pizza %}
         <h3>{{ pizza_type }}</h3>
-        <ul>
+        <table>
+            <th> Pizza</th>
+            <th> Big</th>
+            <th> Small</th>
             {% for pizza_ in pizza_type.pizzas.all %}
-                <li>
-                    {{ pizza_ }}
-                </li>
+                <tr>
+                    <td> {{ pizza_.name }} </td>
+                    <td> {{ pizza_.large_price }}
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="pizza" data-id="{{ pizza_.id }}">Button</button>
+                        {% endif %}
+                    </td>
+                    <td> {{ pizza_.small_price }} </td>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
     {% endfor %}
     <h2>Subs</h2>
     <ul>
@@ -55,7 +66,6 @@
             </li>
         {% endfor %}
     </ul>
-    <button class="add-menu">Button</button>
     <div class="notification">
         Item added to cart
     </div>
