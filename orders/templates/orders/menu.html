@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block head %}
+    <link rel="stylesheet" href="{% static 'orders/style/main.css' %}"/>
     <script src="{% static 'orders/js/menu.js' %}"></script>
 {% endblock %}
 
@@ -54,7 +55,10 @@
             </li>
         {% endfor %}
     </ul>
-    <button class="add-menu" data-csrf="{% csrf_token %}">Red</button>
+    <button class="add-menu">Button</button>
+    <div class="notification">
+        this is a notification
+    </div>
 
 
 {% endblock %}

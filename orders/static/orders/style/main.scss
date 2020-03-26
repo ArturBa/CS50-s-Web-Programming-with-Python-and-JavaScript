@@ -1,0 +1,17 @@
+@import "colors";
+
+.notification {
+  background-color: gold;
+  opacity: 0;
+}
+
+@keyframes example {
+  0% {
+    background-color: red;
+    opacity: 1
+  }
+  100% {
+    background-color: red;
+    opacity: 0
+  }
+}
