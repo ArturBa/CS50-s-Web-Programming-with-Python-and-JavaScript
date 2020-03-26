@@ -11,6 +11,29 @@
   transition: all .5s ease-in-out;
 }
 
+h2 {
+  text-align: center;
+  color: $green;
+}
+
+h3 {
+  text-align: center;
+
+}
+
 .notification.show {
   opacity: 0.9;
+}
+
+.add-menu {
+  background-color: beige;
+}
+
+.table-menu {
+  width: 60%;
+  margin: 0 auto;
+
+  .price-menu {
+    width: 8em;
+  }
 }

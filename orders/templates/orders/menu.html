@@ -13,71 +13,147 @@
 
 
 {% block content %}
-    <h1>Menu</h1>
-    <h2>Pizza</h2>
+    <h2 id="pizza">Pizza</h2>
     {% for pizza_type in pizza %}
-        <h3>{{ pizza_type }}</h3>
-        <table>
+        <h3>{{ pizza_type.name }}</h3>
+        <table class="table-menu">
             <th>Pizza</th>
             <th>Small</th>
             <th>Big</th>
             {% for pizza_ in pizza_type.pizzas.all %}
                 <tr>
                     <td> {{ pizza_.name }} </td>
-                    <td>
+                    <td class="price-menu">
                         {% if request.user.is_authenticated %}
                             <button class="add-menu" data-type="pizza" data-large="False" data-id="{{ pizza_.id }}">
-                                {{ pizza_.small_price }}
+                                {{ pizza_.price_small }}
                             </button>
                         {% else %}
-                            {{ pizza_.small_price }}
+                            {{ pizza_.price_small }}
                         {% endif %}
                     </td>
-                    <td>
+                    <td class="price-menu">
                         {% if request.user.is_authenticated %}
                             <button class="add-menu" data-type="pizza" data-large="True" data-id="{{ pizza_.id }}">
-                                {{ pizza_.large_price }}
+                                {{ pizza_.price_large }}
                             </button>
                         {% else %}
-                            {{ pizza_.large_price }}
+                            {{ pizza_.price_large }}
                         {% endif %}
                     </td>
                 </tr>
             {% endfor %}
         </table>
     {% endfor %}
-    <h2>Subs</h2>
-    <ul>
-        {% for sub in subs %}
-            <li>
-                {{ sub }}
-            </li>
+    <h2 id="subs">Subs</h2>
+    <table class="table-menu">
+        <th>Sub</th>
+        <th>Small</th>
+        <th>Big</th>
+        {% for sub in subs.all %}
+            <tr>
+                <td> {{ sub.name }} {% if sub.adds_available %} <i>Adds available</i> {% endif %}</td>
+                <td class="price-menu">
+                    {% if sub.price_small %}
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="sub" data-large="False" data-id="{{ sub.id }}">
+                                {{ sub.price_small }}
+                            </button>
+                        {% else %}
+                            {{ sub.price_small }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td class="price-menu">
+                    {% if sub.price_large %}
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="sub" data-large="True" data-id="{{ sub.id }}">
+                                {{ sub.price_large }}
+                            </button>
+                        {% else %}
+                            {{ sub.price_large }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
-    <h2>Salads</h2>
-    <ul>
-        {% for salad in salads %}
-            <li>
-                {{ salad }}
-            </li>
+    </table>
+    <h2 id="salads">Salads</h2>
+    <table class="table-menu">
+        <th>Salad</th>
+        <th>Price</th>
+        {% for salad in salads.all %}
+            <tr>
+                <td> {{ salad.name }} </td>
+                <td class="price-menu">
+                    {% if salad.price %}
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="salad" data-large="False" data-id="{{ salad.id }}">
+                                {{ salad.price }}
+                            </button>
+                        {% else %}
+                            {{ salad.price }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
-    <h2>Pastas</h2>
-    <ul>
-        {% for pasta in pastas %}
-            <li>
-                {{ pasta }}
-            </li>
+    </table>
+    <h2 id="pastas">Pastas</h2>
+    <table class="table-menu">
+        <th>Pasta</th>
+        <th>Price</th>
+        {% for pasta in pastas.all %}
+            <tr>
+                <td> {{ pasta.name }} </td>
+                <td class="price-menu">
+                    {% if pasta.price %}
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="pasta" data-large="False" data-id="{{ pasta.id }}">
+                                {{ pasta.price }}
+                            </button>
+                        {% else %}
+                            {{ pasta.price }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
-    <h2>Dinner plates</h2>
-    <ul>
-        {% for dinner_plate in dinner_plates %}
-            <li>
-                {{ dinner_plate }}
-            </li>
+    </table>
+    <h2 id="dinner">Dinner plates</h2>
+    <table class="table-menu">
+        <th>Dinner plate</th>
+        <th>Small</th>
+        <th>Large</th>
+        {% for dinner in dinner_plates.all %}
+            <tr>
+                <td> {{ dinner.name }} </td>
+                <td class="price-menu">
+                    {% if dinner.price_small %}
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="dinner" data-large="False"
+                                    data-id="{{ dinner.id }}">
+                                {{ dinner.price_small }}
+                            </button>
+                        {% else %}
+                            {{ dinner.price_small }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td class="price-menu">
+                    {% if dinner.price_large %}
+                        {% if request.user.is_authenticated %}
+                            <button class="add-menu" data-type="dinner" data-large="True" data-id="{{ dinner.id }}">
+                                {{ dinner.price_large }}
+                            </button>
+                        {% else %}
+                            {{ dinner.price_large }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
     <div class="notification">
         Item added to cart
     </div>

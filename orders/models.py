@@ -20,8 +20,8 @@ class Pizza(models.Model):
     name = models.CharField(max_length=64)
     type = models.ForeignKey(PizzaType, on_delete=models.CASCADE, related_name='pizzas')
     toppings_count = models.IntegerField()
-    large_price = models.FloatField()
-    small_price = models.FloatField()
+    price_large = models.FloatField()
+    price_small = models.FloatField()
 
     def __str__(self):
         return f'Pizza: {self.type.name}:{self.name} with toppings: {self.toppings_count}'
@@ -41,7 +41,7 @@ class PizzaOrder(models.Model):
     """
     Pizza order model. Contains size, toppings and quantity of pizza
     """
-    pizza_id = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    pizza_id = models.ForeignKey(Pizza, on_delete=models.PROTECT)
     large = models.BooleanField(default=True)
     quantity = models.IntegerField(default=1)
     toppings = models.ManyToManyField(Topping, blank=True)
@@ -78,7 +78,7 @@ class SubsOrder(models.Model):
     Sub order model
     Has information about sub type, adds, size, quantity and if extra cheese was chosen
     """
-    sub_id = models.ForeignKey(Sub, on_delete=models.CASCADE)
+    sub_id = models.ForeignKey(Sub, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
     large = models.BooleanField(default=True)
     extra_cheese = models.BooleanField(default=False)
@@ -101,7 +101,7 @@ class SaladOrder(models.Model):
     Salad order model
     Has information about type and number of salad
     """
-    salad_id = models.ForeignKey(Salad, on_delete=models.CASCADE)
+    salad_id = models.ForeignKey(Salad, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
 
 
@@ -121,7 +121,7 @@ class PastaOrder(models.Model):
     Pasta order model
     Has information about type and number of pastas
     """
-    pasta_id = models.ForeignKey(Pasta, on_delete=models.CASCADE)
+    pasta_id = models.ForeignKey(Pasta, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
 
 
@@ -142,7 +142,7 @@ class DinnerPlateOrder(models.Model):
     Dinner player order model
     Has information about dinner player number and type
     """
-    dinner_plate_id = models.ForeignKey(DinnerPlate, on_delete=models.CASCADE)
+    dinner_plate_id = models.ForeignKey(DinnerPlate, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=1)
     large = models.BooleanField(default=True)
 
@@ -165,7 +165,7 @@ class Order(models.Model):
     """
     Order model
     """
-    status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, related_name="orders")
+    status = models.ForeignKey(OrderStatus, on_delete=models.PROTECT, related_name="orders")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
     creation_date = models.DateField(auto_now_add=True)
     pizza_order = models.ManyToManyField(PizzaOrder, blank=True, related_name='order')
