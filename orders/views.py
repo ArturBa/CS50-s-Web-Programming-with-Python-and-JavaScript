@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect, HttpResponse
@@ -90,11 +92,19 @@ def checkout_view(request):
 
 def make_order(request):
     status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
-    cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
+    order = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     status = OrderStatus.objects.get_or_create(name="Collecting goods")[0]
-    cart.status = status
-    cart.save()
+    order.status = status
+    order.creation_date = datetime.now()
+    order.save()
     return HttpResponseRedirect(reverse("index"))
+
+
+def user_view(request):
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
+    orders = Order.objects.filter(user_id=request.user.id).exclude(status=status).order_by('creation_date')
+    print(orders)
+    return render(request, "orders/user.html", {'orders': orders})
 
 
 def add(request):
