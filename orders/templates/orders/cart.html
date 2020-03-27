@@ -1,4 +1,5 @@
 {% extends "orders/base.html" %}
+{% load static %}
 
 {% load range %}
 
@@ -7,7 +8,8 @@
 {% endblock %}
 
 {% block head %}
-    {#    <script src="{% static 'orders/js/cart.js' %}"></script>#}
+    <link rel="stylesheet" href="{% static 'orders/style/cart.css' %}"/>
+    <script src="{% static 'orders/js/cart.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -22,19 +24,28 @@
             <form>
                 {% for i in pizza.pizza_id.toppings_count|range %}
                     <label>
-                        <select>
-                            {% for top in toppings %}
-                                <option value="{{ top.id }}">{{ top.name }}</option>
-                            {% endfor %}
-                        </select>
+                        <label>
+                            <select>
+                                {% for top in toppings %}
+                                    <option value="{{ top.id }}">{{ top.name }}</option><br>
+                                {% endfor %}
+                            </select>
+                        </label>
                     </label>
                 {% endfor %}
-                <input type="checkbox"> Big
+                <br>
+                <label>
+                    {% if pizza.large %}
+                        <input class="large" type="checkbox" checked> Big
+                    {% else %}
+                        <input class="large" type="checkbox" checked> Big
+                    {% endif %}
+                </label>
             </form>
 
             <div class="hidden price-small">{{ pizza.pizza_id.price_small }}</div>
             <div class="hidden price-large">{{ pizza.pizza_id.price_large }}</div>
-            <div class="price"></div>
+            <div class="price">$21.12</div>
         </div>
     {% endfor %}
 
@@ -51,8 +62,25 @@
                         </select>
                     </label>
                 {% endif %}
-                <input type="checkbox"> Big
-                <input type="checkbox"> Extra cheese + {{ sub.sub_id.extra_cheese_price }}
+                <br>
+                <label>
+                    {% if sub.large %}
+                        {% if sub.sub_id.price_large and sub.sub_id.price_small %}
+                            <input class="large" type="checkbox" checked> Big
+                        {% else %}
+                            <input class="large" type="checkbox" checked="checked" onclick="return false;"> Big
+                        {% endif %}
+                    {% else %}
+                        {% if sub.sub_id.price_large and sub.sub_id.price_small %}
+                            <input class="large" type="checkbox"> Big
+                        {% else %}
+                            <input class="large" type="checkbox" onclick="return false;"> Big
+                        {% endif %}
+                    {% endif %}
+                </label>
+                <label>
+                    <input type="checkbox"> Extra cheese + {{ sub.sub_id.extra_cheese_price }}
+                </label>
             </form>
 
             <div class="hidden price-small">{{ sub.sub_id.price_small }}</div>
@@ -82,7 +110,13 @@
             <h2>Dinner plate: {{ dinner_plate.dinner_plate_id.name }}</h2>
 
             <form>
-                <input type="checkbox"> Big
+                <label>
+                    {% if dinner_plate.large %}
+                        <input class="large" type="checkbox" checked> Big
+                    {% else %}
+                        <input class="large" type="checkbox"> Big
+                    {% endif %}
+                </label>
             </form>
 
             <div class="hidden price-small">{{ dinner_plate.dinner_plate_id.price_small }}</div>
