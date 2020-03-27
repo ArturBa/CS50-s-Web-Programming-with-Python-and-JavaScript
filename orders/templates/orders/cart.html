@@ -39,7 +39,11 @@
                         <input class="large" type="checkbox" checked> Big
                     {% else %}
                         <input class="large" type="checkbox" checked> Big
-                    {% endif %}
+                    {% endif %}<br>
+                </label>
+                <label>
+                    Quantity:
+                    <input class="quantity" type="number" min="0" step="1" value="{{ pizza.quantity }}">
                 </label>
             </form>
 
@@ -79,7 +83,11 @@
                     {% endif %}
                 </label>
                 <label>
-                    <input type="checkbox"> Extra cheese + {{ sub.sub_id.extra_cheese_price }}
+                    <input class="extra-cheese" type="checkbox"> Extra cheese + {{ sub.sub_id.extra_cheese_price }}
+                </label><br>
+                <label>
+                    Quantity:
+                    <input class="quantity" type="number" min="0" step="1" value="{{ sub.quantity }}">
                 </label>
             </form>
 
@@ -93,6 +101,13 @@
         <div class="salad-cart item-cart">
             <h2>Salad: {{ salad.salad_id.name }}</h2>
 
+            <form>
+                <label>
+                    Quantity:
+                    <input class="quantity" type="number" min="0" step="1" value="{{ salad.quantity }}">
+                </label>
+            </form>
+
             <div class="price">{{ salad.salad_id.price }}</div>
         </div>
     {% endfor %}
@@ -100,6 +115,12 @@
     {% for pasta in cart.pasta_order.all %}
         <div class="pasta-cart item-cart">
             <h2>Pasta: {{ pasta.pasta_id.name }}</h2>
+            <form>
+                <label>
+                    Quantity:
+                    <input class="quantity" type="number" min="0" step="1" value="{{ pasta.quantity }}">
+                </label>
+            </form>
 
             <div class="price">{{ pasta.pasta_id.price }}</div>
         </div>
@@ -115,7 +136,11 @@
                         <input class="large" type="checkbox" checked> Big
                     {% else %}
                         <input class="large" type="checkbox"> Big
-                    {% endif %}
+                    {% endif %}<br>
+                </label>
+                <label>
+                    Quantity:
+                    <input class="quantity" type="number" min="0" step="1" value="{{ dinner_plate.quantity }}">
                 </label>
             </form>
 
@@ -124,5 +149,7 @@
             <div class="price"></div>
         </div>
     {% endfor %}
+
+    <div class="total-price"></div>
 
 {% endblock %}
