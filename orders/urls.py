@@ -18,5 +18,6 @@ urlpatterns = [
     path("update/pasta", views.update_pasta, name="update_pasta"),
     path("update/dinner", views.update_dinner, name="update_dinner"),
     path("checkout", views.checkout_view, name="checkout"),
+    path("make_order", views.make_order, name="make_order"),
     path("add/", views.add, name="add")
 ]

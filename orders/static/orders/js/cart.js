@@ -32,7 +32,7 @@ function update_total() {
     $('.price').each(function () {
         total += parseFloat($(this).html());
     });
-    $('.total-price').html(total);
+    $('.total-price').html(total.toFixed(2));
 }
 
 function checkout() {

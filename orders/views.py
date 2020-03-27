@@ -75,7 +75,7 @@ def orders_view(request):
 def cart_view(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("index"))
-    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     toppings = Topping.objects.all()
     sub_adds = SubAdd.objects.all()
@@ -83,9 +83,18 @@ def cart_view(request):
 
 
 def checkout_view(request):
-    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     return render(request, "orders/checkout.html", {'cart': cart})
+
+
+def make_order(request):
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
+    cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
+    status = OrderStatus.objects.get_or_create(name="Collecting goods")[0]
+    cart.status = status
+    cart.save()
+    return HttpResponseRedirect(reverse("index"))
 
 
 def add(request):
@@ -123,7 +132,7 @@ def add_pizza(request):
     large = is_large(request)
     pizza_order = PizzaOrder.objects.create(pizza_id=Pizza.objects.get(id=id), large=large)
     pizza_order.save()
-    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     cart.pizza_order.add(pizza_order)
     cart.save()
@@ -134,7 +143,7 @@ def add_sub(request):
     large = is_large(request)
     sub_order = SubsOrder.objects.create(sub_id=Sub.objects.get(id=id), large=large)
     sub_order.save()
-    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     cart.sub_order.add(sub_order)
     cart.save()
@@ -145,7 +154,7 @@ def add_salad(request):
     salad_order = SaladOrder.objects.create(salad_id=Salad.objects.get(id=id))
     salad_order.save()
     print(salad_order)
-    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     cart.salad_order.add(salad_order)
     cart.save()
@@ -155,7 +164,7 @@ def add_pasta(request):
     id = request.POST['id']
     pasta_order = PastaOrder.objects.create(pasta_id=Pasta.objects.get(id=id))
     pasta_order.save()
-    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     cart.pasta_order.add(pasta_order)
     cart.save()
@@ -166,7 +175,7 @@ def add_dinner(request):
     large = is_large(request)
     dinner_order = DinnerPlateOrder.objects.create(dinner_plate_id=DinnerPlate.objects.get(id=id), large=large)
     dinner_order.save()
-    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     cart.dinner_plate_order.add(dinner_order)
     cart.save()

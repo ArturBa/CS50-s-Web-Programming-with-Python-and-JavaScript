@@ -1,55 +1,103 @@
 {% extends "orders/base.html" %}
+{% load static %}
 
 {% block title %}
     Checkout
 {% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" href="{% static 'orders/style/checkout.css' %}"/>
+    <script src="{% static 'orders/js/checkout.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-    {% for pizza in cart.pizza_order.all %}
-        <div class="checkout-item">
-            <h2>
-                {{ pizza.pizza_id.name }}
-            </h2>
-            Size: {% if pizza.large %} big {% else %} small {% endif %} <br>
-            Toppings:
-            {% for topping in pizza.toppings.all %}
-                {{ topping.name }}
-            {% endfor %} <br>
-            Price:
-            <div style="display: inline" class="price">{% if pizza.large %} {{ pizza.pizza_id.price_large }} {% else %}
-                {{ pizza.pizza_id.price_small }}{% endif %}</div>
+    <div class="row">
+        <div class="col-md-6">
+
+            {% for pizza in cart.pizza_order.all %}
+                <div class="checkout-item">
+                    <h2>
+                        {{ pizza.pizza_id.name }}
+                    </h2>
+                    Size: {% if pizza.large %} big {% else %} small {% endif %} <br>
+                    Toppings:
+                    {% for topping in pizza.toppings.all %}
+                        {{ topping.name }}
+                    {% endfor %} <br>
+                    Price:
+                    <div style="display: inline" class="price">{% if pizza.large %}
+                        {{ pizza.pizza_id.price_large }} {% else %}
+                        {{ pizza.pizza_id.price_small }}{% endif %}</div>
+                </div>
+            {% endfor %}
+
+            {% for sub in cart.sub_order.all %}
+                <div class="checkout-item">
+                    <h2>
+                        {{ sub.sub_id.name }}
+                    </h2>
+                    Size: {% if sub.large %} big {% else %} small {% endif %} <br>
+                    Extra cheese: {% if sub.extra_cheese %} yes
+                    <div class="extra-cheese" style="display: inline; opacity: 0">y</div> {% else %} no {% endif %} <br>
+                    Adds:
+                    {% for adds in sub.adds.all %}
+                        {{ adds.name }}
+                    {% endfor %}
+                    <div class="add-count" style="display: inline; opacity: 0">{{ sub.adds.all.count }}</div>
+                    <br>
+                    Price:
+                    <div style="display: inline" class="price">
+                        {% if sub.large %}
+                            {{ sub.sub_id.price_large }}
+                        {% else %}
+                            {{ sub.sub_id.price_small }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% for salad in cart.salad_order.all %}
+                <div class="checkout-item">
+                    <h2>
+                        {{ salad.salad_id.name }}
+                    </h2>
+                    Price:
+                    <div style="display: inline" class="price">{{ salad.salad_id.price }} </div>
+                </div>
+            {% endfor %}
+
+            {% for pasta in cart.pasta_order.all %}
+                <div class="checkout-item">
+                    <h2>
+                        {{ pasta.pasta_id.name }}
+                    </h2>
+                    Price:
+                    <div style="display: inline" class="price">{{ pasta.pasta_id.price }} </div>
+                </div>
+            {% endfor %}
+
+            {% for dinner_plate in cart.dinner_plate_order.all %}
+                <div class="checkout-item">
+                    <h2>
+                        {{ dinner_plate.dinner_plate_id.name }}
+                    </h2>
+                    Size: {% if dinner_plate.large %} big {% else %} small {% endif %} <br>
+                    Price:
+                    <div style="display: inline" class="price">{% if dinner_plate.large %}
+                        {{ dinner_plate.dinner_plate_id.price_large }} {% else %}
+                        {{ dinner_plate.dinner_plate_id.price_small }}{% endif %}</div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-
-    {% for sub in cart.sub_order.all %}
-        <div class="checkout-item">
-            <h2>
-                {{ sub.sub_id.name }}
-            </h2>
-            Size: {% if sub.large %} big {% else %} small {% endif %} <br>
-            Extra cheese: {% if sub.extra_cheese %} yes {% else %} no {% endif %} <br>
-            Adds:
-            {% for adds in sub.adds.all %}
-                {{ adds.name }}
-            {% endfor %} <br>
-            Price:
-            <div style="display: inline" class="price">{% if sub.large %} {{ sub.sub_id.price_large }} {% else %}
-                {{ sub.sub_id.price_small }}{% endif %}</div>
+        <div class="col-md-6 order-details">
+            Total:
+            <div style="display: inline" class="total-price"></div>
+            <form action="make_order" method="post">
+                {% csrf_token %}
+                <textarea placeholder="address" cols="40" maxlength="512" required></textarea>
+                <textarea placeholder="Additional info" cols="40" maxlength="512"></textarea>
+                <button>Place order</button>
+            </form>
         </div>
-    {% endfor %}
-
-    {% for salad in cart.salad_order.all %}
-        {{ salad.salad_id.name }}
-    {% endfor %}
-
-    {% for pasta in cart.pasta_order.all %}
-        {{ pasta.pasta_id.name }}
-    {% endfor %}
-
-    {% for dinner_plate in cart.dinner_plate_order.all %}
-        {{ dinner_plate.dinner_plate_id.name }}
-    {% endfor %}
+    </div>
 {% endblock %}
