@@ -15,6 +15,7 @@
     {% for order in orders %}
         <div class="order">
             Status: {{ order.status.name }} <br>
+            Date: <i>{{ order.creation_date|date:'D d M Y' }}</i><br>
             {% if order.pizza_order.all %} Pizza: {% endif %}
             {% for pizza in order.pizza_order.all %}
                 {{ pizza.pizza_id.name }}

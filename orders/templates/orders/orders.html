@@ -5,5 +5,34 @@
 {% endblock %}
 
 {% block content %}
-    This is a page for cookers
+    {% for order in orders %}
+        <div class="order">
+            Status: {{ order.status.name }} <br>
+            Date: <i>{{ order.creation_date|date:'D d M Y' }}</i><br>
+            {% if order.pizza_order.all %} Pizza: {% endif %}
+            {% for pizza in order.pizza_order.all %}
+                {{ pizza.pizza_id.name }}
+            {% endfor %}
+            {% if order.pizza_order.all %} <br> {% endif %}
+            {% if order.sub_order.all %} Sub: {% endif %}
+            {% for sub in order.sub_order.all %}
+                {{ sub.sub_id.name }}
+            {% endfor %}
+            {% if order.sub_order.all %} <br> {% endif %}
+            {% if order.salad_order.all %} Salad: {% endif %}
+            {% for salad in order.salad_order.all %}
+                {{ salad.salad_id.name }}
+            {% endfor %}
+            {% if order.salad_order.all %} <br> {% endif %}
+            {% if order.pasta_order.all %} Pasta: {% endif %}
+            {% for pasta in order.pasta_order.all %}
+                {{ pasta.pasta_id.name }}
+            {% endfor %}
+            {% if order.pasta_order.all %} <br> {% endif %}
+            {% if order.dinner_plate_order.all %} Dinner plates: {% endif %}
+            {% for dinner_plate in order.dinner_plate_order.all %}
+                {{ dinner_plate.dinner_plate_id.name }}
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}

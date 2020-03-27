@@ -67,7 +67,9 @@ def orders_view(request):
         for group in request.user.groups.all():
             groups.append(group.name)
         if 'cook' in groups:
-            return render(request, "orders/orders.html")
+            status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
+            orders = Order.objects.exclude(status=status).order_by('creation_date')
+            return render(request, "orders/orders.html", {'orders': orders})
         else:
             return render(request, "orders/login.html",
                           {"message": "Look's like you dont have permissions here. Try relogin."})
@@ -103,7 +105,6 @@ def make_order(request):
 def user_view(request):
     status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     orders = Order.objects.filter(user_id=request.user.id).exclude(status=status).order_by('creation_date')
-    print(orders)
     return render(request, "orders/user.html", {'orders': orders})
 
 
