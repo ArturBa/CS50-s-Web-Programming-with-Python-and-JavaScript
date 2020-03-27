@@ -173,6 +173,8 @@ class Order(models.Model):
     salad_order = models.ManyToManyField(SaladOrder, blank=True, related_name='order')
     pasta_order = models.ManyToManyField(PastaOrder, blank=True, related_name='order')
     dinner_plate_order = models.ManyToManyField(DinnerPlateOrder, blank=True, related_name='order')
+    add_info = models.CharField(blank=True, max_length=512)
+    location = models.CharField(blank=True, max_length=512)
 
     def __str__(self):
         return f'[{self.status.name}] Order by {self.user_id.first_name} from {self.creation_date}'

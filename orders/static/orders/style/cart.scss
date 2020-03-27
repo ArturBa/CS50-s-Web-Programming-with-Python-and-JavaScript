@@ -1,3 +1,5 @@
+@import "colors";
+
 .item-cart {
   width: 60%;
   margin: 20px auto;
@@ -15,9 +17,6 @@
 }
 
 label {
-  //  display: block;
-  //  position: relative;
-  //  left: 20px;
   padding-left: 20px;
 }
 
@@ -31,4 +30,13 @@ label {
 }
 
 select {
+}
+
+#checkout {
+  background-color: $green;
+  position: fixed;
+  border-radius: 20px;
+  top: 45%;
+  right: 7%;
+  padding: 20px;
 }

@@ -21,29 +21,29 @@
     {% for pizza in cart.pizza_order.all %}
         <div class="pizza-cart item-cart">
             <h2>Pizza: {{ pizza.pizza_id.type.name }}: {{ pizza.pizza_id.name }}</h2>
-            <form>
+            <form action="{% url 'update_pizza' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ pizza.id }}">
                 {% for i in pizza.pizza_id.toppings_count|range %}
                     <label>
-                        <label>
-                            <select>
-                                {% for top in toppings %}
-                                    <option value="{{ top.id }}">{{ top.name }}</option><br>
-                                {% endfor %}
-                            </select>
-                        </label>
+                        <select name="toppings">
+                            {% for top in toppings %}
+                                <option value="{{ top.id }}">{{ top.name }}</option><br>
+                            {% endfor %}
+                        </select>
                     </label>
                 {% endfor %}
                 <br>
                 <label>
                     {% if pizza.large %}
-                        <input class="large" type="checkbox" checked> Big
+                        <input name="big" class="large" type="checkbox" checked> Big
                     {% else %}
-                        <input class="large" type="checkbox" checked> Big
+                        <input name="big" class="large" type="checkbox"> Big
                     {% endif %}<br>
                 </label>
                 <label>
                     Quantity:
-                    <input class="quantity" type="number" min="0" step="1" value="{{ pizza.quantity }}">
+                    <input name="quantity" class="quantity" type="number" min="0" step="1" value="{{ pizza.quantity }}">
                 </label>
             </form>
 
@@ -56,10 +56,12 @@
     {% for sub in cart.sub_order.all %}
         <div class="sub-cart item-cart">
             <h2>Sub: {{ sub.sub_id.name }}</h2>
-            <form>
+            <form action="{% url 'update_sub' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ sub.id }}" name="id">
                 {% if sub.sub_id.adds_available %}
                     <label>
-                        <select multiple>
+                        <select multiple name="adds" class="adds">
                             {% for add in sub_adds %}
                                 <option value="{{ add.id }}">{{ add.name }} + {{ add.price }}</option>
                             {% endfor %}
@@ -70,24 +72,26 @@
                 <label>
                     {% if sub.large %}
                         {% if sub.sub_id.price_large and sub.sub_id.price_small %}
-                            <input class="large" type="checkbox" checked> Big
+                            <input name="big" class="large" type="checkbox" checked> Big
                         {% else %}
-                            <input class="large" type="checkbox" checked="checked" onclick="return false;"> Big
+                            <input name="big" class="large" type="checkbox" checked="checked" onclick="return false;">
+                            Big
                         {% endif %}
                     {% else %}
                         {% if sub.sub_id.price_large and sub.sub_id.price_small %}
-                            <input class="large" type="checkbox"> Big
+                            <input name="big" class="large" type="checkbox"> Big
                         {% else %}
-                            <input class="large" type="checkbox" onclick="return false;"> Big
+                            <input name="big" class="large" type="checkbox" onclick="return false;"> Big
                         {% endif %}
                     {% endif %}
                 </label>
                 <label>
-                    <input class="extra-cheese" type="checkbox"> Extra cheese + {{ sub.sub_id.extra_cheese_price }}
+                    <input name="cheese" class="extra-cheese" type="checkbox"> Extra cheese
+                    + {{ sub.sub_id.extra_cheese_price }}
                 </label><br>
                 <label>
                     Quantity:
-                    <input class="quantity" type="number" min="0" step="1" value="{{ sub.quantity }}">
+                    <input name="quantity" class="quantity" type="number" min="0" step="1" value="{{ sub.quantity }}">
                 </label>
             </form>
 
@@ -97,59 +101,62 @@
         </div>
     {% endfor %}
 
-    {% for salad in cart.salad_order.all %}
-        <div class="salad-cart item-cart">
-            <h2>Salad: {{ salad.salad_id.name }}</h2>
+    {#    {% for salad in cart.salad_order.all %}#}
+    {#        <div class="salad-cart item-cart">#}
+    {#            <h2>Salad: {{ salad.salad_id.name }}</h2>#}
+    {##}
+    {#            <form>#}
+    {#                <label>#}
+    {#                    Quantity:#}
+    {#                    <input class="quantity" type="number" min="0" step="1" value="{{ salad.quantity }}">#}
+    {#                </label>#}
+    {#            </form>#}
+    {##}
+    {#            <div class="price">{{ salad.salad_id.price }}</div>#}
+    {#        </div>#}
+    {#    {% endfor %}#}
+    {##}
+    {#    {% for pasta in cart.pasta_order.all %}#}
+    {#        <div class="pasta-cart item-cart">#}
+    {#            <h2>Pasta: {{ pasta.pasta_id.name }}</h2>#}
+    {#            <form>#}
+    {#                <label>#}
+    {#                    Quantity:#}
+    {#                    <input class="quantity" type="number" min="0" step="1" value="{{ pasta.quantity }}">#}
+    {#                </label>#}
+    {#            </form>#}
+    {##}
+    {#            <div class="price">{{ pasta.pasta_id.price }}</div>#}
+    {#        </div>#}
+    {#    {% endfor %}#}
+    {##}
+    {#    {% for dinner_plate in cart.dinner_plate_order.all %}#}
+    {#        <div class="dinner_plate-cart item-cart">#}
+    {#            <h2>Dinner plate: {{ dinner_plate.dinner_plate_id.name }}</h2>#}
+    {##}
+    {#            <form>#}
+    {#                <label>#}
+    {#                    {% if dinner_plate.large %}#}
+    {#                        <input class="large" type="checkbox" checked> Big#}
+    {#                    {% else %}#}
+    {#                        <input class="large" type="checkbox"> Big#}
+    {#                    {% endif %}<br>#}
+    {#                </label>#}
+    {#                <label>#}
+    {#                    Quantity:#}
+    {#                    <input class="quantity" type="number" min="0" step="1" value="{{ dinner_plate.quantity }}">#}
+    {#                </label>#}
+    {#            </form>#}
+    {##}
+    {#            <div class="hidden price-small">{{ dinner_plate.dinner_plate_id.price_small }}</div>#}
+    {#            <div class="hidden price-large">{{ dinner_plate.dinner_plate_id.price_large }}</div>#}
+    {#            <div class="price"></div>#}
+    {#        </div>#}
+    {#    {% endfor %}#}
 
-            <form>
-                <label>
-                    Quantity:
-                    <input class="quantity" type="number" min="0" step="1" value="{{ salad.quantity }}">
-                </label>
-            </form>
-
-            <div class="price">{{ salad.salad_id.price }}</div>
-        </div>
-    {% endfor %}
-
-    {% for pasta in cart.pasta_order.all %}
-        <div class="pasta-cart item-cart">
-            <h2>Pasta: {{ pasta.pasta_id.name }}</h2>
-            <form>
-                <label>
-                    Quantity:
-                    <input class="quantity" type="number" min="0" step="1" value="{{ pasta.quantity }}">
-                </label>
-            </form>
-
-            <div class="price">{{ pasta.pasta_id.price }}</div>
-        </div>
-    {% endfor %}
-
-    {% for dinner_plate in cart.dinner_plate_order.all %}
-        <div class="dinner_plate-cart item-cart">
-            <h2>Dinner plate: {{ dinner_plate.dinner_plate_id.name }}</h2>
-
-            <form>
-                <label>
-                    {% if dinner_plate.large %}
-                        <input class="large" type="checkbox" checked> Big
-                    {% else %}
-                        <input class="large" type="checkbox"> Big
-                    {% endif %}<br>
-                </label>
-                <label>
-                    Quantity:
-                    <input class="quantity" type="number" min="0" step="1" value="{{ dinner_plate.quantity }}">
-                </label>
-            </form>
-
-            <div class="hidden price-small">{{ dinner_plate.dinner_plate_id.price_small }}</div>
-            <div class="hidden price-large">{{ dinner_plate.dinner_plate_id.price_large }}</div>
-            <div class="price"></div>
-        </div>
-    {% endfor %}
-
-    <div class="total-price"></div>
+    <div id="checkout">
+        <div class="total-price"></div>
+        <button onclick="checkout()">Checkout</button>
+    </div>
 
 {% endblock %}

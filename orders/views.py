@@ -99,7 +99,6 @@ def add(request):
             add_dinner(request)
         else:
             return HttpResponse('', status=400)
-        print(f'{type}: {id}')
         return HttpResponse('', status=200)
     except Exception as exception:
         print(exception)
@@ -165,3 +164,60 @@ def add_dinner(request):
     cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     cart.dinner_plate_order.add(dinner_order)
     cart.save()
+
+
+def update_sub(request):
+    if request.method != 'POST':
+        return HttpResponse('Wrong method', status=400)
+    try:
+        id = request.POST['id']
+        quantity = int(request.POST.get('quantity'))
+        sub = SubsOrder.objects.get(id=id)
+        if quantity == 0:
+            sub.delete()
+            return HttpResponse('Sub Order deleted', status=200)
+
+        cheese = True if request.POST.get('cheese', False) else False
+        big = True if request.POST.get('big', False) else False
+        adds = request.POST.getlist('adds')
+        print(f'Id: {id} q: {quantity} cheese: {cheese} big: {big} add: {adds}')
+
+        sub.quantity = quantity
+        sub.extra_cheese = cheese
+        sub.large = big
+        sub.adds.clear()
+        for add_id in adds:
+            sub.adds.add(SubAdd.objects.get(id=add_id))
+        sub.save()
+        return HttpResponse('Sub updated', status=200)
+    except Exception as exception:
+        print(exception)
+        return HttpResponse(f'Exception {exception}', status=400)
+
+
+def update_pizza(request):
+    print('pizza update')
+    if request.method != 'POST':
+        return HttpResponse('Wrong method', status=400)
+    try:
+        id = request.POST['id']
+        quantity = int(request.POST.get('quantity'))
+        order = PizzaOrder.objects.get(id=id)
+        if quantity == 0:
+            order.delete()
+            return HttpResponse('Pizza order deleted', status=200)
+
+        big = True if request.POST.get('big', False) else False
+        toppings = request.POST.getlist('toppings')
+        print(f'Pizza id: {id} q: {quantity} big: {big} toppings: {toppings}')
+
+        order.quantity = quantity
+        order.large = big
+        order.toppings.clear()
+        for top_id in toppings:
+            order.toppings.add(Topping.objects.get(id=top_id))
+        order.save()
+        return HttpResponse('Pizza order updated', status=200)
+    except Exception as exception:
+        print(type(exception))
+        return HttpResponse(f'Exception {exception}', status=400)
