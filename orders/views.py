@@ -82,6 +82,12 @@ def cart_view(request):
     return render(request, "orders/cart.html", {'cart': cart, 'toppings': toppings, 'sub_adds': sub_adds})
 
 
+def checkout_view(request):
+    status = OrderStatus.objects.get_or_create(name="cart")[0]
+    cart = Order.objects.get_or_create(user_id=request.user, status=status)[0]
+    return render(request, "orders/checkout.html", {'cart': cart})
+
+
 def add(request):
     if request.method != 'POST':
         return HttpResponse('', status=400)
@@ -196,7 +202,6 @@ def update_sub(request):
 
 
 def update_pizza(request):
-    print('pizza update')
     if request.method != 'POST':
         return HttpResponse('Wrong method', status=400)
     try:
@@ -218,6 +223,69 @@ def update_pizza(request):
             order.toppings.add(Topping.objects.get(id=top_id))
         order.save()
         return HttpResponse('Pizza order updated', status=200)
+    except Exception as exception:
+        print(type(exception))
+        return HttpResponse(f'Exception {exception}', status=400)
+
+
+def update_salad(request):
+    if request.method != 'POST':
+        return HttpResponse('Wrong method', status=400)
+    try:
+        id = request.POST['id']
+        quantity = int(request.POST.get('quantity'))
+        order = SaladOrder.objects.get(id=id)
+        if quantity == 0:
+            order.delete()
+            return HttpResponse('Salad order deleted', status=200)
+
+        order.quantity = quantity
+        order.save()
+        print(f'Salad id: {id} q: {quantity}')
+        return HttpResponse('Salad order updated', status=200)
+    except Exception as exception:
+        print(exception)
+        return HttpResponse(f'Exception {exception}', status=400)
+
+
+def update_pasta(request):
+    if request.method != 'POST':
+        return HttpResponse('Wrong method', status=400)
+    try:
+        id = request.POST['id']
+        quantity = int(request.POST.get('quantity'))
+        order = PastaOrder.objects.get(id=id)
+        if quantity == 0:
+            order.delete()
+            return HttpResponse('Pasta order deleted', status=200)
+
+        order.quantity = quantity
+        order.save()
+        print(f'Pasta id: {id} q: {quantity}')
+        return HttpResponse('Pasta order updated', status=200)
+    except Exception as exception:
+        print(type(exception))
+        return HttpResponse(f'Exception {exception}', status=400)
+
+
+def update_dinner(request):
+    if request.method != 'POST':
+        return HttpResponse('Wrong method', status=400)
+    try:
+        id = request.POST['id']
+        quantity = int(request.POST.get('quantity'))
+        order = DinnerPlateOrder.objects.get(id=id)
+        if quantity == 0:
+            order.delete()
+            return HttpResponse('Dinner plate order deleted', status=200)
+
+        big = True if request.POST.get('big', False) else False
+
+        order.quantity = quantity
+        order.large = big
+        order.save()
+        print(f'Dinner id: {id} q: {quantity} big: {big}')
+        return HttpResponse('Dinner plate order updated', status=200)
     except Exception as exception:
         print(type(exception))
         return HttpResponse(f'Exception {exception}', status=400)

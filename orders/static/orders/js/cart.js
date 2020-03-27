@@ -50,7 +50,6 @@ function checkout() {
                 //this will execute when form is submited without errors
             },
             error: function (data, status) {
-                console.log(`there was a error ${data}: ${status}`);
                 //this will execute when get any error
             },
         });
@@ -58,14 +57,6 @@ function checkout() {
     return false;
 }
 
-
-function SubForm(e1) {
-    console.log(`hi`);
-    e1.preventDefault();
-    e1.stopPropagation();
-    let post_form = $.post($(this).action, $(this).serialize());
-
-    post_form.done(function (result) {
-        // would be nice to show some feedback about the first result here
-    });
-}
+$(document).ajaxStop(function () {
+    location.replace('/checkout');
+});
