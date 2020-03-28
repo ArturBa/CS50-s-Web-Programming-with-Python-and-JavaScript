@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import views, utils
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -12,14 +12,14 @@ urlpatterns = [
     path("register", views.register_view, name="register"),
     path("orders", views.orders_view, name="orders"),
     path("cart", views.cart_view, name="cart"),
-    path("update/sub", views.update_sub, name="update_sub"),
-    path("update/pizza", views.update_pizza, name="update_pizza"),
-    path("update/salad", views.update_salad, name="update_salad"),
-    path("update/pasta", views.update_pasta, name="update_pasta"),
-    path("update/dinner", views.update_dinner, name="update_dinner"),
+    path("update/sub", utils.update_sub, name="update_sub"),
+    path("update/pizza", utils.update_pizza, name="update_pizza"),
+    path("update/salad", utils.update_salad, name="update_salad"),
+    path("update/pasta", utils.update_pasta, name="update_pasta"),
+    path("update/dinner", utils.update_dinner, name="update_dinner"),
     path("checkout", views.checkout_view, name="checkout"),
     path("make_order", views.make_order, name="make_order"),
     path("user", views.user_view, name="user"),
-    path("add/", views.add, name="add"),
-    path("order/update", views.update_order, name="update_order")
+    path("add/", utils.add, name="add"),
+    path("order/update", utils.update_order, name="update_order")
 ]
