@@ -67,9 +67,17 @@ def orders_view(request):
         for group in request.user.groups.all():
             groups.append(group.name)
         if 'cook' in groups:
-            status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
-            orders = Order.objects.exclude(status=status).order_by('creation_date')
-            return render(request, "orders/orders.html", {'orders': orders})
+            collecting_status = OrderStatus.objects.get_or_create(name="Collecting goods")[0]
+            cooking_status = OrderStatus.objects.get_or_create(name="Cooking")[0]
+            delivering_status = OrderStatus.objects.get_or_create(name="Delivering")[0]
+            completed_status = OrderStatus.objects.get_or_create(name="Completed")[0]
+            collecting_orders = Order.objects.filter(status=collecting_status).order_by('creation_date')
+            delivering_orders = Order.objects.filter(status=delivering_status).order_by('creation_date')
+            cooking_orders = Order.objects.filter(status=cooking_status).order_by('creation_date')
+            completed_orders = Order.objects.filter(status=completed_status).order_by('creation_date')
+            return render(request, "orders/orders.html",
+                          {'collecting': collecting_orders, 'cooking': cooking_orders, 'delivering': delivering_orders,
+                           'completed': completed_orders})
         else:
             return render(request, "orders/login.html",
                           {"message": "Look's like you dont have permissions here. Try relogin."})
@@ -104,7 +112,7 @@ def make_order(request):
 
 def user_view(request):
     status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
-    orders = Order.objects.filter(user_id=request.user.id).exclude(status=status).order_by('creation_date')
+    orders = Order.objects.filter(user_id=request.user.id).exclude(status=status).order_by('-creation_date')
     return render(request, "orders/user.html", {'orders': orders})
 
 
@@ -307,5 +315,20 @@ def update_dinner(request):
         print(f'Dinner id: {id} q: {quantity} big: {big}')
         return HttpResponse('Dinner plate order updated', status=200)
     except Exception as exception:
+        print(type(exception))
+        return HttpResponse(f'Exception {exception}', status=400)
+
+
+def update_order(request):
+    if request.method != 'POST':
+        return HttpResponse('Wrong method', status=400)
+    try:
+        id = request.POST['id']
+        order = Order.objects.get(id=id)
+        new_status = request.POST['status']
+        order.status = OrderStatus.objects.get_or_create(name=new_status)[0]
+        order.save()
+    except Exception as exception:
+        print(exception)
         print(type(exception))
         return HttpResponse(f'Exception {exception}', status=400)

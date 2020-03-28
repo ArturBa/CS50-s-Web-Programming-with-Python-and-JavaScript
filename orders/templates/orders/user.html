@@ -1,15 +1,17 @@
 {% extends "orders/base.html" %}
+{% load static %}
 
 {% block title %}
     User page
 {% endblock %}
 
 {% block head %}
-
+    <link rel="stylesheet" href="{% static 'orders/style/orders.css' %}"/>
 {% endblock %}
 
 {% block content %}
-    <h1>Hi {{ request.user.first_name }}</h1>
+    <h1>Hi {% if request.user.first_name %}{{ request.user.first_name }}{% else %}
+        {{ request.user.username }}{% endif %}</h1>
 
     <h2>Your orders: </h2>
     {% for order in orders %}

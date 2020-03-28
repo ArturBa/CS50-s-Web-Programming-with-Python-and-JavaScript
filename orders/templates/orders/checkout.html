@@ -7,6 +7,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'orders/style/checkout.css' %}"/>
+    <link rel="stylesheet" href="{% static 'orders/style/orders.css' %}"/>
     <script src="{% static 'orders/js/checkout.js' %}"></script>
 {% endblock %}
 
@@ -15,10 +16,8 @@
         <div class="col-md-6">
 
             {% for pizza in cart.pizza_order.all %}
-                <div class="checkout-item">
-                    <h2>
-                        {{ pizza.pizza_id.name }}
-                    </h2>
+                <div class="order">
+                    Pizza: {{ pizza.pizza_id.style.name }}{{ pizza.pizza_id.name }}<br>
                     Size: {% if pizza.large %} big {% else %} small {% endif %} <br>
                     Toppings:
                     {% for topping in pizza.toppings.all %}
@@ -32,7 +31,7 @@
             {% endfor %}
 
             {% for sub in cart.sub_order.all %}
-                <div class="checkout-item">
+                <div class="order">
                     <h2>
                         {{ sub.sub_id.name }}
                     </h2>
@@ -57,7 +56,7 @@
             {% endfor %}
 
             {% for salad in cart.salad_order.all %}
-                <div class="checkout-item">
+                <div class="order">
                     <h2>
                         {{ salad.salad_id.name }}
                     </h2>
@@ -67,7 +66,7 @@
             {% endfor %}
 
             {% for pasta in cart.pasta_order.all %}
-                <div class="checkout-item">
+                <div class="order">
                     <h2>
                         {{ pasta.pasta_id.name }}
                     </h2>
@@ -77,7 +76,7 @@
             {% endfor %}
 
             {% for dinner_plate in cart.dinner_plate_order.all %}
-                <div class="checkout-item">
+                <div class="order">
                     <h2>
                         {{ dinner_plate.dinner_plate_id.name }}
                     </h2>

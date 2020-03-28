@@ -39,7 +39,6 @@ function checkout() {
     $('form').each(function () {
         const url = $(this).attr('action');
         const fd = new FormData($(this)[0]);
-        console.log(`data: ${fd} url: ${url}`);
         $.ajax({
             type: "POST",
             url: url,

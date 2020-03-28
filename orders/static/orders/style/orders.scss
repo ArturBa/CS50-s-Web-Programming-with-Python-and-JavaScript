@@ -1,0 +1,23 @@
+.collecting, .cooking, .delivering, .completed {
+  max-height: 750px;
+  overflow-y: scroll;
+}
+
+h2 {
+  text-align: center;
+}
+
+.order {
+  padding: 20px;
+  margin: 10px 0;
+  background-color: #00000020;
+  border-radius: 20px;
+  position: relative;
+
+  button {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+}

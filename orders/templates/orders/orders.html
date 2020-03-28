@@ -1,38 +1,203 @@
 {% extends "orders/base.html" %}
+{% load static %}
 
 {% block title %}
     Orders
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'orders/style/orders.css' %}"/>
+    <script src="{% static 'orders/js/orders.js' %}"></script>
+{% endblock %}
+
 {% block content %}
-    {% for order in orders %}
-        <div class="order">
-            Status: {{ order.status.name }} <br>
-            Date: <i>{{ order.creation_date|date:'D d M Y' }}</i><br>
-            {% if order.pizza_order.all %} Pizza: {% endif %}
-            {% for pizza in order.pizza_order.all %}
-                {{ pizza.pizza_id.name }}
-            {% endfor %}
-            {% if order.pizza_order.all %} <br> {% endif %}
-            {% if order.sub_order.all %} Sub: {% endif %}
-            {% for sub in order.sub_order.all %}
-                {{ sub.sub_id.name }}
-            {% endfor %}
-            {% if order.sub_order.all %} <br> {% endif %}
-            {% if order.salad_order.all %} Salad: {% endif %}
-            {% for salad in order.salad_order.all %}
-                {{ salad.salad_id.name }}
-            {% endfor %}
-            {% if order.salad_order.all %} <br> {% endif %}
-            {% if order.pasta_order.all %} Pasta: {% endif %}
-            {% for pasta in order.pasta_order.all %}
-                {{ pasta.pasta_id.name }}
-            {% endfor %}
-            {% if order.pasta_order.all %} <br> {% endif %}
-            {% if order.dinner_plate_order.all %} Dinner plates: {% endif %}
-            {% for dinner_plate in order.dinner_plate_order.all %}
-                {{ dinner_plate.dinner_plate_id.name }}
-            {% endfor %}
+    <div class="row">
+        <div style="flex: 1">
+            <h2>Collecting</h2>
+            <div class="collecting">
+
+                {% for order in collecting %}
+                    <div class="order">
+                        ID: {{ order.id }} <br>
+                        {% if order.pizza_order.all %} Pizza:
+                            {% for pizza in order.pizza_order.all %}
+                                <i><br>&emsp;{{ pizza.pizza_id.name }}</i>
+                                [{{ pizza.quantity }}]
+                                {% if pizza.large %}
+                                    [B]
+                                {% else %}
+                                    [S]
+                                {% endif %}
+                                :
+                                {% for top in pizza.toppings.all %}
+                                    {{ top.name }}
+                                {% endfor %}
+                            {% endfor %}<br>
+                        {% endif %}
+                        {% if order.sub_order.all %} Sub:
+                            {% for sub in order.sub_order.all %}
+                                <i><br>&emsp;{{ sub.sub_id.name }}</i>
+                                [{{ sub.quantity }}]
+                                {% if sub.large %}
+                                    [B]
+                                {% else %}
+                                    [S]
+                                {% endif %}
+                                {% if sub.extra_cheese %}
+                                    [Ch]
+                                {% else %}
+                                    [No]
+                                {% endif %}
+                                :
+                                {% for add in sub.adds.all %}
+                                    {{ add.name }}
+                                {% endfor %}
+                            {% endfor %} <br>
+                        {% endif %}
+                        {% if order.salad_order.all %} Salad:
+                            {% for salad in order.salad_order.all %}
+                                <i><br>&emsp;{{ salad.salad_id.name }}</i>
+                                [{{ salad.quantity }}]
+                            {% endfor %} <br>
+                        {% endif %}
+                        {% if order.pasta_order.all %} Pasta:
+                            {% for pasta in order.pasta_order.all %}
+                                <i><br>&emsp;{{ pasta.pasta_id.name }}</i>
+                                [{{ pasta.quantity }}]
+                            {% endfor %} <br>
+                        {% endif %}
+                        {% if order.dinner_plate_order.all %} Dinner plates:
+                            {% for dinner_plate in order.dinner_plate_order.all %}
+                                <i><br>&emsp;{{ dinner_plate.dinner_plate_id.name }}</i>
+                                [{{ dinner_plate.quantity }}]
+                                {% if dinner_plate.large %}
+                                    [B]
+                                {% else %}
+                                    [S]
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <form method="post" action="{% url 'update_order' %}"
+                              onsubmit="submitForm(event); return false;">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="Cooking">
+                            <input type="hidden" name="id" value="{{ order.id }}">
+                            <button>Cooking</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    {% endfor %}
+        <div style="flex: 1">
+            <h2>Cooking</h2>
+            <div class="cooking">
+
+                {% for order in cooking %}
+
+                    <div class="order">
+                        ID: {{ order.id }} <br>
+                        {% if order.pizza_order.all %} Pizza:
+                            {% for pizza in order.pizza_order.all %}
+                                <i><br>&emsp;{{ pizza.pizza_id.name }}</i>
+                                [{{ pizza.quantity }}]
+                                {% if pizza.large %}
+                                    [B]
+                                {% else %}
+                                    [S]
+                                {% endif %}
+                                :
+                                {% for top in pizza.toppings.all %}
+                                    {{ top.name }}
+                                {% endfor %}
+                            {% endfor %}<br>
+                        {% endif %}
+                        {% if order.sub_order.all %} Sub:
+                            {% for sub in order.sub_order.all %}
+                                <i><br>&emsp;{{ sub.sub_id.name }}</i>
+                                [{{ sub.quantity }}]
+                                {% if sub.large %}
+                                    [B]
+                                {% else %}
+                                    [S]
+                                {% endif %}
+                                {% if sub.extra_cheese %}
+                                    [Ch]
+                                {% else %}
+                                    [No]
+                                {% endif %}
+                                :
+                                {% for add in sub.adds.all %}
+                                    {{ add.name }}
+                                {% endfor %}
+                            {% endfor %} <br>
+                        {% endif %}
+                        {% if order.salad_order.all %} Salad:
+                            {% for salad in order.salad_order.all %}
+                                <i><br>&emsp;{{ salad.salad_id.name }}</i>
+                                [{{ salad.quantity }}]
+                            {% endfor %} <br>
+                        {% endif %}
+                        {% if order.pasta_order.all %} Pasta:
+                            {% for pasta in order.pasta_order.all %}
+                                <i><br>&emsp;{{ pasta.pasta_id.name }}</i>
+                                [{{ pasta.quantity }}]
+                            {% endfor %} <br>
+                        {% endif %}
+                        {% if order.dinner_plate_order.all %} Dinner plates:
+                            {% for dinner_plate in order.dinner_plate_order.all %}
+                                <i><br>&emsp;{{ dinner_plate.dinner_plate_id.name }}</i>
+                                [{{ dinner_plate.quantity }}]
+                                {% if dinner_plate.large %}
+                                    [B]
+                                {% else %}
+                                    [S]
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {{ order.ad_info }}
+                        <form method="post" action="{% url 'update_order' %}"
+                              onsubmit="submitForm(event); return false;">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="Delivering">
+                            <input type="hidden" name="id" value="{{ order.id }}">
+                            <button>Deliver</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div style="flex: 1">
+            <h2> Delivering </h2>
+            <div class="delivering">
+                {% for order in delivering %}
+                    <div class="order">
+                        ID: {{ order.id }}<br>
+                        Address: {{ order.address }}
+                        {{ order.ad_info }}
+                        <form method="post" action="{% url 'update_order' %}"
+                              onsubmit="submitForm(event); return false;">
+                            {% csrf_token %}
+                            <input type="hidden" name="status" value="Completed">
+                            <input type="hidden" name="id" value="{{ order.id }}">
+                            <button>Complete</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div style="flex: 1">
+            <h2>Completed</h2>
+            <div class="completed">
+
+                {% for order in completed %}
+
+                    <div class="order">
+                        ID: {{ order.id }}<br>
+                        Date: <i>{{ order.creation_date|date:'D d M Y' }}</i><br>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
