@@ -101,10 +101,14 @@ def checkout_view(request):
 
 
 def make_order(request):
+    if request.method != 'POST':
+        return HttpResponseRedirect(reverse("index"))
     status = OrderStatus.objects.get_or_create(name="In shopping cart")[0]
     order = Order.objects.get_or_create(user_id=request.user, status=status)[0]
     status = OrderStatus.objects.get_or_create(name="Collecting goods")[0]
     order.status = status
+    order.address = request.POST['address']
+    order.add_info = request.POST['add_info']
     order.creation_date = datetime.now()
     order.save()
     return HttpResponseRedirect(reverse("index"))
@@ -252,7 +256,7 @@ def update_pizza(request):
         order.save()
         return HttpResponse('Pizza order updated', status=200)
     except Exception as exception:
-        print(type(exception))
+        print(exception)
         return HttpResponse(f'Exception {exception}', status=400)
 
 

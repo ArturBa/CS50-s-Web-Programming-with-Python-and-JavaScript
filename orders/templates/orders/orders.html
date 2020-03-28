@@ -153,8 +153,8 @@
                                     [S]
                                 {% endif %}
                             {% endfor %}
-                        {% endif %}
-                        {{ order.ad_info }}
+                        {% endif %}<br>
+                        {{ order.add_info }}
                         <form method="post" action="{% url 'update_order' %}"
                               onsubmit="submitForm(event); return false;">
                             {% csrf_token %}
@@ -172,8 +172,8 @@
                 {% for order in delivering %}
                     <div class="order">
                         ID: {{ order.id }}<br>
-                        Address: {{ order.address }}
-                        {{ order.ad_info }}
+                        Address: {{ order.address }}<br>
+                        {{ order.add_info }}
                         <form method="post" action="{% url 'update_order' %}"
                               onsubmit="submitForm(event); return false;">
                             {% csrf_token %}

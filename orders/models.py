@@ -167,7 +167,7 @@ class Order(models.Model):
     """
     status = models.ForeignKey(OrderStatus, on_delete=models.PROTECT, related_name="orders")
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
-    creation_date = models.DateField(auto_now_add=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
     pizza_order = models.ManyToManyField(PizzaOrder, blank=True, related_name='order')
     sub_order = models.ManyToManyField(SubsOrder, blank=True, related_name='order')
     salad_order = models.ManyToManyField(SaladOrder, blank=True, related_name='order')
