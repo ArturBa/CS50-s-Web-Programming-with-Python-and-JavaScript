@@ -1,0 +1,32 @@
+.item-cart {
+  width: 60%;
+  margin: 20px auto;
+  background-color: #00000020;
+  border-radius: 10px;
+  padding: 20px;
+  display: block;
+  position: relative; }
+
+.hidden {
+  height: 0;
+  opacity: 0; }
+
+label {
+  padding-left: 20px; }
+
+.price {
+  position: relative;
+  text-align: right; }
+
+.price:before {
+  content: '$'; }
+
+#checkout {
+  background-color: #239346;
+  position: fixed;
+  border-radius: 20px;
+  top: 45%;
+  right: 7%;
+  padding: 20px; }
+
+/*# sourceMappingURL=cart.css.map */

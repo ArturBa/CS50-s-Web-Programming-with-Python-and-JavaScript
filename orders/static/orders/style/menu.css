@@ -1,0 +1,30 @@
+.notification {
+  background-color: #239346;
+  border-radius: 20px;
+  position: fixed;
+  top: 15%;
+  right: 7%;
+  padding: 20px;
+  opacity: 0;
+  transition: all .5s ease-in-out; }
+
+h2 {
+  text-align: center;
+  color: #239346; }
+
+h3 {
+  text-align: center; }
+
+.notification.show {
+  opacity: 0.9; }
+
+.add-menu {
+  background-color: beige; }
+
+.table-menu {
+  width: 60%;
+  margin: 0 auto; }
+  .table-menu .price-menu {
+    width: 8em; }
+
+/*# sourceMappingURL=menu.css.map */
