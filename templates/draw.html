@@ -12,23 +12,19 @@
 <body style="overflow: hidden">
 
 <div id="horizontal">
-    <nav>Animal to draw</nav>
+    <nav>
+        <div class="load"></div>
+        <div class="text">{% trans %} Draw: {% endtrans %}</div>
+    </nav>
     <div style="flex: 1">
         <canvas id="canvas">
-            Your browser dont support canvas :<
+            {% trans %}
+                Your browser dont support canvas :<
+            {% endtrans %}
         </canvas>
     </div>
-    {#    <div id="menu-bar"></div>#}
-    <div id="log">Logg</div>
+    <div id="menu-bar"></div>
+    {#    <div id="log">Logg</div>#}
 </div>
-{#<canvas id="canvas" width="400" height="400" styles="border:solid black 1px;">#}
-{#    You really badly need to use a different browser.#}
-{#</canvas>#}
-{#<br>#}
-{#<button onclick="window.startup();">Initialize</button>#}
-{#<br>#}
-{#Log:#}
-{#<pre id="log" styles="border: 1px solid #ccc;"></pre>#}
-{#<pre id="log" styles="border: 1px solid #ccc;"></pre>#}
 </body>
 </html>

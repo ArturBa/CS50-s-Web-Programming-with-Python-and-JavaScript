@@ -15,7 +15,7 @@
   height: 2ex;
   width: 100%;
   background-color: aqua;
-  font-size: 14pt;
+  font-size: 18pt;
   color: brown;
   padding: 4px;
   margin-right: 0;
@@ -25,6 +25,18 @@
 nav {
   @extend %bar;
   margin-top: 20px;
+
+  .text {
+    position: relative;
+    top: -2ex;
+    left: 1ex;
+  }
+
+  .load {
+    width: 0;
+    height: 100%;
+    background-color: gold;
+  }
 }
 
 #menu-bar {
