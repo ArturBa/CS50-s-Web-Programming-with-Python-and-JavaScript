@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/draw.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/draw.js') }}"></script>
+    <title>Draw and Guess</title>
+</head>
+<body style="overflow: hidden">
+
+<div id="horizontal">
+    <nav>Animal to draw</nav>
+    <div style="flex: 1">
+        <canvas id="canvas">
+            Your browser dont support canvas :<
+        </canvas>
+    </div>
+    {#    <div id="menu-bar"></div>#}
+    <div id="log">Logg</div>
+</div>
+{#<canvas id="canvas" width="400" height="400" styles="border:solid black 1px;">#}
+{#    You really badly need to use a different browser.#}
+{#</canvas>#}
+{#<br>#}
+{#<button onclick="window.startup();">Initialize</button>#}
+{#<br>#}
+{#Log:#}
+{#<pre id="log" styles="border: 1px solid #ccc;"></pre>#}
+{#<pre id="log" styles="border: 1px solid #ccc;"></pre>#}
+</body>
+</html>

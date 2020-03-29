@@ -1,0 +1,37 @@
+#horizontal {
+  width: 100vh;
+  height: 100vw;
+  -webkit-transform: rotate(90deg); /* Safari and Chrome */
+  -moz-transform: rotate(90deg); /* Firefox */
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -o-transform: rotate(90deg); /* Opera */
+  transform: rotate(90deg) translateY(-100vw);
+  transform-origin: top left;
+  display: flex;
+  flex-direction: column;
+}
+
+%bar {
+  height: 2ex;
+  width: 100%;
+  background-color: aqua;
+  font-size: 14pt;
+  color: brown;
+  padding: 4px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+nav {
+  @extend %bar;
+  margin-top: 20px;
+}
+
+#menu-bar {
+  @extend %bar;
+  margin-bottom: 10px;
+}
+
+#log {
+  @extend %bar;
+}

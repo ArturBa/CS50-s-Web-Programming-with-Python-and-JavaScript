@@ -34,9 +34,9 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/mobile")
+@app.route("/draw")
 def mobile():
-    return render_template('index_mobile.html')
+    return render_template('draw.html')
 
 
 @socketio.on('connect')

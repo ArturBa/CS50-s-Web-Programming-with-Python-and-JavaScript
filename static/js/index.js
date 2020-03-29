@@ -1,17 +1,8 @@
-$(document).ready(() => {
-    const socket = io();
-    checkMobile();
-    socket.on('connect', function () {
-        socket.emit('new_host');
-    });
-    socket.on('disconnect', function () {
-        socket.emit('remove_host');
-    });
-});
+checkMobile();
 
 function checkMobile() {
     if (isMobileDevice()) {
-        location.href = "/mobile";
+        location.href = "/draw";
     } else {
         $('.mobile').html('no');
     }
