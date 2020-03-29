@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Draw
+{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    {% trans %}Is mobile:{% endtrans %}
+    <div class="mobile"></div>
+{% endblock %}

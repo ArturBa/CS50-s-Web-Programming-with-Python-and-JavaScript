@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index_mobile.js') }}"></script>
+    <title>Draw and Guess</title>
+</head>
+<body>
+
+<canvas id="canvas" width="400" height="400" style="border:solid black 1px;">
+    You really badly need to use a different browser.
+</canvas>
+<br>
+<button onclick="window.startup();">Initialize</button>
+<br>
+Log:
+<pre id="log" style="border: 1px solid #ccc;"></pre>
+</body>
+</html>
