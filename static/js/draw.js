@@ -4,14 +4,19 @@ $(document).ready(() => {
     let rect = canvas.parentNode.getBoundingClientRect();
     canvas.width = rect.height;
     canvas.height = rect.width;
-    const position_offset = findPos(canvas);
+    positionOffset = findPos(canvas);
+    console.log(positionOffset);
     ctx = canvas.getContext('2d');
-    console.log(position_offset);
-    ctx.strokeRect(0, 0, 100, 100);
+    ctx.beginPath();
+    ctx.moveTo(0, 100);
+    ctx.lineTo(100, 100);
+    ctx.lineWidth = 5;
+    ctx.stroke();
 });
 
 let canvas;
 let ctx;
+let positionOffset;
 
 class Point {
     constructor(x, y) {
@@ -21,6 +26,7 @@ class Point {
 }
 
 let prevPoint;
+let currPoint = 0;
 
 function startup() {
     const el = document.body;
@@ -33,23 +39,36 @@ function startup() {
 }
 
 
-function handleStart(event) {
+function updateTouchPosition(event) {
     const touch = event.changedTouches[0];
-    prevPoint = new Point(parseInt(touch.clientY), parseInt(touch.clientX));
-    log(`Start X: ${prevPoint.x} Y: ${prevPoint.y}`);
+    prevPoint = currPoint;
+    currPoint = new Point(parseInt(touch.clientY) - positionOffset.x,
+        window.innerWidth - parseInt(touch.clientX) - positionOffset.y);
+}
+
+
+function handleStart(event) {
+    updateTouchPosition(event);
+    log(`Start X: ${currPoint.x} Y: ${currPoint.y}`);
     ctx.beginPath();
-    ctx.arc(prevPoint.x, prevPoint.y, 50, 0, 2 * Math.PI);
+    ctx.arc(currPoint.x, currPoint.y, 2.5, 0, 2 * Math.PI);
     ctx.fill();
 }
 
 function handleEnd(event) {
-    const touch = event.changedTouches[0];
-    log(`End X: ${touch.pageX} Y: ${touch.pageY}`);
+    updateTouchPosition(event);
+    prevPoint = 0;
+    log(`End X: ${currPoint.x} Y: ${currPoint.y}`);
 }
 
 function handleMove(event) {
-    const touch = event.changedTouches[0];
-    log(`Move X: ${touch.pageX} Y: ${touch.pageY}`);
+    updateTouchPosition(event);
+    log(`Move X: ${prevPoint.x} Y: ${prevPoint.y} to ${currPoint.x} ${currPoint.y}`);
+    ctx.beginPath();
+    ctx.moveTo(prevPoint.x, prevPoint.y);
+    ctx.lineTo(currPoint.x, currPoint.y);
+    ctx.lineWidth = 5;
+    ctx.stroke();
 }
 
 
