@@ -2,7 +2,7 @@ checkMobile();
 
 function checkMobile() {
     if (isMobileDevice()) {
-        location.href = "/draw";
+        location.href = "/mobile";
     } else {
         $('.mobile').html('no');
     }

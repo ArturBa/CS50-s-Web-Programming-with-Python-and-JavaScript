@@ -1,0 +1,48 @@
+#horizontal {
+  width: 100vh;
+  height: 100vw;
+  -webkit-transform: rotate(90deg);
+  /* Safari and Chrome */
+  -moz-transform: rotate(90deg);
+  /* Firefox */
+  -ms-transform: rotate(90deg);
+  /* IE 9 */
+  -o-transform: rotate(90deg);
+  /* Opera */
+  transform: rotate(90deg) translateY(-100vw);
+  transform-origin: top left;
+  display: flex;
+  flex-direction: column; }
+
+canvas {
+  background: #fff7f1; }
+
+nav, #menu-bar, #log {
+  height: 3ex;
+  width: 100%;
+  background-color: aqua;
+  font-size: 18pt;
+  color: brown;
+  padding: 4px;
+  margin-right: 0;
+  margin-left: 0; }
+
+nav {
+  margin-top: 20px; }
+  nav .text {
+    position: relative;
+    top: -2ex;
+    left: 1ex; }
+  nav .load {
+    width: 0;
+    height: 100%;
+    background-color: gold; }
+
+svg {
+  width: 50%;
+  height: 100%; }
+
+#menu-bar {
+  margin-bottom: 10px; }
+
+/*# sourceMappingURL=draw.css.map */

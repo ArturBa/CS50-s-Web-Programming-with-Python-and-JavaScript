@@ -1,4 +1,4 @@
-$(document).ready(() => {
+function getCanvas() {
     startup();
     canvas = document.getElementById('canvas');
     let rect = canvas.parentNode.getBoundingClientRect();
@@ -13,6 +13,12 @@ $(document).ready(() => {
             color = $(this).data('color');
         })
     })
+}
+
+$('canvas').onclick(function () {
+    if ($(this) === null){
+        getCanvas();
+    }
 });
 
 let color = 'black';

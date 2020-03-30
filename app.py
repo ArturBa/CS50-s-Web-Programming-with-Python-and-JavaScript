@@ -34,8 +34,13 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/draw")
+@app.route("/mobile")
 def mobile():
+    return render_template('index_mobile.html')
+
+
+@app.route("/draw")
+def draw():
     return render_template('draw.html')
 
 
