@@ -17,15 +17,16 @@
 canvas {
   background: #fff7f1; }
 
-nav, #menu-bar, #log {
-  height: 3ex;
-  width: 100%;
-  background-color: aqua;
-  font-size: 18pt;
-  color: brown;
-  padding: 4px;
-  margin-right: 0;
-  margin-left: 0; }
+nav, #menu-bar {
+    height: 3ex;
+    width: 100%;
+    background-color: aqua;
+    font-size: 18pt;
+    color: brown;
+    padding: 4px;
+    margin-right: 0;
+    margin-left: 0;
+}
 
 nav {
   margin-top: 20px; }
@@ -45,4 +46,4 @@ svg {
 #menu-bar {
   margin-bottom: 10px; }
 
-/*# sourceMappingURL=draw.css.map */
+/*# sourceMappingURL=mobile.css.map */

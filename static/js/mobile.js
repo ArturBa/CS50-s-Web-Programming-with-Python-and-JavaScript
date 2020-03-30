@@ -1,5 +1,6 @@
-function getCanvas() {
+$(document).ready(() => {
     startup();
+    // screen.orientation.lock("landscape");
     canvas = document.getElementById('canvas');
     let rect = canvas.parentNode.getBoundingClientRect();
     canvas.width = rect.height;
@@ -13,17 +14,11 @@ function getCanvas() {
             color = $(this).data('color');
         })
     })
-}
-
-$('canvas').onclick(function () {
-    if ($(this) === null){
-        getCanvas();
-    }
 });
 
 let color = 'black';
 const MAX_TIME = 30; // max time of drawing in seconds
-const LINE_WIDTH = 10; // max time of drawing in seconds
+const LINE_WIDTH = 10; // drawing line width
 let canvas;
 let ctx;
 let positionOffset;
@@ -45,7 +40,7 @@ function startup() {
     el.addEventListener("touchend", handleEnd, false);
     el.addEventListener("touchmove", handleMove, false);
     // el.addEventListener("touchcancel", handleCancel, false);
-    // el.addEventListener("touchleave", handleEnd, false);
+    el.addEventListener("touchleave", handleEnd, false);
 }
 
 
@@ -103,9 +98,26 @@ function findPos(obj) {
 function updateTimer() {
     currTime += 1;
     $('.load').css('width', `${currTime * 100 / MAX_TIME}%`);
+    if (currTime === MAX_TIME) {
+        sendImage();
+        clearCanvas();
+        currTime = 0;
+    }
 }
 
 function clearCanvas() {
-    // #F8ECC2
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
+
+function sendImage() {
+    const imgURL = canvas.toDataURL();
+    // console.log(imgURL);
+    $.ajax({
+        type: "POST",
+        url: "/save_img",
+        data: {
+            'img64': imgURL
+        },
+    });
 }

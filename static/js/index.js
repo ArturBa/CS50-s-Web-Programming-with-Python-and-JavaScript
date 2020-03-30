@@ -4,7 +4,7 @@ function checkMobile() {
     if (isMobileDevice()) {
         location.href = "/mobile";
     } else {
-        $('.mobile').html('no');
+        location.href = "/desktop";
     }
 }
 

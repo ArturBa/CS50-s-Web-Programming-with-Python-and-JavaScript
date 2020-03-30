@@ -2,24 +2,21 @@
 <html lang="en">
 <head>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/draw.css') }}">
     <title>Draw and Guess</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mobile.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mobile.js') }}"></script>
 </head>
 <body>
 <div id="fullscreen">
     <div id="horizontal">
         <nav>
             <div class="load"></div>
-            <div class="text">{% trans %} Draw: {% endtrans %}</div>
+            <div class="text">Draw:</div>
         </nav>
         <div style="flex: 1">
             <canvas id="canvas">
-                {% trans %}
-                    Your browser dont support canvas :<
-                {% endtrans %}
+                Your browser don't support canvas :<
             </canvas>
         </div>
         <div id="menu-bar">
@@ -34,7 +31,9 @@
             </svg>
         </div>
     </div>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/draw.js') }}"></script>
+</div>
+<div id="start">
+    <button id="toggleFullscreen">Start game</button>
 </div>
 </body>
 </html>
