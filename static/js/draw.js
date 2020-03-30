@@ -5,12 +5,19 @@ $(document).ready(() => {
     canvas.width = rect.height;
     canvas.height = rect.width;
     positionOffset = findPos(canvas);
-    console.log(positionOffset);
     ctx = canvas.getContext('2d');
     setInterval(updateTimer, 1000);
+
+    $('circle').each(function () {
+        $(this).on('click', function () {
+            color = $(this).data('color');
+        })
+    })
 });
 
+let color = 'black';
 const MAX_TIME = 30; // max time of drawing in seconds
+const LINE_WIDTH = 10; // max time of drawing in seconds
 let canvas;
 let ctx;
 let positionOffset;
@@ -33,7 +40,6 @@ function startup() {
     el.addEventListener("touchmove", handleMove, false);
     // el.addEventListener("touchcancel", handleCancel, false);
     // el.addEventListener("touchleave", handleEnd, false);
-    log("initialized.");
 }
 
 
@@ -47,31 +53,30 @@ function updateTouchPosition(event) {
 
 function handleStart(event) {
     updateTouchPosition(event);
-    log(`Start X: ${currPoint.x} Y: ${currPoint.y}`);
     ctx.beginPath();
-    ctx.arc(currPoint.x, currPoint.y, 2.5, 0, 2 * Math.PI);
+    ctx.arc(currPoint.x, currPoint.y, LINE_WIDTH / 2, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
     ctx.fill();
 }
 
 function handleEnd(event) {
     updateTouchPosition(event);
     prevPoint = 0;
-    log(`End X: ${currPoint.x} Y: ${currPoint.y}`);
 }
 
 function handleMove(event) {
     updateTouchPosition(event);
-    log(`Move X: ${prevPoint.x} Y: ${prevPoint.y} to ${currPoint.x} ${currPoint.y}`);
     ctx.beginPath();
     ctx.moveTo(prevPoint.x, prevPoint.y);
     ctx.lineTo(currPoint.x, currPoint.y);
-    ctx.lineWidth = 5;
+    ctx.lineWidth = LINE_WIDTH;
+    ctx.strokeStyle = color;
     ctx.stroke();
 }
 
 function log(msg) {
-    var p = document.getElementById('log');
-    p.innerHTML = msg + "\n";
+    // var p = document.getElementById('log');
+    // p.innerHTML = msg + "\n";
 }
 
 
@@ -90,7 +95,11 @@ function findPos(obj) {
 }
 
 function updateTimer() {
-    console.log(currTime);
     currTime += 1;
     $('.load').css('width', `${currTime * 100 / MAX_TIME}%`);
+}
+
+function clearCanvas() {
+    // #F8ECC2
+
 }
