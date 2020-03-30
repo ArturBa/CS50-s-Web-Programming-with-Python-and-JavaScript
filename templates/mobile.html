@@ -12,9 +12,9 @@
     <div id="horizontal">
         <nav>
             <div class="load"></div>
-            <div class="text">Draw:</div>
+            <div class="text">Draw: {{ animal }}</div>
         </nav>
-        <div style="flex: 1">
+        <div class="over-canvas">
             <canvas id="canvas">
                 Your browser don't support canvas :<
             </canvas>
@@ -31,9 +31,9 @@
             </svg>
         </div>
     </div>
-</div>
-<div id="start">
-    <button id="toggleFullscreen">Start game</button>
+    <div id="start">
+        <button onclick="start()">Start game</button>
+    </div>
 </div>
 </body>
 </html>

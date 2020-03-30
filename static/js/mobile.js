@@ -1,20 +1,22 @@
-$(document).ready(() => {
-    startup();
-    // screen.orientation.lock("landscape");
+function setUpCanvas() {
     canvas = document.getElementById('canvas');
-    let rect = canvas.parentNode.getBoundingClientRect();
-    canvas.width = rect.height;
-    canvas.height = rect.width;
+    // let rect = canvas.parentNode.getBoundingClientRect();
+    // canvas.width  = canvas.parentElement.clientWidth > canvas.parentElement.clientHeight ? canvas.parentElement.clientWidth : canvas.parentElement.clientHeight;
+    // canvas.height = canvas.parentElement.clientWidth < canvas.parentElement.clientHeight ? canvas.parentElement.clientWidth : canvas.parentElement.clientHeight;
+    // canvas.style.width = '100%';
+    // canvas.style.height = '100%';
+    canvas.width = window.innerHeight;
+    canvas.height = window.innerWidth - 2 * (10 + 40) - 4 * 5;
+    // canvas.height = rect.height;
     positionOffset = findPos(canvas);
     ctx = canvas.getContext('2d');
-    setInterval(updateTimer, 1000);
 
     $('circle').each(function () {
         $(this).on('click', function () {
             color = $(this).data('color');
         })
     })
-});
+}
 
 let color = 'black';
 const MAX_TIME = 30; // max time of drawing in seconds
@@ -34,7 +36,7 @@ class Point {
 let prevPoint;
 let currPoint = 0;
 
-function startup() {
+function setUpEvents() {
     const el = document.body;
     el.addEventListener("touchstart", handleStart, false);
     el.addEventListener("touchend", handleEnd, false);
@@ -47,8 +49,8 @@ function startup() {
 function updateTouchPosition(event) {
     const touch = event.changedTouches[0];
     prevPoint = currPoint;
-    currPoint = new Point(parseInt(touch.clientY) - positionOffset.x,
-        window.innerWidth - parseInt(touch.clientX) - positionOffset.y);
+    currPoint = new Point(parseInt(touch.clientX) - positionOffset.x,
+        parseInt(touch.clientY) - positionOffset.y);
 }
 
 
@@ -73,11 +75,6 @@ function handleMove(event) {
     ctx.lineWidth = LINE_WIDTH;
     ctx.strokeStyle = color;
     ctx.stroke();
-}
-
-function log(msg) {
-    // var p = document.getElementById('log');
-    // p.innerHTML = msg + "\n";
 }
 
 
@@ -112,7 +109,6 @@ function clearCanvas() {
 
 function sendImage() {
     const imgURL = canvas.toDataURL();
-    // console.log(imgURL);
     $.ajax({
         type: "POST",
         url: "/save_img",
@@ -120,4 +116,27 @@ function sendImage() {
             'img64': imgURL
         },
     });
+}
+
+
+function start() {
+    openFullscreen();
+    screen.orientation.lock("landscape");
+    setUpEvents();
+    setUpCanvas();
+    $('#start').remove();
+    setInterval(updateTimer, 1000);
+}
+
+function openFullscreen() {
+    const elem = document.getElementById('fullscreen');
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+    }
 }

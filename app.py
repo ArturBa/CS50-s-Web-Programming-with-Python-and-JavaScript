@@ -2,6 +2,8 @@ import os
 
 from flask import Flask, render_template, request, jsonify
 
+from animals import animals
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 app.config.from_pyfile('app.config')
@@ -16,7 +18,8 @@ def index():
 
 @app.route("/mobile")
 def mobile():
-    return render_template('mobile.html')
+    animal = animals['en'][0]
+    return render_template('mobile.html', animal=animal)
 
 
 @app.route("/desktop")

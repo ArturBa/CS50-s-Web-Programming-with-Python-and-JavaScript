@@ -1,34 +1,41 @@
 #horizontal {
-  width: 100vh;
-  height: 100vw;
-  -webkit-transform: rotate(90deg); /* Safari and Chrome */
-  -moz-transform: rotate(90deg); /* Firefox */
-  -ms-transform: rotate(90deg); /* IE 9 */
-  -o-transform: rotate(90deg); /* Opera */
-  transform: rotate(90deg) translateY(-100vw);
-  transform-origin: top left;
+  width: 100vw;
+  height: 100vh;
+  //-webkit-transform: rotate(90deg); /* Safari and Chrome */
+  //-moz-transform: rotate(90deg); /* Firefox */
+  //-ms-transform: rotate(90deg); /* IE 9 */
+  //-o-transform: rotate(90deg); /* Opera */
+  //transform: rotate(90deg) translateY(-100vw);
+  //transform-origin: top left;
   display: flex;
   flex-direction: column;
 }
 
+.over-canvas {
+  flex: 1;
+  margin: 0 auto;
+  background: aqua;
+}
+
 canvas {
+  margin: 0 auto;
   background: #fff7f1;
 }
 
 %bar {
-  height: 3ex;
+  height: 40px;
   width: 100%;
   background-color: aqua;
   font-size: 18pt;
   color: brown;
-  padding: 4px;
+  padding: 5px;
   margin-right: 0;
   margin-left: 0;
 }
 
 nav {
   @extend %bar;
-  margin-top: 20px;
+  margin-top: 10px;
 
   .text {
     position: relative;
@@ -56,3 +63,22 @@ svg {
   margin-bottom: 10px;
 }
 
+
+#start {
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: olive;
+  top: 0;
+  left: 0;
+
+  button {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    width: 200px;
+    height: 100px;
+    font-size: 20px;
+  }
+}
