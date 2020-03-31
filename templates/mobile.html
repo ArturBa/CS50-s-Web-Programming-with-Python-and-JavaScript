@@ -3,6 +3,7 @@
 <head>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
     <title>Draw and Guess</title>
+    <script src="https://kit.fontawesome.com/c6d318dc7c.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/mobile.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='js/mobile.js') }}"></script>
@@ -12,11 +13,13 @@
     <div id="horizontal">
         <nav>
             <div class="load"></div>
-            <div class="text">Draw: {{ animal }}</div>
+            <div class="text">
+                {% trans %} Draw: {% endtrans %} {{ animal }}
+            </div>
         </nav>
         <div class="over-canvas">
             <canvas id="canvas">
-                Your browser don't support canvas :<
+                {% trans %} Your browser don't support canvas :< {% endtrans %}
             </canvas>
         </div>
         <div id="menu-bar">
@@ -29,10 +32,15 @@
                 <circle cy="50%" cx="24ex" r="1.5ex" fill="#ffc425" data-color="#ffc425"></circle>
                 <circle cy="50%" cx="28ex" r="1.5ex" fill="#ffffff" data-color="#ffffff"></circle>
             </svg>
+            <i id="eraser" onclick="clearCanvas()" class="fa fa-eraser" aria-hidden="true"></i>
+            <i id="send" onclick="sendImage()" class="fa fa-paper-plane" aria-hidden="true"></i>
+
         </div>
     </div>
     <div id="start">
-        <button onclick="start()">Start game</button>
+        <button onclick="start()">
+            {% trans %} Start drawing {% endtrans %}
+        </button>
     </div>
 </div>
 </body>

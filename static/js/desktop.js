@@ -1,24 +1,21 @@
 $(document).ready(() => {
-    setInterval(newImage, 1000);
+    const socket = io();
+    await_text = $('#img').html();
+
+    socket.on('connect', () => {
+        socket.on('new img', () => {
+            newImage();
+        });
+
+    })
 });
 
-function httpImg() {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", '/get_img', true); // false for synchronous request
-    xmlHttp.send(null);
-    console.log(xmlHttp.responseType);
-    console.log(xmlHttp.responseURL);
-    return xmlHttp.responseURL;
-}
-
-
 function newImage() {
-    console.log('new image');
     $.ajax({
         url: '/get_img',
         processData: false,
     }).always(function (b64data) {
-        console.log(b64data['img']);
-        $('#img').attr("src", b64data['img']);
+        $('#img').html(`<img alt="${await_text}"></img>`);
+        $('img').attr("src", b64data['img']);
     });
 }

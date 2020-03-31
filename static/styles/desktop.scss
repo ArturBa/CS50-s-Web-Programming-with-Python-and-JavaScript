@@ -1,14 +1,15 @@
-%bar {
-  height: 3ex;
-  width: 100%;
-  background-color: aqua;
-  font-size: 18pt;
-  color: brown;
-  padding: 4px;
-  margin-right: 0;
-  margin-left: 0;
+img {
+  max-height: 100%;
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-nav {
-  @extend %bar;
+#img {
+  height: 80vh;
 }
+
+body {
+  text-align: center;
+}
+

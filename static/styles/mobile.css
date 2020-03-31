@@ -9,10 +9,6 @@
   margin: 0 auto;
   background: aqua; }
 
-canvas {
-  margin: 0 auto;
-  background: #fff7f1; }
-
 nav, #menu-bar {
   height: 40px;
   width: 100%;
@@ -40,6 +36,11 @@ svg {
 
 #menu-bar {
   margin-bottom: 10px; }
+  #menu-bar i {
+    height: 100%;
+    position: relative;
+    top: -20px;
+    padding-left: 20px; }
 
 #start {
   opacity: 1;

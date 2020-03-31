@@ -1,15 +1,18 @@
+let color = 'black';
+const MAX_TIME = 45; // max time of drawing in seconds
+const LINE_WIDTH = 10; // drawing line width
+let canvas;
+let ctx;
+let positionOffset;
+let currTime = 0;
+
 function setUpCanvas() {
     canvas = document.getElementById('canvas');
-    // let rect = canvas.parentNode.getBoundingClientRect();
-    // canvas.width  = canvas.parentElement.clientWidth > canvas.parentElement.clientHeight ? canvas.parentElement.clientWidth : canvas.parentElement.clientHeight;
-    // canvas.height = canvas.parentElement.clientWidth < canvas.parentElement.clientHeight ? canvas.parentElement.clientWidth : canvas.parentElement.clientHeight;
-    // canvas.style.width = '100%';
-    // canvas.style.height = '100%';
     canvas.width = window.innerHeight;
     canvas.height = window.innerWidth - 2 * (10 + 40) - 4 * 5;
-    // canvas.height = rect.height;
     positionOffset = findPos(canvas);
     ctx = canvas.getContext('2d');
+    clearCanvas();
 
     $('circle').each(function () {
         $(this).on('click', function () {
@@ -17,24 +20,6 @@ function setUpCanvas() {
         })
     })
 }
-
-let color = 'black';
-const MAX_TIME = 30; // max time of drawing in seconds
-const LINE_WIDTH = 10; // drawing line width
-let canvas;
-let ctx;
-let positionOffset;
-let currTime = 0;
-
-class Point {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-let prevPoint;
-let currPoint = 0;
 
 function setUpEvents() {
     const el = document.body;
@@ -45,6 +30,15 @@ function setUpEvents() {
     el.addEventListener("touchleave", handleEnd, false);
 }
 
+let prevPoint;
+let currPoint = 0;
+
+class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 function updateTouchPosition(event) {
     const touch = event.changedTouches[0];
@@ -103,7 +97,8 @@ function updateTimer() {
 }
 
 function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#E2DAD5";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 
@@ -115,6 +110,8 @@ function sendImage() {
         data: {
             'img64': imgURL
         },
+    }).done(() => {
+        location.reload();
     });
 }
 

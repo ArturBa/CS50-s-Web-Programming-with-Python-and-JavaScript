@@ -1,3 +1,4 @@
+Flask-Babel2
 numpy
 Flask
 opencv-python

@@ -1,12 +1,6 @@
 #horizontal {
   width: 100vw;
   height: 100vh;
-  //-webkit-transform: rotate(90deg); /* Safari and Chrome */
-  //-moz-transform: rotate(90deg); /* Firefox */
-  //-ms-transform: rotate(90deg); /* IE 9 */
-  //-o-transform: rotate(90deg); /* Opera */
-  //transform: rotate(90deg) translateY(-100vw);
-  //transform-origin: top left;
   display: flex;
   flex-direction: column;
 }
@@ -15,11 +9,6 @@
   flex: 1;
   margin: 0 auto;
   background: aqua;
-}
-
-canvas {
-  margin: 0 auto;
-  background: #fff7f1;
 }
 
 %bar {
@@ -61,6 +50,14 @@ svg {
 #menu-bar {
   @extend %bar;
   margin-bottom: 10px;
+
+  i {
+    height: 100%;
+    //width: 150px;
+    position: relative;
+    top: -20px;
+    padding-left: 20px;
+  }
 }
 
 

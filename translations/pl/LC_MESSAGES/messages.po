@@ -1,15 +1,15 @@
-# Polish translations for DRAW AND GUESS.
+# Polish translations for PROJECT.
 # Copyright (C) 2020 ORGANIZATION
-# This file is distributed under the same license as the DRAW AND GUESS project.
-# ARTUR BAUER <bauerart1@gmail.com>, 2020.
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: DRAW AND GUESS 0.10\n"
-"Report-Msgid-Bugs-To: bauerart1@gmail.com\n"
-"POT-Creation-Date: 2020-03-28 18:28+0100\n"
-"PO-Revision-Date: 2020-03-28 18:28+0100\n"
-"Last-Translator: ARTUR BAUER <bauerart1@gmail.com>\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-03-31 10:46+0200\n"
+"PO-Revision-Date: 2020-03-31 10:46+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
 "Language-Team: pl <LL@li.org>\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
@@ -19,7 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: templates/index.html:12
-msgid "Is mobile: "
-msgstr "Jest mobilnie"
+#: animals.py:3
+msgid "Beaver"
+msgstr "Bóbr"
+
+#: animals.py:3
+msgid "Hedgehog"
+msgstr "Jeż"
+
+#: templates/desktop.html:12
+msgid " Guess: "
+msgstr "Zgaduj:"
+
+#: templates/desktop.html:15
+msgid " Awaiting a first picture "
+msgstr "Oczekiwanie na pierwszy obrazek"
+
+#: templates/mobile.html:17
+msgid " Draw: "
+msgstr "Narysuj"
+
+#: templates/mobile.html:22
+msgid " Your browser don't support canvas :< "
+msgstr "Twoja przeglądarka nie wspiera płótn"
+
+#: templates/mobile.html:42
+msgid " Start drawing "
+msgstr "Rozpocznij rysowanie"
 
