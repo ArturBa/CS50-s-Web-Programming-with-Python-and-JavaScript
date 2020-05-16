@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Post(models.Model):
-    value = models.CharField(max_length=1024)
+    value = models.CharField(max_length=1024, blank=False)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="post")
     date = models.DateTimeField(auto_now_add=True)
 
