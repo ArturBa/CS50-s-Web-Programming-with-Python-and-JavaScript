@@ -6,10 +6,12 @@ from ..models import *
 class PostTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        cls.theme = Theme.objects.create(title='test')
+        cls.topic = Topic.objects.create(title="test", theme=cls.theme)
         cls.user = User.objects.create(username='test')
 
     def setUp(self):
-        self.p = Post.objects.create(value="Test", user_id=self.user)
+        self.p = Post.objects.create(value="Test", user=self.user, topic=self.topic)
 
     def test_creation(self):
         self.assertEqual("Test", self.p.value)
@@ -19,12 +21,10 @@ class PostTest(TestCase):
 class TopicTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create(username='test')
-        cls.post = Post.objects.create(value="test", user_id=cls.user)
+        cls.theme = Theme.objects.create(title='test')
 
     def setUp(self):
-        self.t = Topic.objects.create(title="Test")
-        self.t.posts.set([self.post])
+        self.t = Topic.objects.create(title="Test", theme=self.theme)
 
     def test_creation(self):
         self.assertEqual("Test", self.t.title)
@@ -34,14 +34,10 @@ class TopicTest(TestCase):
 class ThemeTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user = User.objects.create(username='test')
-        cls.post = Post.objects.create(value="test", user_id=cls.user)
-        cls.topic = Topic.objects.create(title="Test")
-        cls.topic.posts.set([cls.post])
+        pass
 
     def setUp(self):
         self.t = Theme.objects.create(title='Test')
-        self.t.topics.set([self.topic])
 
     def test_creation(self):
         self.assertTrue(isinstance(self.t, Theme))
