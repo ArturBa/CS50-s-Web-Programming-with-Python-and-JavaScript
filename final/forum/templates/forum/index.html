@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "forum/base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Forum
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+    <h1> Hi </h1>
+    {% for theme in themes %}
+        <p>{{ theme.title }}</p>
+        {% for topic in theme.topic.all %}
+            <p>{{ topic.title }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

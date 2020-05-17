@@ -12,7 +12,7 @@ class IndexViewTest(TestCase):
         theme = Theme.objects.create(title="test")
 
         for topic_id in range(number_of_topic):
-            t = Topic.objects.create(
+            Topic.objects.create(
                 title=f'Topic test {topic_id}',
                 theme=theme
             )
@@ -24,3 +24,8 @@ class IndexViewTest(TestCase):
     def test_view_url_accessible_by_name(self):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'forum/index.html')
