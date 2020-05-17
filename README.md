@@ -1,1 +1,2 @@
-# ArturBa
+# Forum on django
+
