@@ -7,7 +7,7 @@ from ..models import *
 class IndexViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        # Create 13 authors for pagination tests
+        # Create 13 topics for tests
         number_of_topic = 13
         theme = Theme.objects.create(title="test")
 

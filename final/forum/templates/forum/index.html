@@ -1,18 +1,24 @@
 {% extends "forum/base.html" %}
+{% load static %}
 
 {% block title %}
-    Forum
+    Forum italiano
 {% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" href="{% static 'forum/style/index.css' %}"/>
 {% endblock %}
 
 {% block content %}
-    <h1> Hi </h1>
+    <h1> This is official italian forum</h1>
     {% for theme in themes %}
-        <p>{{ theme.title }}</p>
-        {% for topic in theme.topic.all %}
-            <p>{{ topic.title }}</p>
-        {% endfor %}
+        <div class="theme">
+            <h2>{{ theme.title }}</h2>
+            {% for topic in theme.topic.all %}
+                <div class="topic">
+                    <h2>{{ topic.title }}</h2>
+                </div>
+            {% endfor %}
+        </div>
     {% endfor %}
 {% endblock %}
