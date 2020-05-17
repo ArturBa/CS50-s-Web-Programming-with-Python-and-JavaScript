@@ -29,3 +29,9 @@ class IndexViewTest(TestCase):
         response = self.client.get(reverse('index'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'forum/index.html')
+
+    def test_lists_all_themes(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(len(response.context['themes']) == 1)
+        self.assertTrue(len(response.context['themes'][0].topic.all()) == 13)
