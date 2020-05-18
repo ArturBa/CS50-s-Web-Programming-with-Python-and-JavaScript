@@ -2,10 +2,32 @@
 
 .theme {
   width: 100%;
-  border: #be0027 2px groove;
+  border: #be0027 2px solid;
 }
 
-.topic {
-  margin: 5px;
-  border: #239346 2px groove;
+table {
+  table-layout: fixed;
+  width: 100%;
+
+  th, td {
+    border: $green 2px solid;
+
+  }
+
+  .topic-icon {
+    width: 10%;
+
+    img {
+      height: 40px;
+    }
+  }
+
+  .title {
+    width: 40%;
+  }
+
+  .last-post {
+    width: 40%;
+  }
 }
+

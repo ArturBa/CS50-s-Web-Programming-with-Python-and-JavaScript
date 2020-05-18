@@ -7,6 +7,7 @@ def index(request):
     context = {
         'themes': Theme.objects.all()
     }
+    print(Theme.objects.all()[0].topic.all()[0].post.last())
     return render(request, 'forum/index.html', context)
 
 

@@ -14,11 +14,39 @@
     {% for theme in themes %}
         <div class="theme">
             <h2>{{ theme.title }}</h2>
-            {% for topic in theme.topic.all %}
-                <div class="topic">
-                    <h2>{{ topic.title }}</h2>
-                </div>
-            {% endfor %}
+            <table>
+                <tr>
+                    <th class="topic-icon">
+
+                    </th>
+                    <th class="title">
+                        Title
+                    </th>
+                    <th class="last-post">
+                        Last reply
+                    </th>
+                </tr>
+                <tbody>
+                {% for topic in theme.topic.all %}
+                    <tr>
+                        <td class="topic-icon">
+                            <img src="{{ theme.icon }}" alt="{{ theme.title }}">
+                        </td>
+                        <td class="title">
+                            {{ topic.title }}
+                        </td>
+                        <td class="last-post">
+                            <div class="date">
+                                {{ topic.post.last.date }}
+                            </div>
+                            <div class="text">
+                                {{ topic.post.last.value }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     {% endfor %}
 {% endblock %}
