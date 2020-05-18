@@ -22,6 +22,9 @@
                     <th class="title">
                         Title
                     </th>
+                    <th class="reply-count">
+                        Reply count
+                    </th>
                     <th class="last-post">
                         Last reply
                     </th>
@@ -33,14 +36,17 @@
                             <img src="{{ theme.icon }}" alt="{{ theme.title }}">
                         </td>
                         <td class="title">
-                            {{ topic.title }}
+                            <a href="">{{ topic.title }}</a>
+                        </td>
+                        <td class="reply-count">
+                            {{ topic.post.count }}
                         </td>
                         <td class="last-post">
                             <div class="date">
                                 {{ topic.post.last.date }}
                             </div>
-                            <div class="text">
-                                {{ topic.post.last.value }}
+                            <div class="user">
+                                By: <a href="{% url 'user' %}">{{ topic.post.last.user.user.username }}</a>
                             </div>
                         </td>
                     </tr>

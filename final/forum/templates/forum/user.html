@@ -1,0 +1,20 @@
+{% extends 'forum/base.html' %}
+
+{% block title %}
+    User {{ forum_user.user.username }}
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+    {{ forum_user.user.username }}
+    Points: {{ forum_user.points }}
+
+
+    <h2>Last posts:</h2>
+    {% for post in forum_activity %}
+        {{ post }}
+    {% endfor %}
+{% endblock %}
