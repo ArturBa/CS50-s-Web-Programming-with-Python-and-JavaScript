@@ -9,9 +9,10 @@ class PostTest(TestCase):
         cls.theme = Theme.objects.create(title='test')
         cls.topic = Topic.objects.create(title="test", theme=cls.theme)
         cls.user = User.objects.create(username='test')
+        cls.fuser = ForumUser.objects.create(user=cls.user)
 
     def setUp(self):
-        self.p = Post.objects.create(value="Test", user=self.user, topic=self.topic)
+        self.p = Post.objects.create(value="Test", user=self.fuser, topic=self.topic)
 
     def test_creation(self):
         self.assertEqual("Test", self.p.value)

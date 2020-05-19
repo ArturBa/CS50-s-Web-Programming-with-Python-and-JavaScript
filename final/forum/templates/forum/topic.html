@@ -11,7 +11,9 @@
 {% block content %}
     {{ topic.title }}
     {% for post in topic.post.all %}
-        {{ post }}
+        <div class="post" id="{{ post.id }}">
+            {{ post }}
+        </div>
     {% endfor %}
 
 {% endblock %}
