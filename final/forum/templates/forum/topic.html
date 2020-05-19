@@ -1,0 +1,17 @@
+{% extends 'forum/base.html' %}
+
+{% block title %}
+    {{ topic.title }}
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+    {{ topic.title }}
+    {% for post in topic.post.all %}
+        {{ post }}
+    {% endfor %}
+
+{% endblock %}

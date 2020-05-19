@@ -1,4 +1,6 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 
 from .models import *
 
@@ -22,6 +24,17 @@ def user(request, username):
     except Exception as e:
         print(e)
         return render(request, 'forum/no-user.html')
+
+
+def topic(request, topic_id):
+    try:
+        context = {
+            'topic': Topic.objects.get(id=topic_id)
+        }
+        return render(request, 'forum/topic.html', context)
+    except Exception as e:
+        print(e)
+        return HttpResponseRedirect(reverse('index'))
 
 
 def new_post(request):
