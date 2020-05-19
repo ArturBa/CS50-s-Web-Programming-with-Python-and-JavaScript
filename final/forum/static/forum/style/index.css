@@ -1,0 +1,33 @@
+.theme {
+  width: 100%;
+  border: #be0027 2px solid;
+  padding: 5px;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+table th, table td {
+  border: #239346 2px solid;
+  padding: 5px;
+}
+
+table .topic-icon {
+  width: 10%;
+}
+
+table .topic-icon img {
+  height: 40px;
+}
+
+table .title {
+  width: 40%;
+}
+
+table .last-post {
+  width: 40%;
+}
+
+/*# sourceMappingURL=index.css.map */

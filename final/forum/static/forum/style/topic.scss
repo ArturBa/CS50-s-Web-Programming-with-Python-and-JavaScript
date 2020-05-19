@@ -1,0 +1,24 @@
+@import "color";
+
+.topic {
+  border: $red solid 2px;
+  padding: 5px;
+
+  table, td {
+    border: $green solid 2px;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+  }
+
+  .user {
+    width: 20%;
+  }
+
+  .body {
+    .date {
+      font-style: italic;
+      font-size: small;
+    }
+  }
+}

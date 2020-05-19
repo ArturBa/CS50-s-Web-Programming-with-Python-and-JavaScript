@@ -1,19 +1,41 @@
 {% extends 'forum/base.html' %}
+{% load static %}
 
 {% block title %}
     {{ topic.title }}
 {% endblock %}
 
 {% block head %}
-
+    <link rel="stylesheet" href="{% static 'forum/style/topic.css' %}"/>
 {% endblock %}
 
 {% block content %}
-    {{ topic.title }}
-    {% for post in topic.post.all %}
-        <div class="post" id="{{ post.id }}">
-            {{ post }}
-        </div>
-    {% endfor %}
+    <div class="topic">
+        <h2>
+            {{ topic.title }}
+        </h2>
+
+        {% for post in topic.post.all %}
+            <table>
+                <tr class="post" id="{{ post.id }}">
+                    <td class="user">
+                        By: <a href=" {% url 'user' %}{{ post.user.user.username }}">
+                        {{ post.user.user.username }}
+                    </a><br>
+                        Points: {{ post.user.points }}
+                    </td>
+                    <td class="body">
+                        <div class="date">
+                            {{ post.date }}
+                        </div>
+                        <div class="value">
+                            {{ post.value }}
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        {% endfor %}
+    </div>
 
 {% endblock %}

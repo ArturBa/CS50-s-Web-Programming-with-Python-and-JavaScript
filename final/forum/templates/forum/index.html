@@ -46,9 +46,8 @@
                                 {{ topic.post.last.date }}
                             </div>
                             <div class="user">
-                                By: <a href="
-
-                                    {% url 'user' %}{{ topic.post.last.user.user.username }}">{{ topic.post.last.user.user.username }}</a>
+                                By: <a href=" {% url 'user' %}{{ topic.post.last.user.user.username }}">
+                                {{ topic.post.last.user.user.username }}</a>
                             </div>
                         </td>
                     </tr>
