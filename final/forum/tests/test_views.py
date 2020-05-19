@@ -58,6 +58,29 @@ class TopicViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_view_uses_correct_template(self):
-        response = self.client.get(reverse('topic', kwargs={'topic_id': Topic.objects.all()[0].id}))
+        topic = Topic.objects.all()[0]
+        response = self.client.get(reverse('topic', kwargs={'topic_id': topic.id}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'forum/topic.html')
+        self.assertEqual(response.context['topic'].id, topic.id)
+
+
+class UserViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create(username='test')
+        cls.fuser = ForumUser.objects.create(user=cls.user)
+
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get(f'/user/{self.user.username}/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse('user', kwargs={'username': self.user.username}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('user', kwargs={'username': self.user.username}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'forum/user.html')
+        self.assertEqual(response.context['forum_user'].id, self.fuser.id)
