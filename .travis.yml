@@ -7,5 +7,9 @@ python:
 install:
   - pip install -r requirments.txt
 
+before_script:
+  - python final/manage.py makemigrations
+  - python final/manage.py migrate
+
 script:
   - python final/manage.py test
