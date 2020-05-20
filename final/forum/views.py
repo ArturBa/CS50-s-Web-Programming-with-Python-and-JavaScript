@@ -36,15 +36,3 @@ def topic(request, topic_id):
     except Exception as e:
         print(e)
         return HttpResponseRedirect(reverse('index'))
-
-
-def new_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            user_id = form.cleaned_data['user']
-            topic_id = form.cleaned_data['topic']
-            message = form.cleaned_data['message']
-            Post.objects.create(user_id=user_id, topic_id=topic_id, message=message)
-        return HttpResponseRedirect(reverse(f"topic/{request.POST['topic']}"))
-    return HttpResponseRedirect(reverse("index"))

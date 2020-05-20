@@ -10,10 +10,10 @@ class PostFormTest(TestCase):
 
     # Valid Form Data
     def test_PostForm_valid(self):
-        form = PostForm(data={'user': 1, 'topic': 12, 'message': "test_message"})
+        form = PostForm(data={'topic': 12, 'message': "test_message"})
         self.assertTrue(form.is_valid())
 
     # Invalid Form Data
     def test_UserForm_invalid(self):
-        form = PostForm(data={'user': "", 'topic': 10, 'message': "mp"})
+        form = PostForm(data={'topic': '', 'message': "mp"})
         self.assertFalse(form.is_valid())

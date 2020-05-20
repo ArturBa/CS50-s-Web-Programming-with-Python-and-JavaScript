@@ -1,5 +1,6 @@
 from django.urls import path
 
+from . import utils
 from . import views
 
 urlpatterns = [
@@ -8,5 +9,5 @@ urlpatterns = [
     path("user/<str:username>/", views.user, name="user"),
     path("topic/", views.topic, name="topic"),
     path("topic/<int:topic_id>/", views.topic, name="topic"),
-    path('new-post/', views.new_post, name='new_post')
+    path('new-post/', utils.new_post, name='new_post')
 ]
