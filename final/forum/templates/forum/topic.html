@@ -15,7 +15,6 @@
             {{ topic.title }}
         </h2>
 
-        {% for post in topic.post.all %}
             <table>
                 <thead>
                 <tr>
@@ -27,6 +26,7 @@
                 </thead>
                 <tbody>
 
+                {% for post in topic.post.all %}
                 <tr class="post" id="{{ post.id }}">
                     <td class="user">
                         By: <a href=" {% url 'user' %}{{ post.user.user.username }}">
@@ -39,14 +39,30 @@
                             {{ post.date }}
                         </div>
                         <div class="value">
-                            {{ post.value }}
+                            {{ post.message }}
                         </div>
                     </td>
                 </tr>
+                {% endfor %}
 
                 </tbody>
             </table>
-        {% endfor %}
+
+        {% if request.user.is_authenticated %}
+            <div class="new_post">
+                <form action="{% url 'new_post' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="user" value="{{ request.user.id }}">
+                    <input type="hidden" name="topic" value="{{ topic.id }}">
+                    <label>
+                        <textarea cols="50" name="message" autocomplete="off">Write here your response</textarea>
+                    </label>
+                    <button>Add post</button>
+                </form>
+
+            </div>
+
+        {% endif %}
     </div>
 
 {% endblock %}

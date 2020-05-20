@@ -32,13 +32,13 @@ class Topic(models.Model):
 
 
 class Post(models.Model):
-    value = models.CharField(max_length=1024, blank=False)
+    message = models.CharField(max_length=1024, blank=False)
     user = models.ForeignKey(ForumUser, on_delete=models.CASCADE, related_name="post")
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name="post")
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Post: {self.user.user.username}: {self.value[:100]}'
+        return f'Post: {self.user.user.username}: {self.message[:100]}'
 
 
 class Points(models.Model):

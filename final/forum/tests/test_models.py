@@ -12,10 +12,10 @@ class PostTest(TestCase):
         cls.fuser = ForumUser.objects.create(user=cls.user)
 
     def setUp(self):
-        self.p = Post.objects.create(value="Test", user=self.fuser, topic=self.topic)
+        self.p = Post.objects.create(message="Test", user=self.fuser, topic=self.topic)
 
     def test_creation(self):
-        self.assertEqual("Test", self.p.value)
+        self.assertEqual("Test", self.p.message)
         self.assertTrue(isinstance(self.p, Post))
 
 

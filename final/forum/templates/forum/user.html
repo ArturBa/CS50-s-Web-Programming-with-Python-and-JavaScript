@@ -1,11 +1,12 @@
 {% extends 'forum/base.html' %}
+{% load static %}
 
 {% block title %}
     User {{ forum_user.user.username }}
 {% endblock %}
 
 {% block head %}
-
+    <link rel="stylesheet" href="{% static 'forum/style/user.css' %}"/>
 {% endblock %}
 
 {% block content %}
