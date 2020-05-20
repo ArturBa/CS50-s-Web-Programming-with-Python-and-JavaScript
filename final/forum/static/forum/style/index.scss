@@ -2,21 +2,12 @@
 
 .theme {
   width: 100%;
-  border: #be0027 2px solid;
+  border: $red 2px solid;
   padding: 5px;
-}
-
-table {
-  table-layout: fixed;
-  width: 100%;
-
-  th, td {
-    border: $green 2px solid;
-    padding: 5px;
-  }
 
   .topic-icon {
     width: 10%;
+    text-align: center;
 
     img {
       height: 40px;
@@ -27,8 +18,11 @@ table {
     width: 40%;
   }
 
+  .reply-count {
+    text-align: center;
+  }
+
   .last-post {
     width: 40%;
   }
 }
-

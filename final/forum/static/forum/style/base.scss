@@ -1,3 +1,5 @@
+@import "color";
+
 body {
   text-align: center;
 }
@@ -7,3 +9,16 @@ body {
   padding: 20px;
   margin: 0 auto;
 }
+
+table {
+  table-layout: fixed;
+  width: 100%;
+
+  th, td {
+    border: $green 2px solid;
+    padding: 5px;
+    text-align: left;
+  }
+
+}
+

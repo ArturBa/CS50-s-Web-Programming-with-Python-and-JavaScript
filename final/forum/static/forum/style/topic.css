@@ -1,11 +1,8 @@
 .topic {
-  border: #be0027 solid 2px;
-  padding: 5px; }
-  .topic table, .topic td {
-    border: #239346 solid 2px;
     width: 100%;
-    text-align: left;
-    padding: 5px; }
+    border: #be0027 solid 2px;
+    padding: 5px;
+}
   .topic .user {
     width: 20%; }
   .topic .body .date {

@@ -1,10 +1,16 @@
 body {
-  text-align: center;
-}
+  text-align: center; }
 
 .content {
   padding: 20px;
-  margin: 0 auto;
-}
+  margin: 0 auto; }
+
+table {
+  table-layout: fixed;
+  width: 100%; }
+  table th, table td {
+    border: #239346 2px solid;
+    padding: 5px;
+    text-align: left; }
 
 /*# sourceMappingURL=base.css.map */

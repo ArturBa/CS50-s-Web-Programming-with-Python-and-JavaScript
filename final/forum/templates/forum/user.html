@@ -9,12 +9,30 @@
 {% endblock %}
 
 {% block content %}
-    {{ forum_user.user.username }}
-    Points: {{ forum_user.points }}
+    <div class="user">
+        <h2>
+            {{ forum_user.user.username }}
+        </h2>
+        Points: {{ forum_user.points }}
+        <table>
+            <thead>
+            <tr>
+                <th>Topic</th>
+                <th>Last posts:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {% for post in forum_activity %}
+                    <td>
+                        <a href="{% url 'topic' %}{{ post.topic.id }}">{{ post.topic.title }}</a>
+                    </td>
+                    <td>{{ post.value }}</td>
+                {% endfor %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 
-    <h2>Last posts:</h2>
-    {% for post in forum_activity %}
-        {{ post }}
-    {% endfor %}
 {% endblock %}
