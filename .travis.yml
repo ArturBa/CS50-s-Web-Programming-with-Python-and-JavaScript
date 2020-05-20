@@ -8,4 +8,4 @@ install:
   - pip install -r requirments.txt
 
 script:
-  - python forum/manage.py test
+  - python final/manage.py test
