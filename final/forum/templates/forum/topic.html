@@ -7,6 +7,7 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'forum/style/topic.css' %}"/>
+    <script src="{% static 'forum/js/topic.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -15,8 +16,8 @@
             {{ topic.title }}
         </h2>
 
-            <table>
-                <thead>
+        <table>
+            <thead>
                 <tr>
                     <th class="user">User</th>
                     <th class="body">Post</th>
@@ -49,8 +50,8 @@
             </table>
 
         {% if request.user.is_authenticated %}
-            <div class="new_post">
-                <form action="{% url 'new_post' %}" method="post">
+            <div class="new-post">
+                <form id="new-post">
                     {% csrf_token %}
                     <input type="hidden" name="topic" value="{{ topic.id }}">
                     <label>
@@ -58,9 +59,7 @@
                     </label>
                     <button>Add post</button>
                 </form>
-
             </div>
-
         {% endif %}
     </div>
 

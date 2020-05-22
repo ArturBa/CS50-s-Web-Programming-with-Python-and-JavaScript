@@ -23,14 +23,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                {% for post in forum_activity %}
+            {% for post in forum_activity %}
+                <tr>
                     <td>
                         <a href="{% url 'topic' %}{{ post.topic.id }}">{{ post.topic.title }}</a>
                     </td>
-                    <td>{{ post.value }}</td>
-                {% endfor %}
-            </tr>
+                    <td>{{ post.message }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

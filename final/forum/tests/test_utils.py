@@ -13,13 +13,16 @@ class NewPostViewTest(TestCase):
         cls.theme = Theme.objects.create(title="test")
         cls.topic = Topic.objects.create(title="test topic", theme=cls.theme)
 
-    def test_view_url_exists_at_desired_location(self):
+    def test_util_url_exists_at_desired_location(self):
         self.client.login(username='test_user', password='test123')
         response = self.client.post('/new-post/', data={'topic': self.topic.id, 'message': 'Test'})
         self.assertEqual(response.status_code, 200)
 
-    def test_view_url_accessible_by_name(self):
+    def test_util_url_accessible_by_name(self):
         self.client.login(username='test_user', password='test123')
         response = self.client.post(reverse('new_post'), data={'topic': self.topic.id, 'message': 'Test'})
-        print(response)
         self.assertEqual(response.status_code, 200)
+
+    def test_util_no_login_forbidden(self):
+        response = self.client.post(reverse('new_post'), data={'topic': self.topic.id, 'message': 'Test'})
+        self.assertEqual(response.status_code, 302)
