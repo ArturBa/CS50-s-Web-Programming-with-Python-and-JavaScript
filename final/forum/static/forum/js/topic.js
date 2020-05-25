@@ -13,11 +13,14 @@ $(document).ready(function () {
     $('.votes-form').each(function () {
         $(this).submit(function (event) {
             event.preventDefault();
-            console.log(`add: ${$(this).serialize()}`)
+            let post_id = $(this).serializeArray()[1].value
             $.ajax({
                 type: 'POST',
                 url: '/add-point/',
                 data: $(this).serialize(),
+                success: function () {
+                    $(`#${post_id}`).load(`${window.location.pathname} #${post_id} > *`);
+                }
             })
         })
     })

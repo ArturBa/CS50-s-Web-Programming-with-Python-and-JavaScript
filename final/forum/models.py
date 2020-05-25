@@ -4,7 +4,6 @@ from django.db import models
 
 class ForumUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    points = models.IntegerField(default=0)
 
     def __str__(self):
         return f'User: {self.user.username}'
