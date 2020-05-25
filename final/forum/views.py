@@ -17,7 +17,7 @@ def user(request, username):
         user_w_username = User.objects.get(username=username)
         context = {
             'forum_user': ForumUser.objects.get(user=user_w_username),
-            'forum_activity': ForumUser.objects.get(user=user_w_username).post.all()
+            'forum_activity': ForumUser.objects.get(user=user_w_username).post.order_by('-date').all()[:10]
         }
         return render(request, 'forum/user.html', context)
     except Exception as e:
