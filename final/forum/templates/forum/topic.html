@@ -37,9 +37,10 @@
                     </td>
                     <td class="body">
                         <div class="votes">
-                            <form method="post">
+                            p: {{ post.get_points }}
+                            <form class="votes-form">
                                 {% csrf_token %}
-                                <input type="hidden" id="post_id" value="{{ post.id }}">
+                                <input type="hidden" name="post" value="{{ post.id }}">
                                 <button>+</button>
                             </form>
                         </div>

@@ -10,6 +10,17 @@ $(document).ready(function () {
             }
         })
     })
+    $('.votes-form').each(function () {
+        $(this).submit(function (event) {
+            event.preventDefault();
+            console.log(`add: ${$(this).serialize()}`)
+            $.ajax({
+                type: 'POST',
+                url: '/add-point/',
+                data: $(this).serialize(),
+            })
+        })
+    })
     set_scroll();
     bold_curr_loc();
 })

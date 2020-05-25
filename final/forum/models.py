@@ -12,8 +12,7 @@ class ForumUser(models.Model):
     def get_points(self):
         points = 0
         for post in self.post.all():
-            for point in post.point.all():
-                points += point
+            points += post.get_points()
         return points
 
 
@@ -41,6 +40,12 @@ class Post(models.Model):
 
     def __str__(self):
         return f'Post: {self.user.user.username}: {self.message[:100]}'
+
+    def get_points(self):
+        points = 0
+        for point in self.point.all():
+            points += point.value
+        return points
 
 
 class Points(models.Model):
