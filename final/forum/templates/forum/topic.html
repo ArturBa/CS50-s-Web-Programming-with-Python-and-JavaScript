@@ -33,7 +33,7 @@
                         By: <a href=" {% url 'user' %}{{ post.user.user.username }}">
                         {{ post.user.user.username }}
                     </a><br>
-                        Points: {{ post.user.points }}
+                        Points: {{ post.user.get_points }}
                     </td>
                     <td class="body">
                         <div class="votes">

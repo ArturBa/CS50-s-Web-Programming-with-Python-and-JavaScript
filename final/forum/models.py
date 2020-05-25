@@ -9,10 +9,12 @@ class ForumUser(models.Model):
     def __str__(self):
         return f'User: {self.user.username}'
 
-    def update_points(self):
-        for post in self.post:
-            for point in post.point:
-                self.points += point
+    def get_points(self):
+        points = 0
+        for post in self.post.all():
+            for point in post.point.all():
+                points += point
+        return points
 
 
 class Theme(models.Model):

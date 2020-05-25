@@ -77,8 +77,7 @@ class TopicViewTest(TestCase):
 
     def test_view_default_on_100_page(self):
         response = self.client.get(reverse('topic', kwargs={'topic_id': self.topic.id}) + '?page=10')
-        self.assertEqual(response.status_code, 200)
-        # self.assertEqual(len(response.context['posts']), 10)
+        self.assertEqual(response.status_code, 302)
 
 
 class UserViewTest(TestCase):

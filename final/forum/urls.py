@@ -9,5 +9,6 @@ urlpatterns = [
     path("user/<str:username>/", views.user, name="user"),
     path("topic/", views.topic, name="topic"),
     path("topic/<int:topic_id>/", views.topic, name="topic"),
-    path('new-post/', utils.new_post, name='new_post')
+    path('new-post/', utils.new_post, name='new_post'),
+    path('add-point/', utils.add_point, name='add_point')
 ]
