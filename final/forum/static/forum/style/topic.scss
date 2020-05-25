@@ -10,9 +10,31 @@
   }
 
   .body {
+    position: relative;
+
+    .votes {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
     .date {
       font-style: italic;
       font-size: small;
     }
   }
+}
+
+#new-post {
+  position: relative;
+
+  button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+.page-scroll {
+  margin: 10px;
 }

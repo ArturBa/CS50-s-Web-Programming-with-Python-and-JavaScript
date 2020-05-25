@@ -1,12 +1,27 @@
 .topic {
-    width: 100%;
-    border: #be0027 solid 2px;
-    padding: 5px;
-}
+  width: 100%;
+  border: #be0027 solid 2px;
+  padding: 5px; }
   .topic .user {
     width: 20%; }
-  .topic .body .date {
-    font-style: italic;
-    font-size: small; }
+  .topic .body {
+    position: relative; }
+    .topic .body .votes {
+      position: absolute;
+      top: 10px;
+      right: 10px; }
+    .topic .body .date {
+      font-style: italic;
+      font-size: small; }
+
+#new-post {
+  position: relative; }
+  #new-post button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px; }
+
+.page-scroll {
+  margin: 10px; }
 
 /*# sourceMappingURL=topic.css.map */
