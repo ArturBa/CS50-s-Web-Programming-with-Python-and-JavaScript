@@ -26,11 +26,13 @@
     <nav>
         <h1> This is official italian forum</h1>
         <a href="{% url 'index' %}"> Home </a>
-        <div>
+        <div id="username">
             {% if request.user.is_authenticated %}
                 Hi {{ request.user.username }}
-
-                <a href="" onclick=logout()>Logout</a>
+                <button id="logout">Logout</button>
+                <form id="logout-token" style="width: 0; height: 0">
+                    {% csrf_token %}
+                </form>
             {% else %}
                 <form id="login">
                     {% csrf_token %}
@@ -40,6 +42,7 @@
                     <label>
                         <input type="password" name="password" placeholder="password">
                     </label>
+                    <button>Login</button>
                 </form>
             {% endif %}
         </div>

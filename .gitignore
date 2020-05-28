@@ -256,3 +256,6 @@ gen
 
 # Ignore credentials
 credentials.sh
+
+# Ignore migrations
+migrations/*.py
