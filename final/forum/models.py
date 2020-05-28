@@ -47,7 +47,7 @@ class Post(models.Model):
         return points
 
 
-class Points(models.Model):
+class Point(models.Model):
     value = models.IntegerField(default=1)
     user = models.ForeignKey(ForumUser, on_delete=models.CASCADE, related_name="point")
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="point")

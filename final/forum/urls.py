@@ -10,5 +10,6 @@ urlpatterns = [
     path("topic/", views.topic, name="topic"),
     path("topic/<int:topic_id>/", views.topic, name="topic"),
     path('new-post/', utils.new_post, name='new_post'),
-    path('add-point/', utils.add_point, name='add_point')
+    path('add-point/', utils.add_point, name='add_point'),
+    path('login/', utils.login_auth, name='login')
 ]

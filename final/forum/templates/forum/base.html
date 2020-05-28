@@ -24,7 +24,25 @@
 <div id="header"></div>
 <div class="col-md-9 content">
     <nav>
+        <h1> This is official italian forum</h1>
         <a href="{% url 'index' %}"> Home </a>
+        <div>
+            {% if request.user.is_authenticated %}
+                Hi {{ request.user.username }}
+
+                <a href="" onclick=logout()>Logout</a>
+            {% else %}
+                <form id="login">
+                    {% csrf_token %}
+                    <label>
+                        <input type="text" name="username" placeholder="username">
+                    </label>
+                    <label>
+                        <input type="password" name="password" placeholder="password">
+                    </label>
+                </form>
+            {% endif %}
+        </div>
     </nav>
     {% block content %}
     {% endblock %}

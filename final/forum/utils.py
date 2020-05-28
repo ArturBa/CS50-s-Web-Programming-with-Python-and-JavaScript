@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
@@ -28,5 +29,18 @@ def add_point(request):
         return HttpResponse('Form not valid', status=400)
     post_id = form.cleaned_data['post']
     fuser = ForumUser.objects.get(user=request.user)
-    Points.objects.get_or_create(user=fuser, post_id=post_id)
+    Point.objects.get_or_create(user=fuser, post_id=post_id)
     return HttpResponse('Point added', status=200)
+
+
+def login_auth(request):
+    if request.method != 'POST':
+        return HttpResponse('Not POST method', status=400)
+    username = request.POST["username"]
+    password = request.POST["password"]
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return HttpResponse("User logged", status=200)
+    else:
+        return HttpResponse('Invalid credentials', status=401)

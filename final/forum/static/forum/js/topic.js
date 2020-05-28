@@ -19,7 +19,7 @@ $(document).ready(function () {
                 url: '/add-point/',
                 data: $(this).serialize(),
                 success: function () {
-                    $(`#${post_id}`).load(`${window.location.pathname} #${post_id} > *`);
+                    $(`#forum-table`).load(`${window.location.pathname} #forum-table > *`);
                 }
             })
         })
