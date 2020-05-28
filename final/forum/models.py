@@ -22,6 +22,22 @@ class Theme(models.Model):
     def __str__(self):
         return f'Theme: {self.title}'
 
+    def recent_topics(self):
+        topics_by_post_date = self.topic.order_by('-post__date').all()
+        unique_topic_id = []
+        i = 0
+        for topic in topics_by_post_date:
+            if topic.id not in unique_topic_id:
+                i += 1
+                unique_topic_id.append(topic.id)
+                if i == 10:
+                    break
+
+        topics = []
+        for unique_topic in unique_topic_id:
+            topics.append(Topic.objects.get(id=unique_topic))
+        return topics
+
 
 class Topic(models.Model):
     title = models.CharField(max_length=128)

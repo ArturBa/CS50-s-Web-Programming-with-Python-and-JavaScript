@@ -25,7 +25,10 @@
 <div class="col-md-9 content">
     <nav>
         <h1> This is official italian forum</h1>
-        <a href="{% url 'index' %}"> Home </a>
+        <div id="menu">
+            <a href="{% url 'index' %}"> Home </a>
+            <a href="{% url 'index' %}"> Register </a>
+        </div>
         <div id="username">
             {% if request.user.is_authenticated %}
                 Hi {{ request.user.username }}
