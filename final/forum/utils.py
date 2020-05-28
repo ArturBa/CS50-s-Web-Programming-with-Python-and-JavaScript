@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
@@ -44,3 +44,8 @@ def login_auth(request):
         return HttpResponse("User logged", status=200)
     else:
         return HttpResponse('Invalid credentials', status=401)
+
+
+def logout_auth(request):
+    logout(request)
+    return HttpResponse("User logout", status=200)
