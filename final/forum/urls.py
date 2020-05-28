@@ -12,5 +12,6 @@ urlpatterns = [
     path('new-post/', utils.new_post, name='new_post'),
     path('add-point/', utils.add_point, name='add_point'),
     path('login/', utils.login_auth, name='login'),
-    path('logout/', utils.logout_auth, name='logout')
+    path('logout/', utils.logout_auth, name='logout'),
+    path('register/', views.register_view, name='register')
 ]
