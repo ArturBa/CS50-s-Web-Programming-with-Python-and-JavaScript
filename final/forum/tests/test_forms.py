@@ -39,3 +39,21 @@ class PointFormTest(TestCase):
     def test_PointForm_wrong_value(self):
         form = PointForm(data={'post': 'test'})
         self.assertFalse(form.is_valid())
+
+
+class TopicFormTest(TestCase):
+    @classmethod
+    def setUp(cls):
+        pass
+
+    def test_TopicForm_valid(self):
+        form = TopicForm(data={'theme': 1, 'topic': 'test', 'message': 'text'})
+        self.assertTrue(form.is_valid())
+
+    def test_TopicForm_missing_data(self):
+        form = TopicForm(data={'theme': ''})
+        self.assertFalse(form.is_valid())
+
+    def test_TopicForm_wrong_value(self):
+        form = TopicForm(data={'theme': 'test'})
+        self.assertFalse(form.is_valid())

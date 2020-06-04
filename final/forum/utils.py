@@ -49,3 +49,19 @@ def login_auth(request):
 def logout_auth(request):
     logout(request)
     return HttpResponse("User logout", status=200)
+
+
+@login_required
+def new_topic(request):
+    if request.method != 'POST':
+        return HttpResponse('Not POST method', status=400)
+    form = TopicForm(request.POST)
+    if not form.is_valid():
+        return HttpResponse('Form not valid', status=400)
+    theme_id = form.cleaned_data['theme']
+    topic = form.cleaned_data['topic']
+    text = form.cleaned_data['message']
+    fuser = ForumUser.objects.get(user=request.user)
+    topic_obj = Topic.objects.get_or_create(theme_id=theme_id, title=topic)
+    Post.objects.create(topic=topic_obj, user=fuser, message=text)
+    return HttpResponse('Post added', status=200)
