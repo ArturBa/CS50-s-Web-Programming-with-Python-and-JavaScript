@@ -1,18 +1,21 @@
 {% extends 'forum/base.html' %}
+{% load static %}
 
 {% block title %}
     Register
 {% endblock %}
 
 {% block head %}
-
+    <link rel="stylesheet" href="{% static 'forum/style/register.css' %}"/>
 {% endblock %}
 
 {% block content %}
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Sign up</button>
-    </form>
+    <div class="register">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Sign up</button>
+        </form>
+    </div>
 {% endblock %}

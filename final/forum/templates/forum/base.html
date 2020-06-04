@@ -27,7 +27,7 @@
         <h1> This is official italian forum</h1>
         <div id="menu">
             <a href="{% url 'index' %}"> Home </a>
-            <a href="{% url 'index' %}"> Register </a>
+            <a href="{% url 'register' %}"> Register </a>
         </div>
         <div id="username">
             {% if request.user.is_authenticated %}

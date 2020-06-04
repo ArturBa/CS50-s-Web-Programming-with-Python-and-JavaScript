@@ -1,0 +1,13 @@
+@import "color";
+
+.register {
+  width: 100%;
+  border: $red 2px solid;
+  padding: 15px;
+
+  form {
+    border: $green 2px solid;
+    padding: 5px;
+    text-align: left;
+  }
+}

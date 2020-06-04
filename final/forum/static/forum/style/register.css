@@ -1,0 +1,13 @@
+.register {
+  width: 100%;
+  border: #be0027 2px solid;
+  padding: 15px;
+}
+
+.register form {
+  border: #239346 2px solid;
+  padding: 5px;
+  text-align: left;
+}
+
+/*# sourceMappingURL=register.css.map */
