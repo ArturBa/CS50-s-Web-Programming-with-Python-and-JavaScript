@@ -63,6 +63,25 @@ def register_view(request):
     return render(request, 'forum/register.html', {'form': form})
 
 
+def theme_view(request, theme_id):
+    try:
+        page = int(request.GET['page'])
+    except Exception:
+        page = 0
+    try:
+        if len(Topic.objects.filter(theme_id=theme_id).all()[page * 10: page * 10 + 10]) == 0:
+            return HttpResponseRedirect(reverse(f'theme', kwargs={'theme_id': theme_id}))
+        context = {
+            'theme': Theme.objects.get(id=theme_id),
+            'topics': Topic.objects.filter(theme_id=theme_id).all()[page * 10: page * 10 + 10],
+            'max_page': int(Topic.objects.filter(theme_id=theme_id).count() / 10)
+        }
+        return render(request, 'forum/theme.html', context)
+    except Exception as e:
+        print(e)
+        return HttpResponseRedirect(reverse('index'))
+
+
 @login_required
 def new_topic_view(request, theme_id):
     theme = Theme.objects.get(id=theme_id)

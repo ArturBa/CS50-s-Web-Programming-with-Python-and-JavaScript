@@ -146,3 +146,25 @@ class NewTopicViewTest(TestCase):
         response = self.client.get(reverse('new-topic', kwargs={'theme_id': self.theme.id}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'forum/new-topic.html')
+
+
+class ThemeViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.theme = Theme.objects.create(title='test')
+        topic_len = 14
+        for topic in range(topic_len):
+            Topic.objects.create(theme=cls.theme, title=f'topic: {topic}')
+
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get(f'/theme/{self.theme.id}')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse('theme', kwargs={'theme_id': self.theme.id}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse('theme', kwargs={'theme_id': self.theme.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'forum/theme.html')
