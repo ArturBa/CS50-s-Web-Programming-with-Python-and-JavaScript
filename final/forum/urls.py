@@ -16,5 +16,6 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('new-topic/<int:theme_id>', views.new_topic_view, name='new-topic'),
     path('add-topic/', utils.add_topic, name='add-topic'),
+    path("theme/", views.theme_view, name="theme"),
     path('theme/<int:theme_id>', views.theme_view, name='theme')
 ]

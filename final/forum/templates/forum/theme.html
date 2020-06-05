@@ -1,13 +1,71 @@
 {% extends 'forum/base.html' %}
+{% load static %}
 
 {% block title %}
     {{ theme.title }}
 {% endblock %}
 
 {% block head %}
-
+    <link rel="stylesheet" href="{% static 'forum/style/theme.css' %}"/>
+    <link rel="stylesheet" href="{% static 'forum/style/index.css' %}"/>
+    <script src="{% static 'forum/js/theme.js' %}"></script>
 {% endblock %}
 
 {% block content %}
+    <div class="theme">
+        <h2>
+            {{ theme.title }}
+        </h2>
+
+        <table id="forum-table">
+            <thead>
+            <tr>
+                <th class="topic-icon">
+
+                </th>
+                <th class="title">
+                    Title
+                </th>
+                <th class="reply-count">
+                    Reply count
+                </th>
+                <th class="last-post">
+                    Last reply
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for topic in topics %}
+                <tr>
+                    <td class="topic-icon">
+                        <img src="{{ theme.icon }}" alt="{{ theme.title }}">
+                    </td>
+                    <td class="title">
+                        <a href="{% url 'topic' %}{{ topic.id }}">{{ topic.title }}</a>
+                    </td>
+                    <td class="reply-count">
+                        {{ topic.post.count }}
+                    </td>
+                    <td class="last-post">
+                        <div class="date">
+                            {{ topic.post.last.date }}
+                        </div>
+                        <div class="user">
+                            By: <a href=" {% url 'user' %}{{ topic.post.last.user.user.username }}">
+                            {{ topic.post.last.user.user.username }}</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="post-scroller">
+            <div style="opacity: 0; height: 0" id="max-page">{{ max_page }}</div>
+            <div style="opacity: 0; height: 0" id="theme-id">{{ topic.id }}</div>
+        </div>
+    </div>
+
 
 {% endblock %}
