@@ -1,0 +1,9 @@
+@import "color";
+
+form {
+  border: 2px $red solid;
+
+  label {
+    width: 80%;
+  }
+}

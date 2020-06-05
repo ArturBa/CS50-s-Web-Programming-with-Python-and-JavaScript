@@ -1,0 +1,28 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+
+{% block title %}
+    New topic
+{% endblock %}
+
+{% block head %}
+    <script src="{% static 'forum/js/new-topic.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'forum/style/new-topic.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <form id="new-topic" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="theme" value="{{ theme.id }}">
+        <label>
+            Topic name:
+            <input class="form-control" type="text" name="topic" minlength="8">
+        </label><br>
+        <label>
+            Message:
+            <textarea class="form-control" name="message"></textarea>
+        </label>
+        <br>
+        <button class="btn btn-primary mb-2">Start a new topic</button>
+    </form>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -60,3 +61,9 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'forum/register.html', {'form': form})
+
+
+@login_required
+def new_topic_view(request, theme_id):
+    theme = Theme.objects.get(id=theme_id)
+    return render(request, 'forum/new-topic.html', {'theme': theme})

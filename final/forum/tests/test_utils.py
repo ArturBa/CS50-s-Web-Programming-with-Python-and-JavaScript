@@ -20,11 +20,11 @@ class NewPostUtilTest(TestCase):
 
     def test_util_url_accessible_by_name(self):
         self.client.login(username='test_user', password='test123')
-        response = self.client.post(reverse('new_post'), data={'topic': self.topic.id, 'message': 'Test'})
+        response = self.client.post(reverse('new-post'), data={'topic': self.topic.id, 'message': 'Test'})
         self.assertEqual(response.status_code, 200)
 
     def test_util_no_login_forbidden(self):
-        response = self.client.post(reverse('new_post'), data={'topic': self.topic.id, 'message': 'Test'})
+        response = self.client.post(reverse('new-post'), data={'topic': self.topic.id, 'message': 'Test'})
         self.assertEqual(response.status_code, 302)
 
 
@@ -45,11 +45,11 @@ class AddPointUtilTest(TestCase):
 
     def test_util_url_accessible_by_name(self):
         self.client.login(username='test_user', password='test123')
-        response = self.client.post(reverse('add_point'), data={'post': self.post.id})
+        response = self.client.post(reverse('add-point'), data={'post': self.post.id})
         self.assertEqual(response.status_code, 200)
 
     def test_util_no_login_forbidden(self):
-        response = self.client.post(reverse('add_point'), data={'post': self.post.id})
+        response = self.client.post(reverse('add-point'), data={'post': self.post.id})
         self.assertEqual(response.status_code, 302)
 
 
@@ -72,7 +72,7 @@ class LoginUtilTest(TestCase):
         self.assertEqual(response.status_code, 401)
 
     def test_util_url_invalid_method(self):
-        response = self.client.get(reverse('login'), {'username': 'test_user', 'password': 'nopass'})
+        response = self.client.get(reverse('login'), {'username': 'test_user', 'password': 'test123'})
         self.assertEqual(response.status_code, 400)
 
 
@@ -101,16 +101,18 @@ class AddTopicTest(TestCase):
 
     def test_util_url_exists_at_desired_location(self):
         self.client.login(username='test_user', password='test123')
-        response = self.client.post('/new-post/', data={'theme': self.theme.id, 'topic': 'topic', 'text': 'text'})
+        response = self.client.post('/add-topic/',
+                                    {'theme': self.theme.id, 'topic': 'test', 'message': 'text'})
+        print(response)
         self.assertEqual(response.status_code, 200)
 
     def test_util_url_accessible_by_name(self):
         self.client.login(username='test_user', password='test123')
-        response = self.client.post(reverse('new_post'),
-                                    data={'theme': self.theme.id, 'topic': 'topic', 'text': 'text'})
+        response = self.client.post(reverse('add-topic'),
+                                    {'theme': self.theme.id, 'topic': 'test', 'message': 'text'})
         self.assertEqual(response.status_code, 200)
 
     def test_util_login_required(self):
-        response = self.client.post(reverse('new_post'),
-                                    data={'theme': self.theme.id, 'topic': 'topic', 'text': 'text'})
+        response = self.client.post(reverse('add-topic'),
+                                    {'theme': self.theme.id, 'topic': 'topic', 'text': 'text'})
         self.assertEqual(response.status_code, 302)

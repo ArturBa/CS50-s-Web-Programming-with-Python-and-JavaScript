@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
 
 from ..models import *
@@ -118,3 +118,31 @@ class RegisterViewTest(TestCase):
         response = self.client.get(reverse('register'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'forum/register.html')
+
+
+class NewTopicViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.client = Client()
+        cls.user = User.objects.create_user('test_user', 'test@user.com', 'test123')
+        cls.theme = Theme.objects.create(title='test')
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(username='test_user', password='test123')
+        response = self.client.get(f'/new-topic/{self.theme.id}')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(username='test_user', password='test123')
+        response = self.client.get(reverse('new-topic', kwargs={'theme_id': self.theme.id}))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_only_login(self):
+        response = self.client.get(reverse('new-topic', kwargs={'theme_id': self.theme.id}))
+        self.assertEqual(response.status_code, 302)
+
+    def test_view_uses_correct_template(self):
+        self.client.login(username='test_user', password='test123')
+        response = self.client.get(reverse('new-topic', kwargs={'theme_id': self.theme.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'forum/new-topic.html')

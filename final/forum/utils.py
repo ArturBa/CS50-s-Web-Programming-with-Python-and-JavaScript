@@ -52,16 +52,17 @@ def logout_auth(request):
 
 
 @login_required
-def new_topic(request):
+def add_topic(request):
     if request.method != 'POST':
         return HttpResponse('Not POST method', status=400)
     form = TopicForm(request.POST)
     if not form.is_valid():
+        print('form not valid')
         return HttpResponse('Form not valid', status=400)
     theme_id = form.cleaned_data['theme']
     topic = form.cleaned_data['topic']
-    text = form.cleaned_data['message']
+    message = form.cleaned_data['message']
     fuser = ForumUser.objects.get(user=request.user)
-    topic_obj = Topic.objects.get_or_create(theme_id=theme_id, title=topic)
-    Post.objects.create(topic=topic_obj, user=fuser, message=text)
-    return HttpResponse('Post added', status=200)
+    topic_obj = Topic.objects.create(theme_id=theme_id, title=topic)
+    Post.objects.create(topic=topic_obj, user=fuser, message=message)
+    return HttpResponse({'msg': 'Post added', 'topic_id': topic_obj.id}, status=200)
