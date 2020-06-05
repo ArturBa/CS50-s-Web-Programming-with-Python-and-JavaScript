@@ -14,6 +14,7 @@ urlpatterns = [
     path('login/', utils.login_auth, name='login'),
     path('logout/', utils.logout_auth, name='logout'),
     path('register/', views.register_view, name='register'),
+    path('new-topic/', views.new_topic_view, name='new-topic'),
     path('new-topic/<int:theme_id>', views.new_topic_view, name='new-topic'),
     path('add-topic/', utils.add_topic, name='add-topic'),
     path("theme/", views.theme_view, name="theme"),

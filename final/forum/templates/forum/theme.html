@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'forum/style/theme.css' %}"/>
     <link rel="stylesheet" href="{% static 'forum/style/index.css' %}"/>
+    <link rel="stylesheet" href="{% static 'forum/style/topic.css' %}"/>
     <script src="{% static 'forum/js/theme.js' %}"></script>
 {% endblock %}
 
@@ -36,6 +36,28 @@
             </thead>
 
             <tbody>
+            {% if request.user.is_authenticated %}
+                <tr class="new-topic">
+                    <td class="topic-icon">
+                        <img src="{{ theme.icon }}" alt="{{ theme.title }}">
+                    </td>
+                    <td class="title">
+                        <a href="{% url 'new-topic' %}{{ theme.id }}">Start a new topic</a>
+                    </td>
+                    <td class="reply-count">
+                        0
+                    </td>
+                    <td class="last-post">
+                        <div class="date">
+                            now
+                        </div>
+                        <div class="user">
+                            By: <a href=" {% url 'user' %}{{ request.user.username }}">
+                            {{ request.user.username }}</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
             {% for topic in topics %}
                 <tr>
                     <td class="topic-icon">
@@ -63,9 +85,7 @@
 
         <div id="post-scroller">
             <div style="opacity: 0; height: 0" id="max-page">{{ max_page }}</div>
-            <div style="opacity: 0; height: 0" id="theme-id">{{ topic.id }}</div>
+            <div style="opacity: 0; height: 0" id="theme-id">{{ theme.id }}</div>
         </div>
     </div>
-
-
 {% endblock %}

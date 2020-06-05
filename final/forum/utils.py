@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from .forms import *
 from .models import *
@@ -65,4 +65,4 @@ def add_topic(request):
     fuser = ForumUser.objects.get(user=request.user)
     topic_obj = Topic.objects.create(theme_id=theme_id, title=topic)
     Post.objects.create(topic=topic_obj, user=fuser, message=message)
-    return HttpResponse({'msg': 'Post added', 'topic_id': topic_obj.id}, status=200)
+    return JsonResponse(status=200, data={'msg': 'Post added', 'topic_id': topic_obj.id})

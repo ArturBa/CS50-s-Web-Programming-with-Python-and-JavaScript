@@ -36,10 +36,14 @@ def topic(request, topic_id):
     try:
         if len(Post.objects.filter(topic_id=topic_id).all()[page * 10: page * 10 + 10]) == 0:
             return HttpResponseRedirect(reverse(f'topic', kwargs={'topic_id': topic_id}))
+        max_page = int(Post.objects.filter(topic_id=topic_id).count() / 10)
+        # Check if not multiple value of 10
+        if int(Post.objects.filter(topic_id=topic_id).count() % 10) == 0:
+            max_page -= 1
         context = {
             'topic': Topic.objects.get(id=topic_id),
             'posts': Post.objects.filter(topic_id=topic_id).all()[page * 10: page * 10 + 10],
-            'max_page': int(Post.objects.filter(topic_id=topic_id).count() / 10)
+            'max_page': max_page
         }
         return render(request, 'forum/topic.html', context)
     except Exception as e:
@@ -70,11 +74,15 @@ def theme_view(request, theme_id):
         page = 0
     try:
         if len(Topic.objects.filter(theme_id=theme_id).all()[page * 10: page * 10 + 10]) == 0:
+            print(f'no topic found {len(Topic.objects.filter(theme_id=theme_id).all())}')
             return HttpResponseRedirect(reverse(f'theme', kwargs={'theme_id': theme_id}))
+        max_page = int(Topic.objects.filter(theme_id=theme_id).count() / 10)
+        if int(Topic.objects.filter(theme_id=theme_id).count() % 10) == 0:
+            max_page -= 1
         context = {
             'theme': Theme.objects.get(id=theme_id),
             'topics': Topic.objects.filter(theme_id=theme_id).all()[page * 10: page * 10 + 10],
-            'max_page': int(Topic.objects.filter(theme_id=theme_id).count() / 10)
+            'max_page': max_page
         }
         return render(request, 'forum/theme.html', context)
     except Exception as e:

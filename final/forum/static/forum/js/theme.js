@@ -7,7 +7,7 @@ function set_scroll() {
     const max_page = Number($('#max-page').html());
     const page = get_curr_loc();
     const scroll = $('#post-scroller')
-    const theme = get_topic_id();
+    const theme = get_theme_id();
 
     if (page > 2) {
         scroll.append(`<a href='/theme/${theme}' class='page-scroll' id='page-0'>0 ...</a>`)
@@ -32,6 +32,6 @@ function get_curr_loc() {
     return Number(params.get('page') ? params.get('page') : 0);
 }
 
-function get_topic_id() {
+function get_theme_id() {
     return Number($('#theme-id').html());
 }

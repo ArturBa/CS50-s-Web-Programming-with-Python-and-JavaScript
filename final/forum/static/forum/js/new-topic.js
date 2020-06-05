@@ -6,9 +6,7 @@ $(document).ready(function () {
             url: '/add-topic/',
             data: $(this).serialize(),
             success: function (data) {
-                const json = $.parseJSON(data);
-                console.log(json)
-                location.pathname = `topic/${json.topic_id}`;
+                location.pathname = `topic/${data.topic_id}`;
             }
         })
     })
